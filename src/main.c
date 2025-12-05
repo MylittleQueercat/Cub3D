@@ -5,6 +5,7 @@ int	render_loop(t_club *club)
 {
 	render_background(club);
 	render_walls(club);
+	render_minimap(club);
 	mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
 	return (0);
 }
