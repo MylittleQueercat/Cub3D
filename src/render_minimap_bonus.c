@@ -49,7 +49,7 @@ void    render_minimap(t_club *club)
     int     map_y;
     char    **g;
 
-    tile = 6;
+    tile = 17;
     y = 0;
     g = club->map.grid;
     while (y < club->map.height)

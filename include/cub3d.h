@@ -8,8 +8,8 @@
 # include "../minilibx/mlx.h"
 
 // 窗口大小
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1200
+# define HEIGHT 1000
 
 // // 按键（macos系统的）
 // # define KEY_ESC	53
