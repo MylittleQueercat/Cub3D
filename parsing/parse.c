@@ -32,3 +32,4 @@ char **read_file(const char *file)
 	close(fd);
 	return (res);
 }
+
