@@ -13,8 +13,10 @@ SRC = $(SRC_DIR)/main.c \
       $(SRC_DIR)/init_club.c \
       $(SRC_DIR)/img_utils.c \
       $(SRC_DIR)/render_background.c \
-	  $(SRC_DIR)/raycast.c \
-	  $(SRC_DIR)/move.c
+	  $(SRC_DIR)/walls_util.c \
+	  $(SRC_DIR)/move.c \
+	  $(SRC_DIR)/textures.c \
+	  $(SRC_DIR)/render_walls.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -3,6 +3,7 @@
 
 int	close_window(t_club *club)
 {
+    destroy_textures(club);
 	destroy_image(club);
 
 	if (club->win)
