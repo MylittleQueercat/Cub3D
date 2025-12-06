@@ -64,4 +64,3 @@ compile_commands.json
 .vscode
 
 minilibx-linux/
-include/cub3d.h

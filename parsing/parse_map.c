@@ -2,11 +2,10 @@
 
 static bool	is_valid_char(char c, bool bonus)
 {
-	if (c == '0' || c == '1' || c == ' ')
+	if (c == '0' || c == '1' || c == ' ' \
+		|| c == 'N' || c == 'W' || c == 'E' || c == 'S')
 		return (true);
-	if (c == 'N' || c == 'W' || c == 'E' || c == 'S')
-		return (true);
-	if (bonus && (c == 2 || c == 'D'))
+	if (bonus && (c == '2' || c == 'D'))
 		return (true);
 	return (false);
 }
@@ -81,22 +80,65 @@ static bool	check_first_last_row(t_club *club)
 	return (true);
 }
 
+static char	*pad_line(char *line, int new_len)
+{
+	int		i;
+	int		old_len;
+	char	*new_line;
+
+	old_len = ft_strlen(line);
+	new_line = malloc(new_len + 1);
+	if (!new_line)
+		return (NULL);
+	i = 0;
+	while (i < old_len)
+	{
+		new_line[i] = line[i];
+		i++;
+	}
+	while (i < new_len)
+		new_line[i++] = ' ';
+	new_line[i] = '\0';
+	free(line);
+	return (new_line);
+}
+
 static bool	check_sides(t_club *club)
 {
 	int	i;
-	int	len;
 
 	i = 0;
 	while (club->map.grid[i])
 	{
-		len = ft_strlen(club->map.grid[i]);
-		if (len == 0)
+		if (ft_strlen(club->map.grid[i]) == 0)
+			return (false);
+		club->map.grid[i] = pad_line(club->map.grid[i], club->map.width);
+		if (!club->map.grid[i])
 			return (false);
 		if (club->map.grid[i][0] != '1' && club->map.grid[i][0] != ' ')
 			return (false);
-		if (club->map.grid[i][len - 1] != '1' && club->map.grid[i][len - 1] != ' ')
+		if (club->map.grid[i][club->map.width - 1] != '1' \
+			&& club->map.grid[i][club->map.width - 1] != ' ')
 			return (false);
 		i++;
+	}
+	return (true);
+}
+
+static bool	check_map_size(t_club *club)
+{
+	int	y;
+
+	if (club->map.height < 3 || club->map.width < 3)
+		return (false);
+	y = 0;
+	while (club->map.grid[y])
+	{
+		if (!ft_strchr(club->map.grid[y], '0') && !ft_strchr(club->map.grid[y], '1') \
+			&& !ft_strchr(club->map.grid[y], 'N') && !ft_strchr(club->map.grid[y], 'S')  \
+			&& !ft_strchr(club->map.grid[y], 'W') && !ft_strchr(club->map.grid[y], 'E'))
+			return (false);
+		y++;
 	}
 	return (true);
 }
@@ -106,7 +148,9 @@ int parse_map(t_club *club, char **file)
 	if (!get_map(club, file))
 		return (-1);
 	if (!check_valid_chars(club) || !check_player_count(club) \
-		|| !check_first_last_row(club) || !check_sides(club))
-		return (-1);
+		|| !check_first_last_row(club) || !check_sides(club) \
+		|| !check_map_size(club) || !prepare_map(club))
+		return (free_array(club->map.grid), -1);
 	return (0);
 }
+

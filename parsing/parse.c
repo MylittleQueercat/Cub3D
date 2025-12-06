@@ -33,3 +33,31 @@ char **read_file(const char *file)
 	return (res);
 }
 
+bool	is_cub_file(char *arg)
+{
+	int	len;
+	int	fd;
+
+	if	(!arg)
+		return (false);
+	len = ft_strlen(arg);
+	if (len < 4 || ft_strcmp(arg + len - 4, ".cub") != 0)
+		return (false);
+	fd = open(arg, O_RDONLY);
+	if (fd < 0)
+		return (false);
+	close(fd);
+	return (true);
+}
+
+int	parsing(t_club *club, char **file)
+{
+	int	start_line;
+
+	start_line = check_elements(club, file);
+	if (!start_line)
+		return (-1);
+	if (!parse_map(club, file + start_line))
+		return (-1);
+	return (0);
+}
