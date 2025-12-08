@@ -1,6 +1,6 @@
 #include "../include/cub3d.h"
 
-char **copy_map(t_club *club)
+static char **copy_map(t_club *club)
 {
 	char **map;
 	int	i;
@@ -26,7 +26,7 @@ char **copy_map(t_club *club)
 ** Returns true for walls ('1') or visited cells ('v').
 ** Marks floor cells as 'v' and checks all 4 directions.
 */
-bool	flood_fill_check(char **map, int x, int y, int height, int width)
+static bool	flood_fill_check(char **map, int x, int y, int height, int width)
 {
 	if (x < 0 || x >= width || y < 0 || y >= height)
 		return (false);
@@ -54,7 +54,7 @@ static bool	is_surrounded_by_zero(char **map, int x, int y)
 	return (false);
 }
 
-bool	find_player_position(t_club *club)
+static bool	find_player_position(t_club *club)
 {
 	int	y;
 	int	x;
@@ -82,7 +82,7 @@ bool	find_player_position(t_club *club)
 	return (false);
 }
 
-bool	init_player_direction(t_club *club)
+static bool	init_player_direction(t_club *club)
 {
 	if (club->player.pos == 'N')
 	{

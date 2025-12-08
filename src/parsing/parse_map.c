@@ -151,6 +151,7 @@ int parse_map(t_club *club, char **file)
 		|| !check_first_last_row(club) || !check_sides(club) \
 		|| !check_map_size(club) || !prepare_map(club))
 		return (free_array(club->map.grid), -1);
+	if (!find_sprite_position(club) || !find_door_position(club))
+		return (free_array(club->map.grid), -1);
 	return (0);
 }
-

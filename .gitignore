@@ -5,7 +5,7 @@ cub3D
 *.d
 
 # Object files
-objects/
+obj/
 */*.o
 *.ko
 *.obj
@@ -64,3 +64,4 @@ compile_commands.json
 .vscode
 
 minilibx-linux/
+maps

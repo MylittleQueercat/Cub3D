@@ -44,7 +44,7 @@ static bool	is_color_key(char *line)
 	return (false);
 }
 
-static int	check_elements(t_club *club, char **lines)
+int	check_elements(t_club *club, char **lines)
 {
 	int	i;
 	int	ret;
@@ -56,14 +56,14 @@ static int	check_elements(t_club *club, char **lines)
 			i++;
 		else if (is_texture_key(lines[i]))
 		{
-			res = prase_texture(lines[i], club);
-			if (res == -1)
+			ret = parse_texture(lines[i], club);
+			if (ret == -1)
 				return (-1);
 		}
-		else if (is_clor_key(lines[i]))
+		else if (is_color_key(lines[i]))
 		{
-			res = parse_color(lines[i], club);
-			if (res == -1)
+			ret = parse_color(lines[i], club);
+			if (ret == -1)
 				return (-1);
 		}
 		else

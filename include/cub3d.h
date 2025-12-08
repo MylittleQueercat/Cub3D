@@ -4,8 +4,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
+# include <fcntl.h>
 # include <math.h>
-# include "../minilibx/mlx.h"
+
+# include "../minilibx-linux/mlx.h"
+# include "../libft/libft.h"
 
 // 窗口大小
 # define WIDTH 800
@@ -79,6 +83,8 @@ typedef struct s_sprite
 {
 	double	x;
 	double	y;
+	bool	visible;
+	int		distance;
 	char	*texture;
 }	t_sprite;
 
@@ -118,7 +124,7 @@ typedef struct s_club
     t_player    player;         // 玩家状态
 	t_sprite	*sprites;
 	int			sprite_count;
-	t_door		doors;
+	t_door		*doors;
 	int			door_count;
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E
     int         floor_color;    // F
@@ -155,5 +161,23 @@ void    rotate_player(t_club *club, double rot_speed);
 // textures.c
 int		load_all_textures(t_club *club);
 void	destroy_textures(t_club *club);
+
+//parsing
+int	check_elements(t_club *club, char **lines);
+int	get_map(t_club *club, char **file);
+int parse_color(char *line, t_club *club);
+int parse_texture(char *line, t_club *club);
+int parse_texture(char *line, t_club *club);
+bool	prepare_map(t_club *club);
+bool	find_sprite_position(t_club *club);
+bool	find_door_position(t_club *club);
+bool	is_cub_file(char *arg);
+char	**read_file(const char *file);
+int	parsing(t_club *club, char **file);
+int parse_map(t_club *club, char **file);
+
+//utils.c
+void	err_msg(char *msg);
+void	free_array(char **arr);
 
 #endif

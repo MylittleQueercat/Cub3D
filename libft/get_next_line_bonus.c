@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:24 by lilwang           #+#    #+#             */
-/*   Updated: 2025/12/03 18:23:35 by lilwang          ###   ########.fr       */
+/*   Updated: 2025/12/08 16:44:04 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,3 @@ char	*get_next_line(int fd)
 	stash[fd] = get_new_buffer(stash[fd]);
 	return (line);
 }
-make fclean

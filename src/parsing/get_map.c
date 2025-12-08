@@ -4,10 +4,14 @@ static bool	is_valid_map_line(char *line)
 {
 	int	i;
 
+	if (!line || !*line)
+		return (false);
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (line[i] == '1' || line[0] == '0')
+	if (line[i] == '\0')
+		return (false);
+	if (line[i] == '1' || line[i] == '0')
 		return (true);
 	return (false);
 }
@@ -51,6 +55,8 @@ int	get_map(t_club *club, char **file)
 	int i;
 	int j;
 
+	if (!file || !*file)
+		return (-1);
 	i = 0;
 	while (file[i] && !is_valid_map_line(file[i]))
 		i++;
@@ -69,6 +75,8 @@ int	get_map(t_club *club, char **file)
 		i++;
 	}
 	club->map.grid[j] = NULL;
+	//for (int k = 0; k < j; k++)
+	//	printf("map[%d]: %s\n", k, club->map.grid[k]);
 	set_map_size(club);
 	return (0);
 }

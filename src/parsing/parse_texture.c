@@ -43,7 +43,7 @@ static char *extract_path(char *line)
 	path[len] = '\0';
 	return (path);
 }
-static char	*get_texture_ptr(t_club *club, char *line)
+static t_tex	*get_texture_ptr(t_club *club, char *line)
 {
 	while (*line == ' ')
 		line++;
@@ -72,9 +72,9 @@ int parse_texture(char *line, t_club *club)
 	if (!path)
 		return (-1);
 	if (!is_valid_xpm_file(path))
-		return (free(path, -1));
+		return (free(path), -1);
 	if (tex_ptr->path)
-		return (free(path, -1));
+		return (free(path), -1);
 	tex_ptr->path = path;
 	return (0);
 }
