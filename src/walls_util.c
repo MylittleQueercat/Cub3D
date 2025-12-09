@@ -3,19 +3,19 @@
 // 根据射线的方向和碰撞的面，选择 NO / SO / WE / EA
 static int  choose_texture(t_ray *r)
 {
-    if (r->side == 0) // 撞到 x 方向的墙（竖线）
+    if (r->side == 0) // 撞到 x 方向
     {
         if (r->ray_dir_x > 0)
-            return (TEX_WE); // 往 +x 看，撞到的是西墙
+            return (TEX_WE); // 往 +x 看
         else
-            return (TEX_EA); // 往 -x 看，撞到的是东墙
+            return (TEX_EA); // 往 -x 看
     }
-    else // 撞到 y 方向的墙（横线）
+    else // 撞到 y 方向
     {
         if (r->ray_dir_y > 0)
-            return (TEX_NO); // 往 +y 看，撞到北墙
+            return (TEX_NO); // 往 +y 看
         else
-            return (TEX_SO); // 往 -y 看，撞到南墙
+            return (TEX_SO); // 往 -y 看
     }
 }
 
@@ -70,11 +70,6 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
             + tex_y * tex->line_len
             + tex_x * (tex->bpp / 8);
         color = *(int *)pixel;
-
-        // 让侧面墙更暗，增加立体感
-        //if (r->side == 1)
-        //    color = (color >> 1) & 0x7F7F7F;
-
         put_pixel(&club->img, x, y, color);
         y++;
     }

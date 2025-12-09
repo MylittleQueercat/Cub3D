@@ -5,8 +5,8 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude -Iminilibx
 
 MLX_DIR = minilibx
 MLX = $(MLX_DIR)/libmlx.a
-//MLX_FLAGS = -framework OpenGL -framework AppKit 
-MLX_FLAGS = -lX11 -lXext -lm
+MLX_FLAGS = -framework OpenGL -framework AppKit 
+//MLX_FLAGS = -lX11 -lXext -lm
 
 
 SRC_DIR = src

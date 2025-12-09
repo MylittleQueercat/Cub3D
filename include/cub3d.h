@@ -8,33 +8,35 @@
 # include "../minilibx/mlx.h"
 
 // 窗口大小
-# define WIDTH 1200
-# define HEIGHT 1000
+# define WIDTH 900
+# define HEIGHT 700
 
-// // 按键（macos系统的）
-// # define KEY_ESC	53
-// # define KEY_W      13
-// # define KEY_S      1
-// # define KEY_A      0
-// # define KEY_D      2
-// # define KEY_LEFT   123
-// # define KEY_RIGHT  124
+// 按键（macos系统的）
+# define KEY_ESC	53
+# define KEY_W      13
+# define KEY_S      1
+# define KEY_A      0
+# define KEY_D      2
+# define KEY_LEFT   123
+# define KEY_RIGHT  124
 
-// Linux Keycodes (X11)
-# define KEY_ESC    65307
-# define KEY_W      119    // 'w'
-# define KEY_S      115    // 's'
-# define KEY_A      97     // 'a'
-# define KEY_D      100    // 'd'
-# define KEY_LEFT   65361
-# define KEY_RIGHT  65363
+// // Linux Keycodes (X11)
+// # define KEY_ESC    65307
+// # define KEY_W      119    // 'w'
+// # define KEY_S      115    // 's'
+// # define KEY_A      97     // 'a'
+// # define KEY_D      100    // 'd'
+// # define KEY_LEFT   65361
+// # define KEY_RIGHT  65363
 
 //纹理结构
 # define TEX_NO		0 //北
 # define TEX_SO		1
 # define TEX_WE		2
 # define TEX_EA		3
-# define TEX_COUNT	4 //四面墙
+# define TEX_CEIL   4
+# define TEX_FLOOR  5
+# define TEX_COUNT	6 //墙的面数
 
 //颜色
 #define MM_BG       0x2A003A   // 深紫色
@@ -110,7 +112,7 @@ typedef struct s_club
 {
     void        *mlx;
     void        *win;
-    t_img       img;            // 当前帧画布
+    t_img       img;       // 当前帧画布
     t_map       map;            // 地图数据
     t_player    player;         // 玩家状态
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E

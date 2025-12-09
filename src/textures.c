@@ -25,6 +25,10 @@ int	load_all_textures(t_club *club)
 		return (1);
 	if (load_texture(club, &club->tex[TEX_EA], "textures/ea.xpm"))
 		return (1);
+	if (load_texture(club, &club->tex[TEX_CEIL], "textures/floor1.xpm"))
+		return (1);
+	if (load_texture(club, &club->tex[TEX_FLOOR], "textures/floor3.xpm"))
+		return (1);
 	return (0);
 }
 
