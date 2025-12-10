@@ -6,8 +6,12 @@ static bool is_all_number(char *s)
 
 	if (!s || s[0] == '\0')
 		return (false);
+	while (ft_is_whitespace(*s))
+		s++;
+	if (*s == '\0')
+		return (false);
 	i = 0;
-	while (s[i])
+	while (s[i] && !ft_is_whitespace(s[i]))
 	{
 		if (!ft_isdigit(s[i]))
 			return (false);
@@ -19,15 +23,15 @@ static bool is_all_number(char *s)
 static bool	validate_color_values(char **nums, int *r, int *g, int *b)
 {
 	if (!nums || !nums[0] || !nums[1] || !nums[2] || nums[3])
-		return (false);
+		return (err_msg("Error: color should have exactly 3 colors"), false);
 	if (!is_all_number(nums[0]) || !is_all_number(nums[1]) \
 			|| !is_all_number(nums[2]))
-		return (false);
+		return (err_msg("Error: color values must be positif numbers"), false);
 	*r = ft_atoi(nums[0]);
 	*g = ft_atoi(nums[1]);
 	*b = ft_atoi(nums[2]);
 	if (*r < 0 || *r > 255 || *g < 0 || *g > 255 || *b < 0 || *b > 255)
-		return (false);
+		return (err_msg("Error: color values out of range: 0 ~ 255"), false);
 	return (true);
 }
 int parse_color(char *line, t_club *club)
@@ -43,6 +47,10 @@ int parse_color(char *line, t_club *club)
 	if (*line != 'F' && *line != 'C')
 		return (-1);
 	type = *line;
+	if (type == 'F' && club->floor_color != -1)
+		return (err_msg("Error: floor color defined multiple times"), -1);
+	if (type == 'C' && club->ceiling_color != -1)
+		return (err_msg("Error: ceiling color defined multiple times"), -1);
 	line++;
 	while (*line == ' ')
 		line++;

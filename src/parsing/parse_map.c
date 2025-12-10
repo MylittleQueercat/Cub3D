@@ -143,13 +143,53 @@ static bool	check_map_size(t_club *club)
 	return (true);
 }
 
+bool	is_map_at_the_end(t_club *club)
+{
+	int	i;
+	int	j;
+
+	if (!club->map.grid)
+		return (false);
+	i = 0;
+	while (club->map.grid[i])
+		i++;
+	if (i == 0)
+		return (false);
+	i--;
+	j = 0;
+	while (club->map.grid[i][j])
+	{
+		if (!ft_is_whitespace(club->map.grid[i][j]))
+			return (false);
+		j++;
+	}
+	return (true);
+}
+
+bool	check_map_valid(t_club *club)
+{
+	if (!club->map.grid)
+		return (false);
+	if (!check_valid_chars(club))
+		return (err_msg("Error: map has invalid character"), false);
+	if (!is_map_at_the_end(club))
+		return (err_msg("Error: map is not at the end of the file"), false);
+	if (!check_first_last_row(club) || !check_sides(club))
+		return (err_msg("Error: map is not surrounded by walls"), false);
+	if (!check_map_size(club))
+		return (err_msg("Error: map size is not right"), false);
+	if (!check_player_count(club))
+		return (err_msg("Error: map should have one and only one player"), false);
+	return (true);
+}
+
 int parse_map(t_club *club, char **file)
 {
-	if (!get_map(club, file))
+	if (get_map(club, file) == -1)
 		return (-1);
-	if (!check_valid_chars(club) || !check_player_count(club) \
-		|| !check_first_last_row(club) || !check_sides(club) \
-		|| !check_map_size(club) || !prepare_map(club))
+	if (!check_map_valid(club))
+		return (free_array(club->map.grid), -1);
+	if (!prepare_map(club))
 		return (free_array(club->map.grid), -1);
 	if (!find_sprite_position(club) || !find_door_position(club))
 		return (free_array(club->map.grid), -1);

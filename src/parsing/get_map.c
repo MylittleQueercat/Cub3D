@@ -4,23 +4,40 @@ static bool	is_valid_map_line(char *line)
 {
 	int	i;
 
-	if (!line || !*line)
+	if (!line)
 		return (false);
 	i = 0;
-	while (line[i] == ' ')
+	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\r'
+		|| line[i] == '\v' || line[i] == '\f')
 		i++;
 	if (line[i] == '\0')
 		return (false);
-	if (line[i] == '1' || line[i] == '0')
+	if (line[i] == '1')
 		return (true);
 	return (false);
 }
+
+// static bool	is_empty_map(char **line)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (line[i])
+// 	{
+// 		if (is_valid_map_line(line[i]))
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
 
 static int count_map_lines(char **file)
 {
 	int	i;
 	int len;
 
+	if (!file)
+		return (0);
 	i = 0;
 	len = 0;
 	while (file[i])
@@ -31,6 +48,7 @@ static int count_map_lines(char **file)
 	}
 	return (len);
 }
+
 
 static void	set_map_size(t_club *club)
 {
@@ -56,7 +74,7 @@ int	get_map(t_club *club, char **file)
 	int j;
 
 	if (!file || !*file)
-		return (-1);
+		return (err_msg("Error: map missing"), -1);
 	i = 0;
 	while (file[i] && !is_valid_map_line(file[i]))
 		i++;
@@ -75,8 +93,9 @@ int	get_map(t_club *club, char **file)
 		i++;
 	}
 	club->map.grid[j] = NULL;
-	//for (int k = 0; k < j; k++)
-	//	printf("map[%d]: %s\n", k, club->map.grid[k]);
+	// for (int k = 0; k < j; k++)
+	//  	printf("map[%d]: %s\n", k, club->map.grid[k]);
 	set_map_size(club);
 	return (0);
 }
+ 

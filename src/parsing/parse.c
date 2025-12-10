@@ -1,6 +1,6 @@
 #include "../include/cub3d.h"
 
-// char **grow_array(char **arr, int old_size, int new_size)
+// static char **grow_array(char **arr, int old_size, int new_size)
 // {
 // 	char	**new_arr;
 // 	int		i;
@@ -18,7 +18,7 @@
 // 	return (new_arr);
 // }
 
-// int	add_line(char **arr, int *count, int *size, char *line)
+// static int	add_line(char **arr, int *count, int *size, char *line)
 // {
 // 	char **tmp;
 
@@ -66,10 +66,63 @@
 // 	return (res);
 // }
 
-static int	get_line_count(const char *file)
+// static int	get_line_count(const char *file)
+// {
+// 	int		count;
+// 	int		fd;
+// 	char	*line;
+
+// 	fd = open(file, O_RDONLY);
+// 	if (fd < 0)
+// 		return (-1);
+// 	count = 0;
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		count++;
+// 		free(line);
+// 		line = get_next_line(fd);
+// 	}
+// 	close(fd);
+// 	return (count);
+// }
+
+// char	**read_file(const char *file)
+// {
+// 	char	**res;
+// 	char	*line;
+// 	int		i;
+// 	int		fd;
+// 	int		map_lines;
+
+// 	map_lines = get_line_count(file);
+// 	if (map_lines <= 0)
+// 		return (NULL);
+// 	fd = open(file, O_RDONLY);
+// 	if (fd < 0)
+// 		return (NULL);
+// 	res = malloc(sizeof(char *) * (map_lines + 1));
+// 	if (!res)
+// 	{
+// 		close(fd);
+// 		return (NULL);
+// 	}
+// 	i = 0;
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		res[i++] = line;
+// 		line = get_next_line(fd);
+// 	}
+// 	res[i] = NULL;
+// 	close(fd);
+// 	return (res);
+// }
+
+static int	count_lines(const char *file)
 {
-	int		count;
 	int		fd;
+	int		count;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
@@ -87,31 +140,41 @@ static int	get_line_count(const char *file)
 	return (count);
 }
 
-char	**read_file(const char *file)
+static char	**load_lines(const char *file, int size)
 {
 	char	**res;
 	char	*line;
-	int		i;
 	int		fd;
+	int		i;
 
+	res = malloc(sizeof(char *) * (size + 1));
+	if (!res)
+		return (NULL);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
-	res = malloc(sizeof(char *) * (get_line_count(file) + 1));
-	if (!res)
-	{
-		close(fd);
-		return (NULL);
-	}
+		return (free(res), NULL);
 	i = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		res[i++] = line;
+		res[i] = line;
+		i++;
 		line = get_next_line(fd);
 	}
 	res[i] = NULL;
 	close(fd);
+	return (res);
+}
+
+char	**read_file(const char *file)
+{
+	int		size;
+	char	**res;
+
+	size = count_lines(file);
+	if (size < 0)
+		return (NULL);
+	res = load_lines(file, size);
 	return (res);
 }
 
@@ -136,12 +199,12 @@ int	parsing(t_club *club, char **file)
 {
 	int	start_line;
 
-	if (!file && !*file)
-		return (-1);
+	if (!file || !*file)
+		return (err_msg("Error: map missing"), -1);
 	start_line = check_elements(club, file);
-	if (!start_line)
+	if (start_line == -1)
 		return (-1);
-	if (!parse_map(club, file + start_line))
+	if (parse_map(club, file + start_line) == -1)
 		return (-1);
 	return (0);
 }

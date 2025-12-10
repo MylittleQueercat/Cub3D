@@ -9,7 +9,7 @@ static bool	is_empty(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ')
+		if (!ft_is_whitespace(line[i]))
 			return (false);
 		i++;
 	}
@@ -20,7 +20,7 @@ static bool	is_texture_key(char *line)
 {
 	if (!line)
 		return (false);
-	while (*line == ' ')
+	while (ft_is_whitespace(*line))
 		line++;
 	if (*line == 'N' && *(line + 1) == 'O')
 		return (true);
@@ -37,9 +37,9 @@ static bool	is_color_key(char *line)
 {
 	if (!line)
 		return (false);
-	while (*line == ' ')
+	while (ft_is_whitespace(*line))
 		line++;
-	if (*line == 'F' || *(line + 1) == 'C')
+	if (*line == 'F' || *line == 'C')
 		return (true);
 	return (false);
 }
@@ -53,22 +53,24 @@ int	check_elements(t_club *club, char **lines)
 	while (lines[i])
 	{
 		if (is_empty(lines[i]))
-			i++;
+			;
 		else if (is_texture_key(lines[i]))
 		{
 			ret = parse_texture(lines[i], club);
 			if (ret == -1)
-				return (-1);
+				return (err_msg("parse texture fails"), -1);
 		}
 		else if (is_color_key(lines[i]))
 		{
 			ret = parse_color(lines[i], club);
 			if (ret == -1)
-				return (-1);
+				return (err_msg("parse color fails"), -1);
 		}
 		else
 			break ;
 		i++;
 	}
+	if (club->floor_color == -1 || club->ceiling_color == -1)
+		return (err_msg("Error: Missing colors"), -1);
 	return (i);
 }

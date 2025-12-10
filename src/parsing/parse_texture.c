@@ -12,7 +12,7 @@ static bool	is_valid_xpm_file(char *path)
 		return (false);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (false);
+		return (perror("open failed"), false);
 	close(fd);
 	return (true);
 }
@@ -24,18 +24,16 @@ static char *extract_path(char *line)
 	int		len;
 
 	start = 0;
-	while (line[start] == ' ')
+	while (ft_is_whitespace(line[start]))
 		start++;
 	len = 0;
-	while (line[start + len] != '\0' && line[start + len] != ' ' \
-			&& line[start + len] != '\n')
+	while (line[start + len] != '\0' && !ft_is_whitespace(line[start + len]))
 		len++;
 	path = malloc(len + 1);
 	if (!path)
 		return (NULL);
 	len = 0;
-	while (line[start + len] != '\0' && line[start + len] != ' ' \
-			&& line[start + len] != '\n')
+	while (line[start + len] != '\0' && !ft_is_whitespace(line[start + len]))
 	{
 		path[len] = line[start + len];
 		len++;
@@ -45,7 +43,7 @@ static char *extract_path(char *line)
 }
 static t_tex	*get_texture_ptr(t_club *club, char *line)
 {
-	while (*line == ' ')
+	while (ft_is_whitespace(*line))
 		line++;
 	if (ft_strncmp(line, "NO", 2) == 0)
 		return (&club->tex[0]);
@@ -68,13 +66,19 @@ int parse_texture(char *line, t_club *club)
 	tex_ptr = get_texture_ptr(club, line);
 	if (!tex_ptr)
 		return (-1);
-	path = extract_path(line + 2);
+	tex_ptr->path = NULL;
+	while (ft_is_whitespace(*line))
+		line++;
+	line += 2;
+	while (ft_is_whitespace(*line))
+		line++;
+	path = extract_path(line);
 	if (!path)
 		return (-1);
 	if (!is_valid_xpm_file(path))
 		return (free(path), -1);
 	if (tex_ptr->path)
-		return (free(path), -1);
+			return (free(path), -1);
 	tex_ptr->path = path;
 	return (0);
 }
