@@ -30,7 +30,7 @@
 
 // }
 
-//Debug用，回头删掉
+//Debug用
 static void	init_club_debug(t_club *club)
 {
     int i;
@@ -44,11 +44,16 @@ static void	init_club_debug(t_club *club)
     club->map.height = 0;
     club->floor_color = -1;
     club->ceiling_color = -1;
+	club->sprites = NULL;
+	club->doors = NULL;
+	club->sprite_count = 0;
+	club->door_count = 0;
     i = 0;
     while (i < TEX_COUNT)
     {
         club->tex[i].img = NULL;
         club->tex[i].addr = NULL;
+        club->tex[i].path = NULL;
         club->tex[i].bpp = 0;
         club->tex[i].line_len = 0;
         club->tex[i].endian = 0;
@@ -73,7 +78,7 @@ int	main(int argc, char **argv)
 	// for (int k =0; file[k]; k++)
 	// 	printf("%s", file[k]);
 	if (!file)
-		return (err_msg("Error: parsing failed"), 1);
+		return (1);
 	if (parsing(&club, file) == -1)
 	{
 		free_array(file);

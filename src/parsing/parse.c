@@ -195,16 +195,31 @@ bool	is_cub_file(char *arg)
 	return (true);
 }
 
+static int	check_elements_complete(t_club *club)
+{
+	if (!club->tex[TEX_NO].path || !club->tex[TEX_SO].path \
+		|| !club->tex[TEX_WE].path || !club->tex[TEX_EA].path)
+		return (err_msg("Error: Missing texture(s)"), -1);
+	if (club->floor_color == -1 || club->ceiling_color == -1)
+		return (err_msg("Error: Missing color(s)"), -1);
+	return (0);
+}
+
 int	parsing(t_club *club, char **file)
 {
-	int	start_line;
-
 	if (!file || !*file)
-		return (err_msg("Error: map missing"), -1);
-	start_line = check_elements(club, file);
-	if (start_line == -1)
-		return (-1);
-	if (parse_map(club, file + start_line) == -1)
-		return (-1);
+		return (err_msg("Error: No file content provided"), -1);
+	if (get_map(club, file) == -1)
+		return (err_msg("Error: Map missing"), -1);
+	if (!is_map_at_the_end(club, file))
+		return (err_msg("Error: Map is not at the end of the file"), -1);
+	if (!check_map_valid(club))
+		return (free_array(club->map.grid), -1);
+	if (check_elements(club, file) == -1)
+		return (free_array(club->map.grid), -1);
+	if (check_elements_complete(club) == -1)
+		return (free_array(club->map.grid), -1);
+	if (parse_map(club) == -1)
+		return (free_array(club->map.grid), -1);
 	return (0);
 }

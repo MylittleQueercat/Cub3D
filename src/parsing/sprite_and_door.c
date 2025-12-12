@@ -41,7 +41,7 @@ static bool	validate_position(t_club *club, int x, int y)
 	return (true);
 }
 
-static bool	fill_srite_array(t_club *club)
+static bool	fill_sprite_array(t_club *club)
 {
 	int	y;
 	int	x;
@@ -107,7 +107,7 @@ bool	find_sprite_position(t_club *club)
 	club->sprites = malloc(sizeof(t_sprite) * club->sprite_count);
 	if (!club->sprites)
 		return (false);
-	return (fill_srite_array(club));
+	return (fill_sprite_array(club));
 }
 
 bool	find_door_position(t_club *club)

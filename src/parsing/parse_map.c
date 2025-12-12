@@ -2,7 +2,7 @@
 
 static bool	is_valid_char(char c, bool bonus)
 {
-	if (c == '0' || c == '1' || c == ' ' \
+	if (c == '0' || c == '1' || c == ' ' || c == '\n'\
 		|| c == 'N' || c == 'W' || c == 'E' || c == 'S')
 		return (true);
 	if (bonus && (c == '2' || c == 'D'))
@@ -66,14 +66,14 @@ static bool	check_first_last_row(t_club *club)
 	x = 0;
 	while (club->map.grid[0][x])
 	{
-		if (club->map.grid[0][x] != '1' && club->map.grid[0][x] != ' ')
+		if (club->map.grid[0][x] != '1' && !ft_is_whitespace(club->map.grid[0][x]))
 			return (false);
 		x++;
 	}
 	x = 0;
 	while (club->map.grid[last_y][x])
 	{
-		if (club->map.grid[last_y][x] != '1' && club->map.grid[last_y][x] != ' ')
+		if (club->map.grid[last_y][x] != '1' && !ft_is_whitespace(club->map.grid[last_y][x]))
 			return (false);
 		x++;
 	}
@@ -118,7 +118,7 @@ static bool	check_sides(t_club *club)
 		if (club->map.grid[i][0] != '1' && club->map.grid[i][0] != ' ')
 			return (false);
 		if (club->map.grid[i][club->map.width - 1] != '1' \
-			&& club->map.grid[i][club->map.width - 1] != ' ')
+			&& !ft_is_whitespace(club->map.grid[i][club->map.width - 1]))
 			return (false);
 		i++;
 	}
@@ -143,25 +143,41 @@ static bool	check_map_size(t_club *club)
 	return (true);
 }
 
-bool	is_map_at_the_end(t_club *club)
+// static bool	is_map_at_the_end(t_club *club)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	if (!club->map.grid)
+// 		return (false);
+// 	i = 0;
+// 	while (club->map.grid[i])
+// 		i++;
+// 	if (i == 0)
+// 		return (false);
+// 	i--;
+// 	j = 0;
+// 	while (club->map.grid[i][j])
+// 	{
+// 		if (!ft_is_whitespace(club->map.grid[i][j]))
+// 			return (false);
+// 		j++;
+// 	}
+// 	return (true);
+// }
+
+bool	is_map_at_the_end(t_club *club, char **file)
 {
 	int	i;
-	int	j;
 
-	if (!club->map.grid)
+	if (!file || !club->map.grid)
 		return (false);
-	i = 0;
-	while (club->map.grid[i])
-		i++;
-	if (i == 0)
-		return (false);
-	i--;
-	j = 0;
-	while (club->map.grid[i][j])
+	i = club->map.map_end_index;
+	while (file[i])
 	{
-		if (!ft_is_whitespace(club->map.grid[i][j]))
+		if (!is_empty_line(file[i]))
 			return (false);
-		j++;
+		i++;
 	}
 	return (true);
 }
@@ -169,11 +185,15 @@ bool	is_map_at_the_end(t_club *club)
 bool	check_map_valid(t_club *club)
 {
 	if (!club->map.grid)
-		return (false);
+		return (err_msg("Error: map missing"), false);
+	// if (!is_map_at_the_end(club))
+	// 	return (err_msg("Error: map is not at the end of the file"), false);
 	if (!check_valid_chars(club))
 		return (err_msg("Error: map has invalid character"), false);
-	if (!is_map_at_the_end(club))
-		return (err_msg("Error: map is not at the end of the file"), false);
+	if (!check_first_last_row(club))
+		printf("find\n");
+	if (!check_sides(club))
+		printf("problem is in check sieds \n");
 	if (!check_first_last_row(club) || !check_sides(club))
 		return (err_msg("Error: map is not surrounded by walls"), false);
 	if (!check_map_size(club))
@@ -183,15 +203,11 @@ bool	check_map_valid(t_club *club)
 	return (true);
 }
 
-int parse_map(t_club *club, char **file)
+int parse_map(t_club *club)
 {
-	if (get_map(club, file) == -1)
-		return (-1);
-	if (!check_map_valid(club))
-		return (free_array(club->map.grid), -1);
 	if (!prepare_map(club))
-		return (free_array(club->map.grid), -1);
-	if (!find_sprite_position(club) || !find_door_position(club))
-		return (free_array(club->map.grid), -1);
+		return (-1);
+	// if (!find_sprite_position(club) || !find_door_position(club))
+	// 	return (-1);
 	return (0);
 }

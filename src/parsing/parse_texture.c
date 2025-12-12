@@ -62,11 +62,10 @@ int parse_texture(char *line, t_club *club)
 	char *path;
 
 	if (*line == '\0')
-		return (-1);
+		return (err_msg("Error: empty texture line"), -1);
 	tex_ptr = get_texture_ptr(club, line);
 	if (!tex_ptr)
-		return (-1);
-	tex_ptr->path = NULL;
+		return (err_msg("Error: unknown texture type"), -1);
 	while (ft_is_whitespace(*line))
 		line++;
 	line += 2;
@@ -74,11 +73,11 @@ int parse_texture(char *line, t_club *club)
 		line++;
 	path = extract_path(line);
 	if (!path)
-		return (-1);
+		return (err_msg("Error: texture path missing"),-1);
 	if (!is_valid_xpm_file(path))
-		return (free(path), -1);
+		return (free(path), err_msg("Error: invalid xmp file"), -1);
 	if (tex_ptr->path)
-			return (free(path), -1);
+			return (free(path), err_msg("Error: texture already defined"), -1);
 	tex_ptr->path = path;
 	return (0);
 }

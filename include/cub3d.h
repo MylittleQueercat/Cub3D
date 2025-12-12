@@ -59,6 +59,7 @@ typedef struct	s_map {
 	char	**grid;
 	int		width;
 	int		height;
+	int		map_end_index;
 }	t_map;
 
 //player
@@ -86,6 +87,11 @@ typedef struct s_sprite
 	bool	visible;
 	int		distance;
 	char	*texture;
+	int		screen_x;
+	int		width;
+	int		height;
+	double	sprite_angle;
+	int		color;
 }	t_sprite;
 
 // 纹理渲染
@@ -174,7 +180,10 @@ bool	find_door_position(t_club *club);
 bool	is_cub_file(char *arg);
 char	**read_file(const char *file);
 int	parsing(t_club *club, char **file);
-int parse_map(t_club *club, char **file);
+int parse_map(t_club *club);
+bool	check_map_valid(t_club *club);
+bool	is_empty_line(char *line);
+bool	is_map_at_the_end(t_club *club, char **file);
 
 //utils.c
 void	err_msg(char *msg);

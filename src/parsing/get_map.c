@@ -49,7 +49,6 @@ static int count_map_lines(char **file)
 	return (len);
 }
 
-
 static void	set_map_size(t_club *club)
 {
 	int	i;
@@ -74,11 +73,11 @@ int	get_map(t_club *club, char **file)
 	int j;
 
 	if (!file || !*file)
-		return (err_msg("Error: map missing"), -1);
+		return (-1);
 	i = 0;
 	while (file[i] && !is_valid_map_line(file[i]))
 		i++;
-	if (!file[i])
+	if (!file[i])	
 		return (-1);
 	club->map.grid = malloc(sizeof(char *) * (count_map_lines(file) + 1));
 	if (!club->map.grid)
@@ -93,9 +92,10 @@ int	get_map(t_club *club, char **file)
 		i++;
 	}
 	club->map.grid[j] = NULL;
-	// for (int k = 0; k < j; k++)
-	//  	printf("map[%d]: %s\n", k, club->map.grid[k]);
 	set_map_size(club);
+	club->map.map_end_index = i;
+	// for (int k = 0; club->map.grid[k]; k++)
+	// 	printf("%s", club->map.grid[k]);
 	return (0);
 }
  
