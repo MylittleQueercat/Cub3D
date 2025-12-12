@@ -31,5 +31,19 @@ int key_hook(int keycode, t_club *club)
         rotate_player(club, +rot_speed);
     else if (keycode == KEY_RIGHT)
         rotate_player(club, -rot_speed);
+    else if (keycode == KEY_MAP)
+        club->show_minimap = !club->show_minimap;
+    else if (keycode == KEY_Q)   // 降低灵敏度
+    {
+        club->mouse_sens *= 0.8;
+        if (club->mouse_sens < 0.0005)
+            club->mouse_sens = 0.0005;   // 最低限制
+    }
+    else if (keycode == KEY_E)  // 提高灵敏度
+    {
+        club->mouse_sens *= 1.25;
+        if (club->mouse_sens > 0.05)
+            club->mouse_sens = 0.05;     // 最高限制
+    }
     return (0);
 }

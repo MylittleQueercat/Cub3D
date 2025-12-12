@@ -19,7 +19,8 @@ SRC = $(SRC_DIR)/main.c \
 	  $(SRC_DIR)/move.c \
 	  $(SRC_DIR)/textures.c \
 	  $(SRC_DIR)/render_walls.c \
-	  $(SRC_DIR)/render_minimap_bonus.c
+	  $(SRC_DIR)/render_minimap_bonus.c \
+	  $(SRC_DIR)/mouse_bonus.c
 
 OBJ = $(SRC:.c=.o)
 

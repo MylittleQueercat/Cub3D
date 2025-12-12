@@ -33,8 +33,11 @@ static void init_club_defaults(t_club *club)
     club->map.height = 0;
     club->floor_color = 0;
     club->ceiling_color = 0;
-
-    // 初始化纹理数组
+    club->mouse_last_x = WIDTH / 2;
+    club->mouse_in_window = 0;
+    club->show_minimap = 1;
+    club->mouse_left = 0;
+    club->mouse_sens = 0.003;
     i = 0;
     while (i < TEX_COUNT)
     {
