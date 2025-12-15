@@ -1,0 +1,16 @@
+# Program
+cub3D
+
+# Object files
+obj/
+*/*.o
+*.obj
+
+
+# Editors
+.vscode
+
+minilibx-linux/
+maps/
+textures/
+run_all_maps.sh
