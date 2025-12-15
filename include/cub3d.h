@@ -41,7 +41,11 @@
 # define TEX_SO		1
 # define TEX_WE		2
 # define TEX_EA		3
-# define TEX_COUNT	4 //四面墙
+// # define TEX_COUNT	4
+# define TEX_CEIL   4
+# define TEX_FLOOR  5
+# define TEX_COUNT	6 //墙的面数
+# define KEY_MAP    46
 
 #define FOV 0.66
 
@@ -69,6 +73,8 @@ typedef struct s_img
     int     bpp;
     int     line_len;
     int     endian;
+	int		width;
+	int		height;
 }   t_img;
 
 //map
@@ -96,6 +102,8 @@ typedef struct	s_door
 	double	x;
 	double	y;
 	bool	is_open;
+	t_img	img_closed;
+	t_img	img_open;
 }	t_door;
 
 typedef struct s_sprite
@@ -104,7 +112,7 @@ typedef struct s_sprite
 	double	y;
 	bool	visible;
 	int		distance;
-	char	*texture;
+	//t_img	img;
 	int		screen_x;
 	int		width;
 	int		height;
@@ -147,26 +155,49 @@ typedef struct s_club
     t_map       map;            // 地图数据
     t_player    player;         // 玩家状态
 	t_sprite	*sprites;
+	t_img		sprite_texture;
 	int			sprite_count;
 	t_door		*doors;
 	int			door_count;
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E
     int         floor_color;    // F
     int         ceiling_color;  // C
+	int         mouse_last_x;       // 上一次鼠标
+    int         mouse_in_window;    // 鼠标刚进窗口
+    int         show_minimap;
+    int         mouse_left;         //鼠标左键
+    double      mouse_sens;         //鼠标灵敏度
 	double		z_buffer[WIDTH]; //屏幕第 x 列最近的墙到玩家的距离
 }   t_club;
 
+//parsing
+int		check_elements(t_club *club, char **lines);
+int		get_map(t_club *club, char **file);
+int 	parse_color(char *line, t_club *club);
+int		parse_texture(char *line, t_club *club);
+int		parse_texture(char *line, t_club *club);
+bool	prepare_map(t_club *club);
+bool	find_sprite_position(t_club *club);
+bool	find_door_position(t_club *club);
+bool	is_cub_file(char *arg);
+char	**read_file(const char *file);
+int		parsing(t_club *club, char **file);
+bool	check_map_valid(t_club *club);
+bool	is_empty_line(char *line);
+bool	is_map_at_the_end(t_club *club, char **file);
+
 // hooks.c
-int	close_window(t_club *club);
-int	key_hook(int keycode, t_club *club);
+int		close_window(t_club *club);
+int		key_hook(int keycode, t_club *club);
 
 // img_utils.c
-int	init_image(t_club *club);
+void init_club_defaults(t_club *club);
+int		init_image(t_club *club);
 void	destroy_image(t_club *club);
 void	put_pixel(t_img *img, int x, int y, int color);
 
 // init_club.c
-int	init_club(t_club *club);
+int		init_club(t_club *club);
 
 // render_background.c
 void	render_background(t_club *club);
@@ -187,29 +218,14 @@ void    rotate_player(t_club *club, double rot_speed);
 int		load_all_textures(t_club *club);
 void	destroy_textures(t_club *club);
 
-//parsing
-int	check_elements(t_club *club, char **lines);
-int	get_map(t_club *club, char **file);
-int parse_color(char *line, t_club *club);
-int parse_texture(char *line, t_club *club);
-int parse_texture(char *line, t_club *club);
-bool	prepare_map(t_club *club);
-bool	find_sprite_position(t_club *club);
-bool	find_door_position(t_club *club);
-bool	is_cub_file(char *arg);
-char	**read_file(const char *file);
-int	parsing(t_club *club, char **file);
-int parse_map(t_club *club);
-bool	check_map_valid(t_club *club);
-bool	is_empty_line(char *line);
-bool	is_map_at_the_end(t_club *club, char **file);
-
 //sprites
 int		count_char_in_map(char **map, char target);
 bool	init_sprits(t_club *club);
 void	render_sprites(t_club *club, t_img *img);
 bool	init_doors(t_club *club);
 void	try_open_door(t_club *club);
+int		load_sprites(t_club *club);
+int		load_door_textures(t_club *club);
 
 //utils.c
 void	err_msg(char *msg);

@@ -8,6 +8,8 @@ int	count_char_in_map(char **map, char target)
 
 	if (!map)
 		return (0);
+	for (int k = 0; map[k]; k++)
+		printf("%s", map[k]);
 	y = 0;
 	count = 0;
 	while (map[y])
@@ -43,7 +45,7 @@ static bool	fill_sprite_array(t_club *club)
 				club->sprites[idx].y = y + 0.5;
 				club->sprites[idx].visible = false;
 				club->sprites[idx].distance = 0;
-				club->sprites[idx].texture = "sprite.xpm";  // 以后再替换成实际贴图
+				//club->sprites[idx].img = NULL;
 				idx++;
 			}
 			x++;
@@ -64,4 +66,16 @@ bool	init_sprits(t_club *club)
 	if (!club->sprites)
 		return (false);
 	return (fill_sprite_array(club));
+}
+
+int	load_sprites(t_club *club)
+{
+	if (!club || !club->sprites)
+		return (1);
+	club->sprite_texture.img = mlx_xpm_file_to_image(club->mlx, \
+		"xpms/pony.xpm", &club->sprite_texture.width, \
+		&club->sprite_texture.height);
+	if (!club->sprite_texture.img)
+		return (1);
+	return (0);
 }

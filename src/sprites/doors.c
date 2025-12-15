@@ -18,6 +18,8 @@ static bool	fill_door_array(t_club *club)
 				club->doors[idx].x = x + 0.5;
 				club->doors[idx].y = y + 0.5;
 				club->doors[idx].is_open = false;
+				club->doors[idx].img_closed.img = NULL;
+				club->doors[idx].img_open.img = NULL;
 				idx++;
 			}
 			x++;
@@ -69,4 +71,26 @@ void	try_open_door(t_club *club)
 		}
 		i++;
 	}
+}
+
+int	load_door_textures(t_club *club)
+{
+	int i;
+
+	i = 0;
+	while (i < club->door_count)
+	{
+		club->doors[i].img_closed.img = mlx_xpm_file_to_image(club->mlx,
+			"textures/door_closed.xpm",
+			&club->doors[i].img_closed.width,
+			&club->doors[i].img_closed.height);
+		club->doors[i].img_open.img = mlx_xpm_file_to_image(club->mlx,
+			"textures/door_open.xpm",
+			&club->doors[i].img_open.width,
+			&club->doors[i].img_open.height);
+		if (!club->doors[i].img_closed.img || !club->doors[i].img_open.img)
+			return (1);
+		i++;
+	}
+	return (0);
 }

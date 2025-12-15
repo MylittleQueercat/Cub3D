@@ -48,7 +48,7 @@ int parse_color(char *line, t_club *club)
 		return (err_msg("Error: unknown color type"), -1);
 	type = *line;
 	if (type == 'F' && club->floor_color != -1)
-		return (err_msg("Error: floor color defined multiple times"), -1);
+			return (err_msg("Error: floor color defined multiple times"), -1);
 	if (type == 'C' && club->ceiling_color != -1)
 		return (err_msg("Error: ceiling color defined multiple times"), -1);
 	line++;

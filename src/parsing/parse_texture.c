@@ -53,6 +53,10 @@ static t_tex	*get_texture_ptr(t_club *club, char *line)
 		return (&club->tex[2]);
 	else if (ft_strncmp(line, "EA", 2) == 0)
 		return (&club->tex[3]);
+	// else if (ft_strncmp(line, "SK", 2) == 0)
+	// 	return (&club->tex[4]);
+	// else if (ft_strncmp(line, "GR", 2) == 0)
+	// 	return (&club->tex[5]);
 	return (NULL);
 }
 

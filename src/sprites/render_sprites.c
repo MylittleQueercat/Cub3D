@@ -66,7 +66,7 @@ static int	sort_sprites(t_club *club)
 ** - `s->height` and `s->width` define the sprite's size on screen.
 **   The size is inversely proportional to the distance to the player.
 */
-static void	project_sprite(t_club *club, t_sprite *s)
+static void	project_sprite(t_sprite *s)
 {
 	double	dist;
 	double	view_dist;
@@ -114,7 +114,7 @@ void	render_sprites(t_club *club, t_img *img)
     i = 0;
     while (i < club->sprite_count)
     {
-        project_sprite(club, &club->sprites[i]);
+        project_sprite(&club->sprites[i]);
         draw_sprite_pixel(img, club, &club->sprites[i]);
         i++;
     }

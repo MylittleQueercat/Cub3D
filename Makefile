@@ -26,10 +26,11 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/sprites/init_sprites.c \
 		$(SRC_DIR)/sprites/render_sprites.c \
 		$(SRC_DIR)/hooks.c \
+		$(SRC_DIR)/mouse_bonus.c \
      	$(SRC_DIR)/init_club.c \
-    	$(SRC_DIR)/img_utils.c \
     	$(SRC_DIR)/render_background.c \
 		$(SRC_DIR)/walls_util.c \
+		$(SRC_DIR)/img_utils.c \
 		$(SRC_DIR)/move.c \
 		$(SRC_DIR)/textures.c \
 		$(SRC_DIR)/render_walls.c \
@@ -37,7 +38,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/utils/error.c \
 		$(SRC_DIR)/utils/free.c
 
-OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJDIR)/%.o,$(SRC))
+OBJ = $(addprefix $(OBJDIR)/,$(subst $(SRC_DIR)/,,$(SRC:.c=.o)))
 
 all: $(NAME)
 

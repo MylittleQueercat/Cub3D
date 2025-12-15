@@ -202,12 +202,3 @@ bool	check_map_valid(t_club *club)
 		return (err_msg("Error: map should have one and only one player"), false);
 	return (true);
 }
-
-int parse_map(t_club *club)
-{
-	if (!prepare_map(club))
-		return (-1);
-	// if (!find_sprite_position(club) || !find_door_position(club))
-	// 	return (-1);
-	return (0);
-}
