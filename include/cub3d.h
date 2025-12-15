@@ -15,14 +15,27 @@
 # define WIDTH 800
 # define HEIGHT 600
 
-// 按键（macos系统的）
-# define KEY_ESC	53
-# define KEY_W      13
-# define KEY_S      1
-# define KEY_A      0
-# define KEY_D      2
-# define KEY_LEFT   123
-# define KEY_RIGHT  124
+/* Key definitions for Mac and Linux compatibility */
+#ifdef __APPLE__
+    #define KEY_ESC    53
+    #define KEY_W      13
+    #define KEY_S      1
+    #define KEY_A      0
+    #define KEY_D      2
+    #define KEY_LEFT   123
+    #define KEY_RIGHT  124
+    #define KEY_O      31
+#elif __linux__
+    #define KEY_ESC    65307
+    #define KEY_W      119
+    #define KEY_S      115
+    #define KEY_A      97
+    #define KEY_D      100
+    #define KEY_LEFT   65361
+    #define KEY_RIGHT  65363
+    #define KEY_O      111
+#endif
+
 
 //纹理结构
 # define TEX_NO		0 //北
@@ -135,7 +148,10 @@ typedef struct s_club
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E
     int         floor_color;    // F
     int         ceiling_color;  // C
+	double		z_buffer[WIDTH]; //屏幕第 x 列最近的墙到玩家的距离
 }   t_club;
+
+// in render_walls: add club->z_buffer[x] = ray.perp_wall_dist after compute_walls;
 
 // hooks.c
 int	close_window(t_club *club);
@@ -184,6 +200,14 @@ int parse_map(t_club *club);
 bool	check_map_valid(t_club *club);
 bool	is_empty_line(char *line);
 bool	is_map_at_the_end(t_club *club, char **file);
+
+//sprites
+int		count_char_in_map(char **map, char target);
+bool	init_sprits(t_club *club);
+void	render_sprites(t_club *club, t_img *img);
+bool	init_doors(t_club *club);
+void	try_open_door(t_club *club);
+
 
 //utils.c
 void	err_msg(char *msg);
