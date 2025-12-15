@@ -15,7 +15,6 @@
 # define WIDTH 1200
 # define HEIGHT 1000
 
-<<<<<<< HEAD
 /* Key definitions for Mac and Linux compatibility */
 #ifdef __APPLE__
     #define KEY_ESC    53
@@ -37,26 +36,6 @@
     #define KEY_O      111
 #endif
 
-=======
-// // 按键（macos系统的）
-// # define KEY_ESC	53
-// # define KEY_W      13
-// # define KEY_S      1
-// # define KEY_A      0
-// # define KEY_D      2
-// # define KEY_LEFT   123
-// # define KEY_RIGHT  124
-
-// Linux Keycodes (X11)
-# define KEY_ESC    65307
-# define KEY_W      119    // 'w'
-# define KEY_S      115    // 's'
-# define KEY_A      97     // 'a'
-# define KEY_D      100    // 'd'
-# define KEY_LEFT   65361
-# define KEY_RIGHT  65363
->>>>>>> hguo
-
 //纹理结构
 # define TEX_NO		0 //北
 # define TEX_SO		1
@@ -64,14 +43,12 @@
 # define TEX_EA		3
 # define TEX_COUNT	4 //四面墙
 
-<<<<<<< HEAD
 #define FOV 0.66
-=======
+
 //颜色
 #define MM_BG       0x2A003A   // 深紫色
 #define MM_WALL     0xFF6ADE   // 亮粉色
 #define MM_PLAYER   0xFFC1F5   // 淡粉
->>>>>>> hguo
 
 //texture 墙的纹理信息
 typedef struct s_tex {
@@ -113,7 +90,7 @@ typedef struct s_player {
 	double	plane_y;
 }	t_player;
 
-<<<<<<< HEAD
+
 typedef struct	s_door
 {
 	double	x;
@@ -135,8 +112,6 @@ typedef struct s_sprite
 	int		color;
 }	t_sprite;
 
-=======
->>>>>>> hguo
 // 纹理渲染
 typedef struct s_ray
 {
@@ -171,20 +146,15 @@ typedef struct s_club
     t_img       img;            // 当前帧画布
     t_map       map;            // 地图数据
     t_player    player;         // 玩家状态
-<<<<<<< HEAD
 	t_sprite	*sprites;
 	int			sprite_count;
 	t_door		*doors;
 	int			door_count;
-=======
->>>>>>> hguo
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E
     int         floor_color;    // F
     int         ceiling_color;  // C
 	double		z_buffer[WIDTH]; //屏幕第 x 列最近的墙到玩家的距离
 }   t_club;
-
-// in render_walls: add club->z_buffer[x] = ray.perp_wall_dist after compute_walls;
 
 // hooks.c
 int	close_window(t_club *club);
@@ -217,7 +187,6 @@ void    rotate_player(t_club *club, double rot_speed);
 int		load_all_textures(t_club *club);
 void	destroy_textures(t_club *club);
 
-<<<<<<< HEAD
 //parsing
 int	check_elements(t_club *club, char **lines);
 int	get_map(t_club *club, char **file);
@@ -242,13 +211,11 @@ void	render_sprites(t_club *club, t_img *img);
 bool	init_doors(t_club *club);
 void	try_open_door(t_club *club);
 
-
 //utils.c
 void	err_msg(char *msg);
 void	free_array(char **arr);
-=======
+
 // render_minimap_bonus.c
 void    render_minimap(t_club *club);
->>>>>>> hguo
 
 #endif

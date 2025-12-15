@@ -30,41 +30,40 @@
 
 // }
 
-//Debug用
-static void	init_club_debug(t_club *club)
-{
-<<<<<<< HEAD
-    int i;
+// //Debug用
+// static void	init_club_debug(t_club *club)
+// {
+//     int i;
 
-    club->mlx = NULL;
-    club->win = NULL;
-    club->img.img = NULL;
-    club->img.addr = NULL;
-    club->map.grid = NULL;
-    club->map.width = 0;
-    club->map.height = 0;
-    club->floor_color = -1;
-    club->ceiling_color = -1;
-	club->sprites = NULL;
-	club->doors = NULL;
-	club->sprite_count = 0;
-	club->door_count = 0;
-    i = 0;
-    while (i < TEX_COUNT)
-    {
-        club->tex[i].img = NULL;
-        club->tex[i].addr = NULL;
-        club->tex[i].path = NULL;
-        club->tex[i].bpp = 0;
-        club->tex[i].line_len = 0;
-        club->tex[i].endian = 0;
-        club->tex[i].width = 0;
-        club->tex[i].height = 0;
-        i++;
-    }
-}
+//     club->mlx = NULL;
+//     club->win = NULL;
+//     club->img.img = NULL;
+//     club->img.addr = NULL;
+//     club->map.grid = NULL;
+//     club->map.width = 0;
+//     club->map.height = 0;
+//     club->floor_color = -1;
+//     club->ceiling_color = -1;
+// 	club->sprites = NULL;
+// 	club->doors = NULL;
+// 	club->sprite_count = 0;
+// 	club->door_count = 0;
+//     i = 0;
+//     while (i < TEX_COUNT)
+//     {
+//         club->tex[i].img = NULL;
+//         club->tex[i].addr = NULL;
+//         club->tex[i].path = NULL;
+//         club->tex[i].bpp = 0;
+//         club->tex[i].line_len = 0;
+//         club->tex[i].endian = 0;
+//         club->tex[i].width = 0;
+//         club->tex[i].height = 0;
+//         i++;
+//     }
+// }
 
-//parsing debug 
+
 int	main(int argc, char **argv)
 {
 	t_club club;
@@ -76,22 +75,17 @@ int	main(int argc, char **argv)
 		return (err_msg("Error: invalid .cub file"), 1);
 	init_club_debug(&club);
 	file = read_file(argv[1]);
-	// for (int k =0; file[k]; k++)
-	// 	printf("%s", file[k]);
 	if (!file)
 		return (1);
 	if (parsing(&club, file) == -1)
 	{
 		free_array(file);
-		return (err_msg("Error: parsing failed"), 1);
+		return (1);
 	}
-	printf("Parsing success\n");
-=======
-	render_background(club);
-	render_walls(club);
-	render_minimap(club);
+	render_background(&club);
+	render_walls(&club);
+	render_minimap(&club);
 	mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
->>>>>>> hguo
 	return (0);
 }
 

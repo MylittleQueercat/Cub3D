@@ -31,5 +31,7 @@ int key_hook(int keycode, t_club *club)
         rotate_player(club, +rot_speed);
     else if (keycode == KEY_RIGHT)
         rotate_player(club, -rot_speed);
+	else if (keycode == KEY_O)
+		try_open_door(club);
     return (0);
 }

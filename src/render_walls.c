@@ -103,6 +103,7 @@ void    render_walls(t_club *club)
         init_step(club, &ray, &s);
         walk_until_wall(club, &s);
         compute_wall(&ray, &s);
+		club->z_buffer[x] = ray.perp_wall_dist;
         draw_wall_stripe(club, x, &ray);
         x++;
     }

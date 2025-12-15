@@ -70,7 +70,3 @@ void	try_open_door(t_club *club)
 		i++;
 	}
 }
-/* in key_hook : add :
-	if (keycode == KEY_O)
-		try_open_door(club);
-*/ 
