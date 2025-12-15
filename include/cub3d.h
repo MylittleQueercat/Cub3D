@@ -1,7 +1,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
@@ -11,7 +10,7 @@
 # define WIDTH 900
 # define HEIGHT 700
 
-// 按键（macos系统的）
+// 按键（macos）
 # define KEY_ESC	53
 # define KEY_W      13
 # define KEY_S      1
@@ -21,18 +20,21 @@
 # define KEY_E      14
 # define KEY_LEFT   123
 # define KEY_RIGHT  124
+# define KEY_MAP    46
 
-// // Linux Keycodes (X11)
+// Linux
 // # define KEY_ESC    65307
 // # define KEY_W      119    // 'w'
 // # define KEY_S      115    // 's'
 // # define KEY_A      97     // 'a'
 // # define KEY_D      100    // 'd'
+// # define KEY_Q      113
+// # define KEY_E      101
 // # define KEY_LEFT   65361
 // # define KEY_RIGHT  65363
-// # define KEY_MAP     109
+// # define KEY_MAP    109
 
-//纹理结构
+// 纹理结构
 # define TEX_NO		0 //北
 # define TEX_SO		1
 # define TEX_WE		2
@@ -42,14 +44,13 @@
 # define TEX_COUNT	6 //墙的面数
 # define KEY_MAP    46
 
-//颜色
+// 颜色
 # define MM_BG       0x2A003A   // 深紫色
 # define MM_WALL     0xFF6ADE   // 亮粉色
 # define MM_PLAYER   0x33CCFF   // 亮蓝色
 # define MM_DOOR     0xAA55FF   // 紫色
 
-
-//texture 墙的纹理信息
+// texture 贴图
 typedef struct s_tex {
 	void	*img;	//mlx图片指针
 	char	*addr;	//像素数据的地址, int*可以直接读写颜色
@@ -64,7 +65,7 @@ typedef struct s_tex {
 typedef struct s_img
 {
     void    *img;
-    char     *addr;
+    char    *addr;
     int     bpp;
     int     line_len;
     int     endian;
@@ -83,7 +84,7 @@ typedef struct s_player {
 	double	y;
 	double	dir_x; //玩家朝向
 	double	dir_y;
-	double	plane_x; //摄像机平面
+	double	plane_x; //屏幕的平面
 	double	plane_y;
 }	t_player;
 
@@ -124,7 +125,6 @@ typedef struct s_club
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E
     int         floor_color;    // F
     int         ceiling_color;  // C
-
     int         mouse_last_x;       // 上一次鼠标
     int         mouse_in_window;    // 鼠标刚进窗口
     int         show_minimap;
@@ -133,16 +133,16 @@ typedef struct s_club
 }   t_club;
 
 // hooks.c
-int	close_window(t_club *club);
-int	key_hook(int keycode, t_club *club);
+int     close_window(t_club *club);
+int	    key_hook(int keycode, t_club *club);
 
 // img_utils.c
-int	init_image(t_club *club);
+int	    init_image(t_club *club);
 void	destroy_image(t_club *club);
 void	put_pixel(t_img *img, int x, int y, int color);
 
 // init_club.c
-int	init_club(t_club *club);
+int	    init_club(t_club *club);
 
 // render_background.c
 void	render_background(t_club *club);
@@ -167,8 +167,8 @@ void	destroy_textures(t_club *club);
 void    render_minimap(t_club *club);
 
 // mouse_bonus.c
-int        mouse_press(int button, int x, int y, t_club *club);
-int mouse_release(int button, int x, int y, t_club *club);
+int     mouse_press(int button, int x, int y, t_club *club);
+int     mouse_release(int button, int x, int y, t_club *club);
 int     mouse_move(int x, int y, t_club *club);
 
 #endif
