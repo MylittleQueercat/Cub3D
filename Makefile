@@ -8,10 +8,29 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 MLX_DIR = minilibx-linux
 MLX = $(MLX_DIR)/libmlx.a
+<<<<<<< HEAD
 MLX_FLAGS = -lX11 -lXext -lm
+=======
+//MLX_FLAGS = -framework OpenGL -framework AppKit 
+MLX_FLAGS = -lX11 -lXext -lm
+
+>>>>>>> hguo
 
 OBJDIR = obj
 SRC_DIR = src
+<<<<<<< HEAD
+=======
+SRC = $(SRC_DIR)/main.c \
+      $(SRC_DIR)/hooks.c \
+      $(SRC_DIR)/init_club.c \
+      $(SRC_DIR)/img_utils.c \
+      $(SRC_DIR)/render_background.c \
+	  $(SRC_DIR)/walls_util.c \
+	  $(SRC_DIR)/move.c \
+	  $(SRC_DIR)/textures.c \
+	  $(SRC_DIR)/render_walls.c \
+	  $(SRC_DIR)/render_minimap_bonus.c
+>>>>>>> hguo
 
 SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parsing/check_elements.c \

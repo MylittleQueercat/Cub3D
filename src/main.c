@@ -33,6 +33,7 @@
 //Debug用
 static void	init_club_debug(t_club *club)
 {
+<<<<<<< HEAD
     int i;
 
     club->mlx = NULL;
@@ -85,6 +86,12 @@ int	main(int argc, char **argv)
 		return (err_msg("Error: parsing failed"), 1);
 	}
 	printf("Parsing success\n");
+=======
+	render_background(club);
+	render_walls(club);
+	render_minimap(club);
+	mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
+>>>>>>> hguo
 	return (0);
 }
 
