@@ -22,18 +22,24 @@
     #define KEY_S      1
     #define KEY_A      0
     #define KEY_D      2
+    #define KEY_Q      12
+    #define KEY_E      14
     #define KEY_LEFT   123
     #define KEY_RIGHT  124
     #define KEY_O      31
+    #define KEY_MAP    46
 #elif __linux__
     #define KEY_ESC    65307
     #define KEY_W      119
     #define KEY_S      115
     #define KEY_A      97
     #define KEY_D      100
+    #define KEY_Q      113
+    #define KEY_E      101
     #define KEY_LEFT   65361
     #define KEY_RIGHT  65363
     #define KEY_O      111
+    #define KEY_MAP    109
 #endif
 
 //纹理结构
@@ -45,7 +51,7 @@
 # define TEX_CEIL   4
 # define TEX_FLOOR  5
 # define TEX_COUNT	6 //墙的面数
-# define KEY_MAP    46
+// # define KEY_MAP    46
 
 #define FOV 0.66
 
@@ -53,6 +59,7 @@
 #define MM_BG       0x2A003A   // 深紫色
 #define MM_WALL     0xFF6ADE   // 亮粉色
 #define MM_PLAYER   0xFFC1F5   // 淡粉
+#define MM_DOOR     0xAA55FF   // 紫色
 
 //texture 墙的纹理信息
 typedef struct s_tex {
@@ -69,7 +76,7 @@ typedef struct s_tex {
 typedef struct s_img
 {
     void    *img;
-    char     *addr;
+    char    *addr;
     int     bpp;
     int     line_len;
     int     endian;
@@ -191,7 +198,7 @@ int		close_window(t_club *club);
 int		key_hook(int keycode, t_club *club);
 
 // img_utils.c
-void init_club_defaults(t_club *club);
+void    init_club_defaults(t_club *club);
 int		init_image(t_club *club);
 void	destroy_image(t_club *club);
 void	put_pixel(t_img *img, int x, int y, int color);
@@ -233,5 +240,10 @@ void	free_array(char **arr);
 
 // render_minimap_bonus.c
 void    render_minimap(t_club *club);
+
+// mouse_bonus.c
+int     mouse_press(int button, int x, int y, t_club *club);
+int     mouse_release(int button, int x, int y, t_club *club);
+int     mouse_move(int x, int y, t_club *club);
 
 #endif

@@ -24,36 +24,35 @@ void init_club_defaults(t_club *club)
 {
     int i;
 
-    club->mlx = NULL;
-    club->win = NULL;
-    club->img.img = NULL;
-    club->img.addr = NULL;
-    club->map.grid = NULL;
-    club->map.width = 0;
-    club->map.height = 0;
-    club->floor_color = -1;
-    club->ceiling_color = -1;
+  club->mlx = NULL;
+  club->win = NULL;
+  club->img.img = NULL;
+  club->img.addr = NULL;
+  club->map.grid = NULL;
+  club->map.width = 0;
+  club->map.height = 0;
+  club->floor_color = -1;
+  club->ceiling_color = -1;
 	club->sprites = NULL;
 	club->doors = NULL;
 	club->sprite_count = 0;
 	club->door_count = 0;
 	club->mouse_last_x = WIDTH / 2;
-    club->mouse_in_window = 0;
-    club->show_minimap = 1;
-    club->mouse_left = 0;
-    club->mouse_sens = 0.003;
-    // 初始化纹理数组
-    i = 0;
-    while (i < TEX_COUNT)
-    {
-        club->tex[i].img = NULL;
-        club->tex[i].addr = NULL;
-        club->tex[i].bpp = 0;
-        club->tex[i].line_len = 0;
-        club->tex[i].endian = 0;
-        club->tex[i].width = 0;
-        club->tex[i].height = 0;
-        i++;
+  club->mouse_in_window = 0;
+  club->show_minimap = 1;
+  club->mouse_left = 0;
+  club->mouse_sens = 0.003;
+  i = 0;
+  while (i < TEX_COUNT)
+  {
+    club->tex[i].img = NULL;
+    club->tex[i].addr = NULL;
+    club->tex[i].bpp = 0;
+    club->tex[i].line_len = 0;
+    club->tex[i].endian = 0;
+    club->tex[i].width = 0;
+    club->tex[i].height = 0;
+    i++;
     }
 }
 
@@ -92,13 +91,13 @@ void init_club_defaults(t_club *club)
 
 int init_club(t_club *club)
 {
-    club->mlx = mlx_init();
-    if (!club->mlx)
+  club->mlx = mlx_init();
+  if (!club->mlx)
 		return (1);
-    club->win = mlx_new_window(club->mlx, WIDTH, HEIGHT, "PINK PONY CLUB");
-    if (!club->win)
+  club->win = mlx_new_window(club->mlx, WIDTH, HEIGHT, "PINK PONY CLUB");
+  if (!club->win)
 		return (1);
-    if (init_image(club))
+  if (init_image(club))
 		return (1);
     // if (init_doors(club))
 	// 	return (1);
