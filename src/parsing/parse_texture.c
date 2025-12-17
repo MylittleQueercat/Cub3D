@@ -1,6 +1,6 @@
 #include "../include/cub3d.h"
 
-static bool	is_valid_xpm_file(char *path)
+bool	is_valid_xpm_file(char *path)
 {
 	int len;
 	int fd;
@@ -81,7 +81,7 @@ int parse_texture(char *line, t_club *club)
 	if (!is_valid_xpm_file(path))
 		return (free(path), err_msg("Error: invalid xmp file"), -1);
 	if (tex_ptr->path)
-			return (free(path), err_msg("Error: texture already defined"), -1);
+		return (free(path), err_msg("Error: texture already defined"), -1);
 	tex_ptr->path = path;
 	return (0);
 }

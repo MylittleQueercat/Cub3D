@@ -14,3 +14,4 @@ minilibx-linux/
 maps/
 textures/
 run_all_maps.sh
+src/sprites/doors.c

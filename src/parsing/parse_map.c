@@ -190,10 +190,6 @@ bool	check_map_valid(t_club *club)
 	// 	return (err_msg("Error: map is not at the end of the file"), false);
 	if (!check_valid_chars(club))
 		return (err_msg("Error: map has invalid character"), false);
-	if (!check_first_last_row(club))
-		printf("find\n");
-	if (!check_sides(club))
-		printf("problem is in check sieds \n");
 	if (!check_first_last_row(club) || !check_sides(club))
 		return (err_msg("Error: map is not surrounded by walls"), false);
 	if (!check_map_size(club))

@@ -24,15 +24,15 @@ void init_club_defaults(t_club *club)
 {
     int i;
 
-  club->mlx = NULL;
-  club->win = NULL;
-  club->img.img = NULL;
-  club->img.addr = NULL;
-  club->map.grid = NULL;
-  club->map.width = 0;
-  club->map.height = 0;
-  club->floor_color = -1;
-  club->ceiling_color = -1;
+	club->mlx = NULL;
+	club->win = NULL;
+	club->img.img = NULL;
+	club->img.addr = NULL;
+	club->map.grid = NULL;
+	club->map.width = 0;
+	club->map.height = 0;
+	club->floor_color = -1;
+	club->ceiling_color = -1;
 	club->sprites = NULL;
 	club->doors = NULL;
 	club->sprite_count = 0;
@@ -52,6 +52,7 @@ void init_club_defaults(t_club *club)
     club->tex[i].endian = 0;
     club->tex[i].width = 0;
     club->tex[i].height = 0;
+    club->tex[i].path = NULL;
     i++;
     }
 }
@@ -91,18 +92,19 @@ void init_club_defaults(t_club *club)
 
 int init_club(t_club *club)
 {
-  club->mlx = mlx_init();
-  if (!club->mlx)
+	club->mlx = mlx_init();
+	if (!club->mlx)
 		return (1);
-  club->win = mlx_new_window(club->mlx, WIDTH, HEIGHT, "PINK PONY CLUB");
-  if (!club->win)
+	club->win = mlx_new_window(club->mlx, WIDTH, HEIGHT, "PINK PONY CLUB");
+	if (!club->win)
 		return (1);
-  if (init_image(club))
+	if (init_image(club))
 		return (1);
-    // if (init_doors(club))
-	// 	return (1);
-	// if (init_sprits(club))
-	// 	return (1);
+	// if (!init_doors(club))
+	// 		return (1);
+	if (!init_sprits(club))
+		return (1);
+	//printf("number sprite : %d\n", club->sprite_count);
     return (0);
 }
 

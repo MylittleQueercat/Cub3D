@@ -28,6 +28,13 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
     double  step;
     double  tex_pos;
     int     y;
+	//边界check
+    if (r->line_height <= 0)
+        return;
+    if (r->draw_start < 0)
+        r->draw_start = 0;
+    if (r->draw_end >= HEIGHT)
+        r->draw_end = HEIGHT - 1;
 
     // 1. 选纹理
     tex_id = choose_texture(r);

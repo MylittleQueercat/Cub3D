@@ -74,16 +74,22 @@ static void	project_sprite(t_sprite *s)
 	dist = sqrt(s->distance);
 	view_dist = (WIDTH / 2.0) / tan(FOV / 2.0);
 	s->screen_x = (int)(WIDTH / 2 + tan(s->sprite_angle) * view_dist);
-	s->height = (int)(HEIGHT / dist);
+	s->height = (int)((0.5 * view_dist / dist) * 0.5);
 	s->width = s->height;
 }
 
 static void	draw_sprite_pixel(t_img *img, t_club *club, t_sprite *s)
 {
-	int	x;
-	int	y;
-	int	screen_x;
-	int	screen_y;
+	int		x;
+	int		y;
+	int		screen_x;
+	int		screen_y;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+
+	if (!club || !s || !club->sprite_texture.img)
+		return ;
 
 	x = -s->width / 2;
 	while (x < s->width / 2)
@@ -97,7 +103,18 @@ static void	draw_sprite_pixel(t_img *img, t_club *club, t_sprite *s)
 			{
 				screen_y = HEIGHT / 2 + y;
 				if (screen_y >= 0 && screen_y < HEIGHT)
-					put_pixel(img, screen_x, screen_y, s->color);
+				{
+					// 计算纹理坐标
+					tex_x = (x + s->width / 2) * club->sprite_texture.width / s->width;
+					tex_y = (y + s->height / 2) * club->sprite_texture.height / s->height;
+
+					// 获取纹理颜色
+					color = *((int *)(club->sprite_texture.addr + (tex_y * club->sprite_texture.line_len + tex_x * (club->sprite_texture.bpp / 8))));
+
+					// 忽略透明色（假设 0x00FFFFFF 以下为透明）
+					if ((color & 0x00FFFFFF) != 0)
+						put_pixel(img, screen_x, screen_y, color);
+				}
 				y++;
 			}
 		}
@@ -105,7 +122,7 @@ static void	draw_sprite_pixel(t_img *img, t_club *club, t_sprite *s)
 	}
 }
 
-void	render_sprites(t_club *club, t_img *img)
+void render_sprites(t_club *club, t_img *img)
 {
     int i;
 

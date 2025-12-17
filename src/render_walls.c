@@ -42,7 +42,30 @@ static void init_step(t_club *club, t_ray *ray, t_step *s)
     }
 }
 
-static void walk_until_wall(t_club *club, t_step *s)
+// static void walk_until_wall(t_club *club, t_step *s)
+// {
+//     int hit;
+
+//     hit = 0;
+//     while (!hit)
+//     {
+//         if (s->dist_x < s->dist_y)
+//         {
+//             s->dist_x += s->delta_x;
+//             s->map_x += s->step_x;
+//             s->side = 0;
+//         }
+//         else
+//         {
+//             s->dist_y += s->delta_y;
+//             s->map_y += s->step_y;
+//             s->side = 1;
+//         }
+//         if (is_wall(club, s->map_x, s->map_y))
+//             hit = 1;
+//     }
+// }
+static void walk_until_wall(t_club *club, t_step *s, t_ray *ray)
 {
     int hit;
 
@@ -61,11 +84,18 @@ static void walk_until_wall(t_club *club, t_step *s)
             s->map_y += s->step_y;
             s->side = 1;
         }
-        if (is_wall(club, s->map_x, s->map_y))
-            hit = 1;
-    }
+		if (club->map.grid[s->map_y][s->map_x] == '1')
+		{
+			ray->hit_type = HIT_WALL;
+			hit = 1;
+		}
+		else if (club->map.grid[s->map_y][s->map_x] == 'D')
+		{
+			ray->hit_type = HIT_DOOR;
+			hit = 1;
+		}
+	}
 }
-
 static void compute_wall(t_ray *ray, t_step *s)
 {
     double dist;
@@ -90,6 +120,32 @@ static void compute_wall(t_ray *ray, t_step *s)
     ray->side = s->side;
 }
 
+// void    render_walls(t_club *club)
+// {
+//     int     x;
+//     t_ray   ray;
+//     t_step  s;
+
+//     x = 0;
+//     while (x < WIDTH)
+//     {
+//         set_ray_dir(club, &ray, x);
+//         init_step(club, &ray, &s);
+//         walk_until_wall(club, &s);
+//         compute_wall(&ray, &s);
+// 		club->z_buffer[x] = ray.perp_wall_dist;
+//         draw_wall_stripe(club, x, &ray);
+//         x++;
+//     }
+// }
+
+void	draw_wall(t_club *club, int x, t_ray *ray)
+{
+	if (ray->hit_type == HIT_WALL)
+		draw_wall_stripe(club, x, ray);
+	else if (ray->hit_type == HIT_DOOR)
+		draw_door_texture(club, x, ray);
+}
 void    render_walls(t_club *club)
 {
     int     x;
@@ -101,10 +157,11 @@ void    render_walls(t_club *club)
     {
         set_ray_dir(club, &ray, x);
         init_step(club, &ray, &s);
-        walk_until_wall(club, &s);
+        walk_until_wall(club, &s, &ray);
         compute_wall(&ray, &s);
 		club->z_buffer[x] = ray.perp_wall_dist;
-        draw_wall_stripe(club, x, &ray);
+        draw_wall(club, x, &ray);
         x++;
     }
 }
+

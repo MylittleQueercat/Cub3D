@@ -8,8 +8,6 @@ int	count_char_in_map(char **map, char target)
 
 	if (!map)
 		return (0);
-	for (int k = 0; map[k]; k++)
-		printf("%s", map[k]);
 	y = 0;
 	count = 0;
 	while (map[y])
@@ -60,22 +58,44 @@ bool	init_sprits(t_club *club)
 	if (!club || !club->map.grid)
 		return (false);
 	club->sprite_count = count_char_in_map(club->map.grid, '2');
+//	printf("the sprite count: %d\n", club->sprite_count);
 	if (club->sprite_count == 0)
 		return (false);
 	club->sprites = malloc(sizeof(t_sprite) * club->sprite_count);
 	if (!club->sprites)
 		return (false);
-	return (fill_sprite_array(club));
+	if (!fill_sprite_array(club))
+	{
+		free(club->sprites);
+		club->sprites = NULL;
+		return (false);
+	}
+	return (true);
 }
 
-int	load_sprites(t_club *club)
+int load_sprites(t_club *club)
 {
-	if (!club || !club->sprites)
-		return (1);
-	club->sprite_texture.img = mlx_xpm_file_to_image(club->mlx, \
-		"xpms/pony.xpm", &club->sprite_texture.width, \
-		&club->sprite_texture.height);
-	if (!club->sprite_texture.img)
-		return (1);
-	return (0);
+	if (!club)
+        return (1);
+    if (!is_valid_xpm_file("xpms/pony.xpm"))
+        return (err_msg("Error: sprite XPM missing"), 1);
+    if (club->sprite_texture.img)
+        mlx_destroy_image(club->mlx, club->sprite_texture.img);
+
+    club->sprite_texture.img = mlx_xpm_file_to_image(club->mlx,
+        "xpms/pony.xpm",
+        &club->sprite_texture.width,
+        &club->sprite_texture.height);
+    if (!club->sprite_texture.img)
+        return (err_msg("Error: failed to load sprite texture"), 1);
+
+    club->sprite_texture.addr = mlx_get_data_addr(club->sprite_texture.img,
+        &club->sprite_texture.bpp,
+        &club->sprite_texture.line_len,
+        &club->sprite_texture.endian);
+    if (!club->sprite_texture.addr)
+        return (err_msg("Error: failed to get sprite image addr"), 1);
+
+    return (0);
 }
+

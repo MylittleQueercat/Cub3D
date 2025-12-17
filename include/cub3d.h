@@ -97,7 +97,8 @@ typedef struct s_player {
 	char	pos;
 	double	x;
 	double	y;
-	double	dir_x; //玩家朝向
+	double	dir_x; //玩家朝
+					// 计算纹理坐标向
 	double	dir_y;
 	double	plane_x; //摄像机平面
 	double	plane_y;
@@ -111,6 +112,11 @@ typedef struct	s_door
 	bool	is_open;
 	t_img	img_closed;
 	t_img	img_open;
+	bool	visible;
+	double	screen_x;
+	int		width;
+	int		height;
+	double	perp_dist;
 }	t_door;
 
 typedef struct s_sprite
@@ -127,6 +133,13 @@ typedef struct s_sprite
 	int		color;
 }	t_sprite;
 
+typedef enum e_hit
+{
+	HIT_NONE,
+	HIT_WALL,
+	HIT_DOOR
+}	t_hit;
+
 // 纹理渲染
 typedef struct s_ray
 {
@@ -137,6 +150,7 @@ typedef struct s_ray
     int     line_height;
     int     draw_start;
     int     draw_end;
+	t_hit	hit_type;
 }   t_ray;
 
 // 每一格
@@ -178,6 +192,8 @@ typedef struct s_club
 }   t_club;
 
 //parsing
+bool	is_valid_xpm_file(char *path);
+bool	is_valid_map_line(char *line);
 int		check_elements(t_club *club, char **lines);
 int		get_map(t_club *club, char **file);
 int 	parse_color(char *line, t_club *club);
@@ -214,6 +230,7 @@ int 	is_wall(t_club *club, int map_x, int map_y);
 void    draw_wall_stripe(t_club *club, int x, t_ray *ray);
 
 // render_walls.c
+void	draw_wall(t_club *club, int x, t_ray *ray);
 void    render_walls(t_club *club);
 
 // move.c
@@ -233,6 +250,7 @@ bool	init_doors(t_club *club);
 void	try_open_door(t_club *club);
 int		load_sprites(t_club *club);
 int		load_door_textures(t_club *club);
+void	render_doors(t_club *club);
 
 //utils.c
 void	err_msg(char *msg);

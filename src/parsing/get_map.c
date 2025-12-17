@@ -1,6 +1,6 @@
 #include "../include/cub3d.h"
 
-static bool	is_valid_map_line(char *line)
+bool	is_valid_map_line(char *line)
 {
 	int	i;
 
