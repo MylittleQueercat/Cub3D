@@ -47,11 +47,9 @@
 # define TEX_SO		1
 # define TEX_WE		2
 # define TEX_EA		3
-// # define TEX_COUNT	4
 # define TEX_CEIL   4
 # define TEX_FLOOR  5
 # define TEX_COUNT	6 //墙的面数
-// # define KEY_MAP    46
 
 #define FOV 0.66
 
@@ -97,10 +95,9 @@ typedef struct s_player {
 	char	pos;
 	double	x;
 	double	y;
-	double	dir_x; //玩家朝
-					// 计算纹理坐标向
+	double	dir_x; //玩家朝向
 	double	dir_y;
-	double	plane_x; //摄像机平面
+	double	plane_x; //屏幕的平面
 	double	plane_y;
 }	t_player;
 
@@ -151,6 +148,14 @@ typedef struct s_ray
     int     draw_start;
     int     draw_end;
 	t_hit	hit_type;
+    int     hit_map_x;
+    int     hit_map_y;
+    double  hit_point; //射线命中某个面时，在这个面的 [0,1) 区间里的位置，用于算 tex_x
+
+    int     has_door; // 开门后 门的渲染
+    double  door_dist;
+    int     door_side;
+    double  door_hit_point;
 }   t_ray;
 
 // 每一格
@@ -179,6 +184,8 @@ typedef struct s_club
 	t_img		sprite_texture;
 	int			sprite_count;
 	t_door		*doors;
+    t_tex       door_tex; //暂时不define，避免有内存风险
+    t_tex       door_open_tex;
 	int			door_count;
     t_tex       tex[TEX_COUNT]; // 0:N, 1:S, 2:W, 3:E
     int         floor_color;    // F
@@ -249,8 +256,8 @@ void	render_sprites(t_club *club, t_img *img);
 bool	init_doors(t_club *club);
 void	try_open_door(t_club *club);
 int		load_sprites(t_club *club);
-int		load_door_textures(t_club *club);
-void	render_doors(t_club *club);
+//int	load_door_textures(t_club *club);
+// void	render_doors(t_club *club);
 
 //utils.c
 void	err_msg(char *msg);
@@ -263,5 +270,14 @@ void    render_minimap(t_club *club);
 int     mouse_press(int button, int x, int y, t_club *club);
 int     mouse_release(int button, int x, int y, t_club *club);
 int     mouse_move(int x, int y, t_club *club);
+
+// doors_util.c
+t_door *door_at(t_club *c, int mx, int my);
+void	try_open_door(t_club *c);
+int	    handle_door_cell(t_club *c, t_step *s, t_ray *r);
+void    draw_door_overlay(t_club *club, int x, t_ray *ray);
+
+// draw_door_overlay.c
+void    draw_door_overlay(t_club *club, int x, t_ray *ray);
 
 #endif

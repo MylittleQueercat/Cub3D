@@ -70,6 +70,7 @@ static void walk_until_wall(t_club *club, t_step *s, t_ray *ray)
     int hit;
 
     hit = 0;
+    ray->hit_type = HIT_NONE;
     while (!hit)
     {
         if (s->dist_x < s->dist_y)
@@ -87,15 +88,14 @@ static void walk_until_wall(t_club *club, t_step *s, t_ray *ray)
 		if (club->map.grid[s->map_y][s->map_x] == '1')
 		{
 			ray->hit_type = HIT_WALL;
+            ray->side = s->side;
 			hit = 1;
 		}
 		else if (club->map.grid[s->map_y][s->map_x] == 'D')
-		{
-			ray->hit_type = HIT_DOOR;
-			hit = 1;
-		}
+            hit = handle_door_cell(club, s, ray);
 	}
 }
+
 static void compute_wall(t_ray *ray, t_step *s)
 {
     double dist;
@@ -141,11 +141,10 @@ static void compute_wall(t_ray *ray, t_step *s)
 
 void	draw_wall(t_club *club, int x, t_ray *ray)
 {
-	if (ray->hit_type == HIT_WALL)
+	if (ray->hit_type == HIT_WALL || ray->hit_type == HIT_DOOR)
 		draw_wall_stripe(club, x, ray);
-	else if (ray->hit_type == HIT_DOOR)
-		draw_door_texture(club, x, ray);
 }
+
 void    render_walls(t_club *club)
 {
     int     x;
@@ -155,13 +154,19 @@ void    render_walls(t_club *club)
     x = 0;
     while (x < WIDTH)
     {
+        ray.has_door = 0;
+        ray.door_dist = 0;
         set_ray_dir(club, &ray, x);
         init_step(club, &ray, &s);
         walk_until_wall(club, &s, &ray);
         compute_wall(&ray, &s);
 		club->z_buffer[x] = ray.perp_wall_dist;
         draw_wall(club, x, &ray);
+        if (ray.has_door && ray.door_dist > 0 && ray.door_dist < ray.perp_wall_dist)
+        {
+            club->z_buffer[x] = ray.door_dist;
+            draw_door_overlay(club, x, &ray);
+        }
         x++;
     }
 }
-

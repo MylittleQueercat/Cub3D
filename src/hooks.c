@@ -39,13 +39,13 @@ int key_hook(int keycode, t_club *club)
     {
         club->mouse_sens *= 0.8;
         if (club->mouse_sens < 0.0005)
-            club->mouse_sens = 0.0005;   // 最低限制
+            club->mouse_sens = 0.0005;
     }
-    else if (keycode == KEY_E)  // 提高灵敏度
+    else if (keycode == KEY_E)  // 提高
     {
         club->mouse_sens *= 1.25;
         if (club->mouse_sens > 0.05)
-            club->mouse_sens = 0.05;     // 最高限制
+            club->mouse_sens = 0.05;
     }
     return (0);
 }

@@ -43,13 +43,14 @@ static int	load_texture(t_club *club, t_tex *tex)
 	return (0);
 }
 
-
 int	load_all_textures(t_club *club)
 {
 	if (load_texture(club, &club->tex[TEX_NO]) \
 		|| load_texture(club, &club->tex[TEX_SO]) \
 		|| load_texture(club, &club->tex[TEX_WE]) \
-		|| load_texture(club, &club->tex[TEX_EA]))
+		|| load_texture(club, &club->tex[TEX_EA]) \
+		|| load_texture(club, &club->door_tex) \
+		|| load_texture(club, &club->door_open_tex))
 		return (1);
 	return (0);
 }
@@ -98,6 +99,21 @@ int	load_all_textures(t_club *club)
 // 	return (fail); // 0 表示全部加载成功，1 表示至少有一个失败
 // }
 
+static void	destroy_one_tex(t_club *c, t_tex *t, int free_path)
+{
+	if (t->img)
+	{
+		mlx_destroy_image(c->mlx, t->img);
+		t->img = NULL;
+		t->addr = NULL;
+	}
+	if (free_path && t->path)
+	{
+		free(t->path);
+		t->path = NULL;
+	}
+}
+
 void	destroy_textures(t_club *club)
 {
 	int	i;
@@ -105,8 +121,9 @@ void	destroy_textures(t_club *club)
 	i = 0;
 	while (i < 4)
 	{
-		if (club->tex[i].img)
-			mlx_destroy_image(club->mlx, club->tex[i].img);
+		destroy_one_tex(club, &club->tex[i], 0);
 		i++;
 	}
+	destroy_one_tex(club, &club->door_tex, 1);
+	destroy_one_tex(club, &club->door_open_tex, 1);
 }

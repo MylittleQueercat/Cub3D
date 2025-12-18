@@ -28,17 +28,30 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
     double  step;
     double  tex_pos;
     int     y;
+
 	//边界check
     if (r->line_height <= 0)
-        return;
+        return ;
     if (r->draw_start < 0)
         r->draw_start = 0;
     if (r->draw_end >= HEIGHT)
         r->draw_end = HEIGHT - 1;
 
     // 1. 选纹理
-    tex_id = choose_texture(r);
-    tex = &club->tex[tex_id];
+    // tex_id = choose_texture(r);
+    // tex = &club->tex[tex_id];
+    tex = NULL;
+    if (r->hit_type == HIT_DOOR)
+        tex = &club->door_tex;
+    else
+    {
+        tex_id = choose_texture(r);
+        tex = &club->tex[tex_id];
+    }
+
+    // 安全检查
+    if (!tex->img || !tex->addr || tex->width <= 0 || tex->height <= 0)
+        return  ;
 
     // 2. 计算墙上的命中位置：wall_x ∈ [0, 1)
     if (r->side == 0)
@@ -77,11 +90,6 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
             + tex_y * tex->line_len
             + tex_x * (tex->bpp / 8);
         color = *(int *)pixel;
-
-        // 让侧面墙更暗，增加立体感
-        //if (r->side == 1)
-        //    color = (color >> 1) & 0x7F7F7F;
-
         put_pixel(&club->img, x, y, color);
         y++;
     }
@@ -90,8 +98,20 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
 // 判断某个格子是不是墙
 int is_wall(t_club *club, int map_x, int map_y)
 {
+    char    cell;
+    t_door  *d;
+
     if (map_x < 0 || map_x >= club->map.width
         || map_y < 0 || map_y >= club->map.height)
         return (1);
-    return (club->map.grid[map_y][map_x] == '1');
+    cell = club->map.grid[map_y][map_x];
+    if (cell == '1')
+        return (1);
+    if (cell == 'D')
+    {
+        d = door_at(club, map_x, map_y);
+        if (d && !d->is_open)
+            return (1);
+    }
+    return (0);
 }

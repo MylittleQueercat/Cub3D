@@ -34,14 +34,18 @@ void init_club_defaults(t_club *club)
 	club->floor_color = -1;
 	club->ceiling_color = -1;
 	club->sprites = NULL;
-	club->doors = NULL;
 	club->sprite_count = 0;
+	club->doors = NULL;
 	club->door_count = 0;
+	ft_bzero(&club->door_tex, sizeof(t_tex));
+	club->door_tex.path = ft_strdup("xpms/door_closed.xpm");
+	ft_bzero(&club->door_open_tex, sizeof(t_tex));
+	club->door_open_tex.path = ft_strdup("xpms/door_open.xpm");
 	club->mouse_last_x = WIDTH / 2;
-  club->mouse_in_window = 0;
-  club->show_minimap = 1;
-  club->mouse_left = 0;
-  club->mouse_sens = 0.003;
+	club->mouse_in_window = 0;
+	club->show_minimap = 1;
+	club->mouse_left = 0;
+	club->mouse_sens = 0.003;
   i = 0;
   while (i < TEX_COUNT)
   {
