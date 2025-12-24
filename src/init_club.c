@@ -38,15 +38,21 @@ void init_club_defaults(t_club *club)
 	club->doors = NULL;
 	club->door_count = 0;
 	ft_bzero(&club->door_tex, sizeof(t_tex));
-	club->door_tex.path = ft_strdup("xpms/door_closed.xpm");
+	club->door_tex.path = ft_strdup("xpms/door_BRUNE.xpm");
 	ft_bzero(&club->door_open_tex, sizeof(t_tex));
-	club->door_open_tex.path = ft_strdup("xpms/door_open.xpm");
+	club->door_open_tex.path = ft_strdup("xpms/door_BRUNE.xpm");
 	club->mouse_last_x = WIDTH / 2;
 	club->mouse_in_window = 0;
 	club->show_minimap = 1;
 	club->mouse_left = 0;
 	club->mouse_sens = 0.003;
-  i = 0;
+	club->key_w = 0;
+	club->key_a = 0;
+	club->key_s = 0;
+	club->key_d = 0;
+	club->key_left = 0;
+	club->key_right = 0;
+	i = 0;
   while (i < TEX_COUNT)
   {
     club->tex[i].img = NULL;
@@ -104,8 +110,8 @@ int init_club(t_club *club)
 		return (1);
 	if (init_image(club))
 		return (1);
-	// if (!init_doors(club))
-	// 		return (1);
+	if (!init_doors(club))
+			return (1);
 	if (!init_sprits(club))
 		return (1);
 	//printf("number sprite : %d\n", club->sprite_count);

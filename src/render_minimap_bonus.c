@@ -18,28 +18,6 @@ void    mm_draw_square(t_img *img, int x, int y, int size, int color)
     }
 }
 
-// void    mm_draw_player_pony(t_img *img, int px, int py)
-// {
-//     put_pixel(img, px + 1, py + 0, MM_PLAYER);
-//     put_pixel(img, px + 2, py + 0, MM_PLAYER);
-//     put_pixel(img, px + 3, py + 0, MM_PLAYER);
-//     put_pixel(img, px + 0, py + 1, MM_PLAYER);
-//     put_pixel(img, px + 1, py + 1, MM_PLAYER);
-//     put_pixel(img, px + 2, py + 1, MM_PLAYER);
-//     put_pixel(img, px + 3, py + 1, MM_PLAYER);
-//     put_pixel(img, px + 4, py + 1, MM_PLAYER);
-//     put_pixel(img, px + 2, py + 2, MM_PLAYER);
-//     put_pixel(img, px + 3, py + 2, MM_PLAYER);
-//     put_pixel(img, px + 4, py + 2, MM_PLAYER);
-//     put_pixel(img, px + 5, py + 2, MM_PLAYER);
-//     put_pixel(img, px + 1, py + 3, MM_PLAYER);
-//     put_pixel(img, px + 2, py + 3, MM_PLAYER);
-//     put_pixel(img, px + 0, py + 4, MM_PLAYER);
-//     put_pixel(img, px + 1, py + 4, MM_PLAYER);
-//     put_pixel(img, px + 3, py + 4, MM_PLAYER);
-//     put_pixel(img, px + 4, py + 4, MM_PLAYER);
-// }
-
 void    mm_draw_player_pony(t_img *img, int cx, int cy, int tile)
 {
     int radius;
@@ -52,7 +30,6 @@ void    mm_draw_player_pony(t_img *img, int cx, int cy, int tile)
     if (radius < 3)
         radius = 3;
     r2 = radius * radius;
-
     // 以 (cx, cy) 为圆心，画一个实心小圆
     y = -radius;
     while (y <= radius)
@@ -77,13 +54,13 @@ void    render_minimap(t_club *club)
     int     map_y;
     char    **g;
 
-    tile = 13;
+    tile = 17;
     y = 0;
     g = club->map.grid;
     while (y < club->map.height)
     {
         x = 0;
-        while (x < club->map.width)
+        while (x < club->map.width - 1)
         {
             if (g[y][x] == '1')
                 mm_draw_square(&club->img, x * tile, y * tile, tile, MM_WALL);

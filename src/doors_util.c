@@ -1,5 +1,42 @@
 #include "../include/cub3d.h"
 
+bool    init_doors(t_club *club)
+{
+    int x;
+    int y;
+    int i;
+
+    club->door_count = count_char_in_map(club->map.grid, 'D');
+    if (club->door_count <= 0)
+        return (true);
+    club->doors = ft_calloc(club->door_count, sizeof(t_door));
+    if (!club->doors)
+        return (false);
+    // door[i].state = DOOR_CLOSED;
+    // door[i].t = 0.0;
+    i = 0;
+    y = 0;
+    while (y < club->map.height)
+    {
+        x = 0;
+        while (x < club->map.width)
+        {
+            if (club->map.grid[y][x] == 'D')
+            {
+                club->doors[i].x = x;
+                club->doors[i].y = y;
+                // club->doors[i].is_open = false;
+				club->doors[i].state = DOOR_CLOSED;
+				club->doors[i].t = 0.0;
+                i++;
+            }
+            x++;
+        }
+        y++;
+    }
+    return (true);
+}
+
 t_door *door_at(t_club *c, int mx, int my)
 {
     for (int i = 0; i < c->door_count; i++)
@@ -18,18 +55,25 @@ void	try_open_door(t_club *c)
     int		my;
 	t_door	*d;
 
-	fx = c->player.x + c->player.dir_x * 0.8;
-	fy = c->player.y + c->player.dir_y * 0.8;
+	fx = c->player.x + c->player.dir_x * 1.8;
+	fy = c->player.y + c->player.dir_y * 1.8;
     mx = (int)fx;
     my = (int)fy;
     if (my < 0 || my >= c->map.height || mx < 0 || mx >= c->map.width)
         return ;
     if (c->map.grid[my][mx] != 'D')
         return ;
+    printf("O pressed: door_count=%d\n", c->door_count);
+    printf("target cell (%d,%d)=%c\n", mx, my, c->map.grid[my][mx]);
     d = door_at(c, mx, my);
+    printf("door_at returned %p\n", (void*)d);
     if (!d)
 		return ;
-    d->is_open = !d->is_open;
+    // d->is_open = !d->is_open;
+    if (d->state == DOOR_CLOSED)
+	    d->state = DOOR_OPENING;
+    else if (d->state == DOOR_OPEN)
+	    d->state = DOOR_CLOSING;
 }
 
 static void	save_door_hit(t_club *c, t_step *s, t_ray *r)
@@ -64,8 +108,10 @@ int	handle_door_cell(t_club *c, t_step *s, t_ray *r)
 
     save_door_hit(c, s, r);
     d = door_at(c, s->map_x, s->map_y);
-    if (d && d->is_open)
-        return (0);
+    // if (d && d->is_open)
+    //     return (0);
+    if (d && d->state == DOOR_OPEN)
+    	return (0);
     r->hit_type = HIT_DOOR;
     r->side = s->side;
     r->hit_map_x = s->map_x;
@@ -73,4 +119,33 @@ int	handle_door_cell(t_club *c, t_step *s, t_ray *r)
     return (1);
 }
 
+void	update_doors(t_club *c)
+{
+	int		i;
+	double	speed;
 
+	speed = 0.08; // 每帧推进，想慢就调小
+	i = 0;
+	while (i < c->door_count)
+	{
+		if (c->doors[i].state == DOOR_OPENING)
+		{
+			c->doors[i].t += speed;
+			if (c->doors[i].t >= 1.0)
+			{
+				c->doors[i].t = 1.0;
+				c->doors[i].state = DOOR_OPEN;
+			}
+		}
+		else if (c->doors[i].state == DOOR_CLOSING)
+		{
+			c->doors[i].t -= speed;
+			if (c->doors[i].t <= 0.0)
+			{
+				c->doors[i].t = 0.0;
+				c->doors[i].state = DOOR_CLOSED;
+			}
+		}
+		i++;
+	}
+}

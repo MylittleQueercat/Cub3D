@@ -54,10 +54,10 @@
 #define FOV 0.66
 
 //颜色
-#define MM_BG       0x2A003A   // 深紫色
-#define MM_WALL     0xFF6ADE   // 亮粉色
-#define MM_PLAYER   0xFFC1F5   // 淡粉
-#define MM_DOOR     0xAA55FF   // 紫色
+#define MM_BG     0xF7A6C3  // 明亮草莓粉
+#define MM_WALL   0xE0448A  // 鲜粉墙
+#define MM_DOOR   0x9E1F5A  // 深玫红门
+#define MM_PLAYER 0xFFFFFF
 
 //texture 墙的纹理信息
 typedef struct s_tex {
@@ -101,19 +101,28 @@ typedef struct s_player {
 	double	plane_y;
 }	t_player;
 
+typedef enum e_door_state
+{
+	DOOR_CLOSED,
+	DOOR_OPENING,
+	DOOR_OPEN,
+	DOOR_CLOSING
+}	t_door_state;
 
 typedef struct	s_door
 {
-	double	x;
-	double	y;
-	bool	is_open;
-	t_img	img_closed;
-	t_img	img_open;
-	bool	visible;
-	double	screen_x;
-	int		width;
-	int		height;
-	double	perp_dist;
+	double	    x;
+	double	    y;
+	bool	    is_open;
+	t_img       img_closed;
+	t_img	    img_open;
+	bool	    visible;
+	double	    screen_x;
+	int		    width;
+	int		    height;
+	double	    perp_dist;
+    t_door_state	state;
+    double			t;   // 0..1, 0=关，1=完全滑开
 }	t_door;
 
 typedef struct s_sprite
@@ -196,6 +205,12 @@ typedef struct s_club
     int         mouse_left;         //鼠标左键
     double      mouse_sens;         //鼠标灵敏度
 	double		z_buffer[WIDTH]; //屏幕第 x 列最近的墙到玩家的距离
+    int	        key_w;
+    int	        key_a;
+    int	        key_s;
+    int	        key_d;
+    int	        key_left;
+    int	        key_right;
 }   t_club;
 
 //parsing
@@ -219,6 +234,11 @@ bool	is_map_at_the_end(t_club *club, char **file);
 // hooks.c
 int		close_window(t_club *club);
 int		key_hook(int keycode, t_club *club);
+
+// hooks_util.c
+int	    key_press(int keycode, t_club *c);
+int 	key_release(int keycode, t_club *c);
+void	update_player(t_club *c);
 
 // img_utils.c
 void    init_club_defaults(t_club *club);
@@ -253,7 +273,6 @@ void	destroy_textures(t_club *club);
 int		count_char_in_map(char **map, char target);
 bool	init_sprits(t_club *club);
 void	render_sprites(t_club *club, t_img *img);
-bool	init_doors(t_club *club);
 void	try_open_door(t_club *club);
 int		load_sprites(t_club *club);
 //int	load_door_textures(t_club *club);
@@ -272,10 +291,12 @@ int     mouse_release(int button, int x, int y, t_club *club);
 int     mouse_move(int x, int y, t_club *club);
 
 // doors_util.c
+bool    init_doors(t_club *club);
 t_door *door_at(t_club *c, int mx, int my);
 void	try_open_door(t_club *c);
 int	    handle_door_cell(t_club *c, t_step *s, t_ray *r);
 void    draw_door_overlay(t_club *club, int x, t_ray *ray);
+void	update_doors(t_club *c);
 
 // draw_door_overlay.c
 void    draw_door_overlay(t_club *club, int x, t_ray *ray);

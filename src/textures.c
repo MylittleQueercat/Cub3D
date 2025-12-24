@@ -30,16 +30,26 @@
 
 static int	load_texture(t_club *club, t_tex *tex)
 {
+	printf("DEBUG: load_texture version A\n");
 	if (!tex || !tex->path)
+	{
+		printf("load_texture: NULL path\n");
 		return (1);
+	}
 	tex->img = mlx_xpm_file_to_image(club->mlx,
 			tex->path, &tex->width, &tex->height);
 	if (!tex->img)
+	{
+		printf("mlx_xpm_file_to_image failed for %s\n", tex->path);
 		return (1);
+	}
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp,
 			&tex->line_len, &tex->endian);
 	if (!tex->addr)
+	{
+		printf("mlx_get_data_addr failed for %s\n", tex->path);
 		return (1);
+	}
 	return (0);
 }
 
@@ -59,6 +69,7 @@ int	load_all_textures(t_club *club)
 {
 	int fail = 0;
 
+	printf("load_all_textures called\n");
 	if (load_texture(club, &club->tex[TEX_NO]))
 	{
 		printf("Warning: failed to load TEX_NO\n");
@@ -83,7 +94,6 @@ int	load_all_textures(t_club *club)
 		fail = 1;
 		club->tex[TEX_EA].img = NULL;
 	}
-
 	// 可选：CEIL/FLOOR 纹理
 	if (club->tex[TEX_CEIL].path && load_texture(club, &club->tex[TEX_CEIL]))
 	{
@@ -95,7 +105,18 @@ int	load_all_textures(t_club *club)
 		printf("Warning: failed to load TEX_FLOOR, fallback to color\n");
 		club->tex[TEX_FLOOR].img = NULL;
 	}
-
+	if (load_texture(club, &club->door_tex))
+	{
+ 	   printf("Warning: failed to load door_tex (%s)\n", club->door_tex.path);
+ 	   fail = 1;
+ 	   club->door_tex.img = NULL;
+	}
+	if (load_texture(club, &club->door_open_tex))
+	{
+ 		printf("Warning: failed to load door_open_tex (%s)\n", club->door_open_tex.path);
+   		fail = 1;
+    	club->door_open_tex.img = NULL;
+	}
 	return (fail); // 0 表示全部加载成功，1 表示至少有一个失败
 }
 

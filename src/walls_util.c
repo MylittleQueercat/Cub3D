@@ -50,7 +50,11 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
     }
     // 安全检查
     if (!tex->img || !tex->addr || tex->width <= 0 || tex->height <= 0)
+    {
+        // printf("stripe skip: hit=%d tex_img=%p tex_addr=%p w=%d h=%d\n",
+        //     r->hit_type, tex->img, tex->addr, tex->width, tex->height);
         return  ;
+    }
 
     // 2. 计算墙上的命中位置：wall_x ∈ [0, 1)
     if (r->side == 0)
@@ -65,6 +69,20 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
         tex_x = tex->width - tex_x - 1;
     if (r->side == 1 && r->ray_dir_y < 0)
         tex_x = tex->width - tex_x - 1;
+
+    if (r->hit_type == HIT_DOOR)
+    {
+        t_door  *d;
+        int     shift;
+
+        d = door_at(club, r->hit_map_x, r->hit_map_y);
+        if (d)
+        {
+            shift = (int)(d->t * (double)tex->width);
+            tex_x += shift; /* 向右滑开；想向左就改成 tex_x -= shift */
+        }
+    }
+
 
     // 4. y 方向步长：屏幕每向下走 1 像素，纹理走多少
     step = 1.0 * tex->height / r->line_height;
@@ -84,6 +102,13 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
         if (tex_y >= tex->height)
             tex_y = tex->height - 1;
         tex_pos += step;
+
+        if (r->hit_type == HIT_DOOR && (tex_x < 0 || tex_x >= tex->width))
+        {
+            y++;
+            continue ;
+        }
+
 
         pixel = tex->addr
             + tex_y * tex->line_len
@@ -109,7 +134,11 @@ int is_wall(t_club *club, int map_x, int map_y)
     if (cell == 'D')
     {
         d = door_at(club, map_x, map_y);
-        if (d && !d->is_open)
+        // if (d && !d->is_open)
+        //     return (1);
+        if (!d)
+            return (0);
+        if (d->state != DOOR_OPEN)
             return (1);
     }
     return (0);

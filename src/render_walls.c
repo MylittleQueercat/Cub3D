@@ -162,11 +162,11 @@ void    render_walls(t_club *club)
         compute_wall(&ray, &s);
 		club->z_buffer[x] = ray.perp_wall_dist;
         draw_wall(club, x, &ray);
-        if (ray.has_door && ray.door_dist > 0 && ray.door_dist < ray.perp_wall_dist)
-        {
-            club->z_buffer[x] = ray.door_dist;
-            draw_door_overlay(club, x, &ray);
-        }
+        // if (ray.has_door && ray.door_dist > 0 && ray.door_dist < ray.perp_wall_dist)
+        // {
+        //     club->z_buffer[x] = ray.door_dist;
+        //     draw_door_overlay(club, x, &ray);
+        // }
         x++;
     }
 }

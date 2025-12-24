@@ -17,6 +17,7 @@ int key_hook(int keycode, t_club *club)
     double move_speed = 0.1;
     double rot_speed = 0.09;
 
+    printf("key_hook called: keycode=%d\n", keycode);
     if (keycode == KEY_ESC)
         close_window(club);
     else if (keycode == KEY_W)

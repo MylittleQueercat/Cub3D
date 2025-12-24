@@ -3,9 +3,9 @@
 static int  clampi(int v, int lo, int hi)
 {
     if (v < lo) 
-		return (lo);
+		  return (lo);
     if (v > hi)
-		return (hi);
+		  return (hi);
     return (v);
 }
 
@@ -36,13 +36,13 @@ static int  init_door_stripe(t_club *c, t_ray *r, t_tex **tex, t_stripe *st)
     *tex = &c->door_open_tex;
     if (r->door_dist < 0.0001 || !(*tex)->addr || (*tex)->width <= 0 || (*tex)->height <= 0)
         return (0);
-    st->line_h = (int)(HEIGHT / r->door_dist);
-    st->start = -st->line_h / 2 + HEIGHT / 2;
-    st->end = st->line_h / 2 + HEIGHT / 2;
+      st->line_h = (int)(HEIGHT / r->door_dist);
+      st->start = -st->line_h / 2 + HEIGHT / 2;
+      st->end = st->line_h / 2 + HEIGHT / 2;
     if (st->start < 0)
 		st->start = 0;
     if (st->end >= HEIGHT)
-		st->end = HEIGHT - 1;
+    st->end = HEIGHT - 1;
     st->tex_x = (int)(r->door_hit_point * (double)(*tex)->width);
     if (st->tex_x < 0)
 		st->tex_x = 0;
