@@ -77,13 +77,13 @@ int load_sprites(t_club *club)
 {
 	if (!club)
         return (1);
-    if (!is_valid_xpm_file("xpms/pony.xpm"))
+    if (!is_valid_xpm_file("xpms/pony_64.xpm"))
         return (err_msg("Error: sprite XPM missing"), 1);
     if (club->sprite_texture.img)
         mlx_destroy_image(club->mlx, club->sprite_texture.img);
 
     club->sprite_texture.img = mlx_xpm_file_to_image(club->mlx,
-        "xpms/pony.xpm",
+        "xpms/pony_64.xpm",
         &club->sprite_texture.width,
         &club->sprite_texture.height);
     if (!club->sprite_texture.img)

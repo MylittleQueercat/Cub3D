@@ -11,7 +11,7 @@ int	render_loop(t_club *club)
 
 	render_background(club);
 	render_walls(club);
-	render_sprites(club, &club->img);
+	render_sprites(club);
 	//render_doors(club); 
 	if (club->show_minimap)
 		render_minimap(club);

@@ -22,7 +22,6 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parsing/parse_texture.c \
 		$(SRC_DIR)/parsing/prepare_map.c \
 		$(SRC_DIR)/parsing/utils.c \
-		$(SRC_DIR)/sprites/doors.c \
 		$(SRC_DIR)/sprites/init_sprites.c \
 		$(SRC_DIR)/sprites/render_sprites.c \
 		$(SRC_DIR)/hooks.c \

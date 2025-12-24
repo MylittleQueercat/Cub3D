@@ -1,121 +1,78 @@
 #include "../include/cub3d.h"
 
-static int	get_sprite_info(t_club *club)
+static void	calc_sprite_info(t_club *club, t_sprite *s)
 {
-	int	i;
 	double	dx;
 	double	dy;
+	double	inv_det;
 
-	if (!club || !club->sprites || club->sprite_count == 0)
-		return (-1);
-	i = 0;
-	while (i < club->sprite_count)
-	{
-		dx = club->sprites[i].x - club->player.x;
-		dy = club->sprites[i].y - club->player.y;
-		club->sprites[i].distance = (dx * dx) + (dy * dy);
-		club->sprites[i].sprite_angle = atan2(dy, dx)
-			- atan2(club->player.dir_y, club->player.dir_x);
-		i++;
-	}
-	return (0);
+	dx = s->x - club->player.x;
+	dy = s->y - club->player.y;
+	s->distance = dx * dx + dy * dy;
+	inv_det = 1.0 / (club->player.plane_x * club->player.dir_y - club->player.dir_x * club->player.plane_y);
+	s->transform_x = inv_det * (club->player.dir_y * dx - club->player.dir_x * dy);
+	s->transform_y = inv_det * (-club->player.plane_y * dx + club->player.plane_x * dy);
+	s->screen_x = (int)((WIDTH / 2) * (1 + s->transform_x / s->transform_y));
+	// s->height = (int)(fabs(HEIGHT / s->transform_y));
+	// s->width = s->height;
+	s->height = 256;
+	s->width = 256;
 }
 
-static int	sort_sprites(t_club *club)
+static void	swap_sprites(t_sprite *a, t_sprite *b)
+{
+	t_sprite	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+static void	sort_sprites(t_club *club)
 {
 	int	i;
 	int	j;
-	t_sprite tmp;
 
-	if (!club || !club->sprites || club->sprite_count == 0)
-		return (-1);
 	i = 0;
-	while (i < club->sprite_count - 1)
+	while (i < club->sprite_count)
 	{
-		j = 0;
-		while (j < club->sprite_count - 1 - i)
+		j = i + 1;
+		while (j < club->sprite_count)
 		{
-			if (club->sprites[j].distance < club->sprites[j + 1].distance)
-			{
-				tmp = club->sprites[j];
-				club->sprites[j] = club->sprites[j + 1];
-				club->sprites[j + 1] = tmp;
-			}
+			if (club->sprites[i].distance < club->sprites[j].distance)
+				swap_sprites(&club->sprites[i], &club->sprites[j]);
 			j++;
 		}
 		i++;
 	}
-	return (0);
 }
 
-/*
-** Projects a sprite from world space onto the screen using the angle method.
-**
-** - `s->distance` is the squared distance from the player to the sprite.
-**   We take the square root to get the real distance, which is used to scale
-**   the sprite size on screen (closer = bigger, farther = smaller).
-**
-** - `view_dist` represents the distance from the player to the projection
-**   plane (screen). It is derived from the screen width and the field of view
-**   (FOV), and is used to convert an angle into a horizontal screen offset.
-**
-** - `s->screen_x` is the horizontal center position of the sprite on screen.
-**   It is computed by projecting the sprite's relative angle (`sprite_angle`)
-**   onto the screen using a tangent-based projection.
-**
-** - `s->height` and `s->width` define the sprite's size on screen.
-**   The size is inversely proportional to the distance to the player.
-*/
-static void project_sprite(t_sprite *s)
+static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 {
-    double dist;
-    double view_dist;
+	int			x;
+	int			y;
+	int			color;
+	int			tex_x;
+	int			tex_y;
+	int			y_start;
+	int			y_end;
 
-    dist = sqrt(s->distance);
-    view_dist = (WIDTH / 2.0) / tan(FOV / 2.0);
-    s->screen_x = (int)(WIDTH / 2 + tan(s->sprite_angle) * view_dist);
-    s->height = (int)((0.5 * view_dist / dist) * 0.5);
-    s->width = s->height;
-}
-
-
-static void	draw_sprite_pixel(t_img *img, t_club *club, t_sprite *s)
-{
-	int		x;
-	int		y;
-	int		screen_x;
-	int		screen_y;
-	int		tex_x;
-	int		tex_y;
-	int		color;
-
-	if (!club || !s || !club->sprite_texture.img)
-		return ;
-
-	x = -s->width / 2;
-	while (x < s->width / 2)
+	x = s->screen_x - s->width / 2; 
+	while (x < s->screen_x + s->width / 2)
 	{
-		screen_x = s->screen_x + x;
-		if (screen_x >= 0 && screen_x < WIDTH
-			&& sqrt(s->distance) < club->z_buffer[screen_x])
+		if (x >= 0 && x < WIDTH && s->transform_y > 0 && s->transform_y < club->z_buffer[x])
 		{
-			y = -s->height / 2;
-			while (y < s->height / 2)
+			tex_x = (x - (s->screen_x - s->width / 2)) * club->sprite_texture.width / s->width;
+			y_start = HEIGHT - s->height;
+			y_end = HEIGHT;
+			y = y_start;
+			while (y < y_end)
 			{
-				screen_y = HEIGHT / 2 + y;
-				if (screen_y >= 0 && screen_y < HEIGHT)
-				{
-					// 计算纹理坐标
-					tex_x = (x + s->width / 2) * club->sprite_texture.width / s->width;
-					tex_y = (y + s->height / 2) * club->sprite_texture.height / s->height;
-
-					// 获取纹理颜色
-					color = *((int *)(club->sprite_texture.addr + (tex_y * club->sprite_texture.line_len + tex_x * (club->sprite_texture.bpp / 8))));
-
-					// 忽略透明色（假设 0x00FFFFFF 以下为透明）
-					if ((color & 0x00FFFFFF) != 0)
-						put_pixel(img, screen_x, screen_y, color);
-				}
+				tex_y = (y - y_start) * club->sprite_texture.height / s->height;
+				color = *((int *)(club->sprite_texture.addr
+					+ (tex_y * club->sprite_texture.line_len + tex_x * (club->sprite_texture.bpp / 8))));
+				if ((color & 0x00FFFFFF) != 0)
+					put_pixel(&club->img, x, y, color);
 				y++;
 			}
 		}
@@ -123,18 +80,22 @@ static void	draw_sprite_pixel(t_img *img, t_club *club, t_sprite *s)
 	}
 }
 
-void render_sprites(t_club *club, t_img *img)
+void	render_sprites(t_club *club)
 {
-    int i;
+	int	i;
 
-    get_sprite_info(club);
-    sort_sprites(club);
-    i = 0;
-    while (i < club->sprite_count)
-    {
-        project_sprite(&club->sprites[i]);
-        draw_sprite_pixel(img, club, &club->sprites[i]);
-        i++;
-    }
+	i = 0;
+	while (i < club->sprite_count)
+	{
+		calc_sprite_info(club, &club->sprites[i]);
+		i++;
+	}
+	sort_sprites(club);
+	i = 0;
+	while (i < club->sprite_count)
+	{
+		draw_sprite_pixel(club, &club->sprites[i]);
+		i++;
+	}
 }
 

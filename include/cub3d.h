@@ -124,10 +124,13 @@ typedef struct s_sprite
 	int		distance;
 	//t_img	img;
 	int		screen_x;
+	int		screen_y;
 	int		width;
 	int		height;
-	double	sprite_angle;
+	double	angle;
 	int		color;
+	double		transform_x;
+	double		transform_y;
 }	t_sprite;
 
 typedef enum e_hit
@@ -252,7 +255,7 @@ void	destroy_textures(t_club *club);
 //sprites
 int		count_char_in_map(char **map, char target);
 bool	init_sprits(t_club *club);
-void	render_sprites(t_club *club, t_img *img);
+void	render_sprites(t_club *club);
 bool	init_doors(t_club *club);
 void	try_open_door(t_club *club);
 int		load_sprites(t_club *club);
