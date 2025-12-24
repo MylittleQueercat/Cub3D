@@ -25,6 +25,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/sprites/init_sprites.c \
 		$(SRC_DIR)/sprites/render_sprites.c \
 		$(SRC_DIR)/hooks.c \
+		$(SRC_DIR)/hooks_util.c \
 		$(SRC_DIR)/doors_util.c \
 		$(SRC_DIR)/draw_door_overlay.c \
 		$(SRC_DIR)/mouse_bonus.c \
