@@ -20,7 +20,7 @@ int key_hook(int keycode, t_club *club)
     if (keycode == KEY_ESC)
         close_window(club);
     else if (keycode == KEY_W)
-        move_forward_backward(club, move_speed);
+		 move_forward_backward(club, move_speed);
     else if (keycode == KEY_S)
         move_forward_backward(club, -move_speed);
     else if (keycode == KEY_A)

@@ -48,7 +48,6 @@ void    draw_wall_stripe(t_club *club, int x, t_ray *r)
         tex_id = choose_texture(r);
         tex = &club->tex[tex_id];
     }
-
     // 安全检查
     if (!tex->img || !tex->addr || tex->width <= 0 || tex->height <= 0)
         return  ;

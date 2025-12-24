@@ -92,6 +92,12 @@ int	parsing(t_club *club, char **file)
 		return (err_msg("Error: No file content provided"), -1);
 	if (check_elements(club, file) == -1)
 		return (free_array(club->map.grid), -1);
+// 	printf("NO: %s\n", club->tex[0].path);
+// printf("SO: %s\n", club->tex[1].path);
+// printf("WE: %s\n", club->tex[2].path);
+// printf("EA: %s\n", club->tex[3].path);
+//printf("S : %s\n", club->sprite_texture.img ? "ok" : "NULL");
+
 	if (check_elements_complete(club) == -1)
 		return (free_array(club->map.grid), -1);
 	if (get_map(club, file) == -1)

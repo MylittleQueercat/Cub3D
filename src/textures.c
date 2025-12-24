@@ -43,61 +43,61 @@ static int	load_texture(t_club *club, t_tex *tex)
 	return (0);
 }
 
-int	load_all_textures(t_club *club)
-{
-	if (load_texture(club, &club->tex[TEX_NO]) \
-		|| load_texture(club, &club->tex[TEX_SO]) \
-		|| load_texture(club, &club->tex[TEX_WE]) \
-		|| load_texture(club, &club->tex[TEX_EA]) \
-		|| load_texture(club, &club->door_tex) \
-		|| load_texture(club, &club->door_open_tex))
-		return (1);
-	return (0);
-}
-
 // int	load_all_textures(t_club *club)
 // {
-// 	int fail = 0;
-
-// 	if (load_texture(club, &club->tex[TEX_NO]))
-// 	{
-// 		printf("Warning: failed to load TEX_NO\n");
-// 		fail = 1;
-// 		club->tex[TEX_NO].img = NULL;
-// 	}
-// 	if (load_texture(club, &club->tex[TEX_SO]))
-// 	{
-// 		printf("Warning: failed to load TEX_SO\n");
-// 		fail = 1;
-// 		club->tex[TEX_SO].img = NULL;
-// 	}
-// 	if (load_texture(club, &club->tex[TEX_WE]))
-// 	{
-// 		printf("Warning: failed to load TEX_WE\n");
-// 		fail = 1;
-// 		club->tex[TEX_WE].img = NULL;
-// 	}
-// 	if (load_texture(club, &club->tex[TEX_EA]))
-// 	{
-// 		printf("Warning: failed to load TEX_EA\n");
-// 		fail = 1;
-// 		club->tex[TEX_EA].img = NULL;
-// 	}
-
-// 	// 可选：CEIL/FLOOR 纹理
-// 	if (club->tex[TEX_CEIL].path && load_texture(club, &club->tex[TEX_CEIL]))
-// 	{
-// 		printf("Warning: failed to load TEX_CEIL, fallback to color\n");
-// 		club->tex[TEX_CEIL].img = NULL;
-// 	}
-// 	if (club->tex[TEX_FLOOR].path && load_texture(club, &club->tex[TEX_FLOOR]))
-// 	{
-// 		printf("Warning: failed to load TEX_FLOOR, fallback to color\n");
-// 		club->tex[TEX_FLOOR].img = NULL;
-// 	}
-
-// 	return (fail); // 0 表示全部加载成功，1 表示至少有一个失败
+// 	if (load_texture(club, &club->tex[TEX_NO]) \
+// 		|| load_texture(club, &club->tex[TEX_SO]) \
+// 		|| load_texture(club, &club->tex[TEX_WE]) \
+// 		|| load_texture(club, &club->tex[TEX_EA]) \
+// 		|| load_texture(club, &club->door_tex) \
+// 		|| load_texture(club, &club->door_open_tex))
+// 		return (1);
+// 	return (0);
 // }
+
+int	load_all_textures(t_club *club)
+{
+	int fail = 0;
+
+	if (load_texture(club, &club->tex[TEX_NO]))
+	{
+		printf("Warning: failed to load TEX_NO\n");
+		fail = 1;
+		club->tex[TEX_NO].img = NULL;
+	}
+	if (load_texture(club, &club->tex[TEX_SO]))
+	{
+		printf("Warning: failed to load TEX_SO\n");
+		fail = 1;
+		club->tex[TEX_SO].img = NULL;
+	}
+	if (load_texture(club, &club->tex[TEX_WE]))
+	{
+		printf("Warning: failed to load TEX_WE\n");
+		fail = 1;
+		club->tex[TEX_WE].img = NULL;
+	}
+	if (load_texture(club, &club->tex[TEX_EA]))
+	{
+		printf("Warning: failed to load TEX_EA\n");
+		fail = 1;
+		club->tex[TEX_EA].img = NULL;
+	}
+
+	// 可选：CEIL/FLOOR 纹理
+	if (club->tex[TEX_CEIL].path && load_texture(club, &club->tex[TEX_CEIL]))
+	{
+		printf("Warning: failed to load TEX_CEIL, fallback to color\n");
+		club->tex[TEX_CEIL].img = NULL;
+	}
+	if (club->tex[TEX_FLOOR].path && load_texture(club, &club->tex[TEX_FLOOR]))
+	{
+		printf("Warning: failed to load TEX_FLOOR, fallback to color\n");
+		club->tex[TEX_FLOOR].img = NULL;
+	}
+
+	return (fail); // 0 表示全部加载成功，1 表示至少有一个失败
+}
 
 static void	destroy_one_tex(t_club *c, t_tex *t, int free_path)
 {
