@@ -1,0 +1,6 @@
+{
+   mlx_init
+   Memcheck:Leak
+   fun:mlx_init
+   ...
+}

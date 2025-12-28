@@ -30,7 +30,7 @@
 
 static int	load_texture(t_club *club, t_tex *tex)
 {
-	printf("DEBUG: load_texture version A\n");
+	//printf("DEBUG: load_texture version A\n");
 	if (!tex || !tex->path)
 	{
 		printf("load_texture: NULL path\n");

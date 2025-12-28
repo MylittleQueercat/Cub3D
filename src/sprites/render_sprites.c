@@ -1,37 +1,5 @@
 #include "../include/cub3d.h"
 
-// static void	calc_sprite_info(t_club *club, t_sprite *s)
-// {
-// 	double	dx;
-// 	double	dy;
-// 	double	inv_det;
-// 	double	ty;
-
-// 	dx = s->x - club->player.x;
-// 	dy = s->y - club->player.y;
-// 	s->distance = dx * dx + dy * dy;
-// 	inv_det = 1.0 / (club->player.plane_x * club->player.dir_y - club->player.dir_x * club->player.plane_y);
-// 	s->transform_x = inv_det * (club->player.dir_y * dx - club->player.dir_x * dy);
-// 	s->transform_y = inv_det * (-club->player.plane_y * dx + club->player.plane_x * dy);
-// 	// s->screen_x = (int)((WIDTH / 2) * (1 + s->transform_x / s->transform_y));
-// 	// // s->height = (int)(fabs(HEIGHT / s->transform_y));
-// 	// // s->width = s->height;
-// 	// s->height = 256;
-// 	// s->width = 256;
-// 	if (s->transform_y <= 0.0001)
-// 	{
-// 		s->visible = false;
-// 		return ;
-// 	}
-// 	ty = s->transform_y;
-// 	if (ty < 0.35)
-// 		ty = 0.35;
-// 	s->visible = true;
-// 	s->screen_x = (int)((WIDTH / 2) * (1 + s->transform_x / s->transform_y));
-// 	s->height = abs((int)(HEIGHT / s->transform_y));
-// 	s->width = s->height;
-// }
-
 static void	calc_sprite_info(t_club *club, t_sprite *s)
 {
 	double	dx;
@@ -110,18 +78,6 @@ static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 		if (x >= 0 && x < WIDTH && s->transform_y > 0 && s->transform_y < club->z_buffer[x])
 		{
 			tex_x = (x - (s->screen_x - s->width / 2)) * club->sprite_texture.width / s->width;
-			// y_start = HEIGHT - s->height;
-			// y_end = HEIGHT;
-			// y = y_start;
-			// while (y < y_end)
-			// {
-			// 	tex_y = (y - y_start) * club->sprite_texture.height / s->height;
-			// 	color = *((int *)(club->sprite_texture.addr
-			// 		+ (tex_y * club->sprite_texture.line_len + tex_x * (club->sprite_texture.bpp / 8))));
-			// 	if ((color & 0x00FFFFFF) != 0)
-			// 		put_pixel(&club->img, x, y, color);
-			// 	y++;
-			// }
 			y_start = -s->height / 2 + HEIGHT / 2;
 			y_end = s->height / 2 + HEIGHT / 2;
 

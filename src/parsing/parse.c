@@ -1,5 +1,7 @@
 #include "../include/cub3d.h"
 
+
+
 static int	count_lines(const char *file)
 {
 	int		fd;

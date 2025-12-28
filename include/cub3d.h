@@ -133,7 +133,7 @@ typedef struct s_sprite
 	double	y;
 	bool	visible;
 	double	distance;
-	//t_img	img;
+	t_img	img;
 	int		screen_x;
 	int		screen_y;
 	int		width;
@@ -300,6 +300,7 @@ int		load_sprites(t_club *club);
 //utils.c
 void	err_msg(char *msg);
 void	free_array(char **arr);
+void	destroy_club(t_club *club);
 
 // render_minimap_bonus.c
 void    render_minimap(t_club *club);

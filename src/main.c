@@ -97,5 +97,7 @@ int	main(int argc, char **argv)
 	// render_walls(&club);
 	// render_minimap(&club);
 	// mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
+	destroy_club(&club);
+	free_array(file);
 	return (0);
 }

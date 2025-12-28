@@ -98,6 +98,5 @@ int load_sprites(t_club *club)
         &club->sprite_texture.endian);
     if (!club->sprite_texture.addr)
         return (err_msg("Error: failed to get sprite image addr"), 1);
-
     return (0);
 }
