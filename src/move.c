@@ -1,18 +1,48 @@
 #include "../include/cub3d.h"
 
-// 前后移动 (W/S)
+// // 前后移动 (W/S)
+// void move_forward_backward(t_club *club, double move_speed)
+// {
+//     double new_x = club->player.x + club->player.dir_x * move_speed;
+//     double new_y = club->player.y + club->player.dir_y * move_speed;
+
+//     if (!is_wall(club, (int)new_x, (int)club->player.y))
+//         club->player.x = new_x;
+//     if (!is_wall(club, (int)club->player.x, (int)new_y))
+//         club->player.y = new_y;
+// }
+
+// // 左右移动（A/D）
+// void strafe_left_right(t_club *club, double move_speed)
+// {
+//     double perp_x = -club->player.dir_y;
+//     double perp_y = club->player.dir_x;
+
+//     double new_x = club->player.x + perp_x * move_speed;
+//     double new_y = club->player.y + perp_y * move_speed;
+
+//     if (!is_wall(club, (int)new_x, (int)club->player.y))
+//         club->player.x = new_x;
+//     if (!is_wall(club, (int)club->player.x, (int)new_y))
+//         club->player.y = new_y;
+// }
+
 void move_forward_backward(t_club *club, double move_speed)
 {
     double new_x = club->player.x + club->player.dir_x * move_speed;
     double new_y = club->player.y + club->player.dir_y * move_speed;
 
-    if (!is_wall(club, (int)new_x, (int)club->player.y))
+    // X 轴尝试：墙 + 精灵 都不能穿
+    if (!is_wall(club, (int)new_x, (int)club->player.y)
+        && !collide_sprite_at(club, new_x, club->player.y))
         club->player.x = new_x;
-    if (!is_wall(club, (int)club->player.x, (int)new_y))
+
+    // Y 轴尝试：墙 + 精灵 都不能穿
+    if (!is_wall(club, (int)club->player.x, (int)new_y)
+        && !collide_sprite_at(club, club->player.x, new_y))
         club->player.y = new_y;
 }
 
-// 左右移动（A/D）
 void strafe_left_right(t_club *club, double move_speed)
 {
     double perp_x = -club->player.dir_y;
@@ -21,11 +51,15 @@ void strafe_left_right(t_club *club, double move_speed)
     double new_x = club->player.x + perp_x * move_speed;
     double new_y = club->player.y + perp_y * move_speed;
 
-    if (!is_wall(club, (int)new_x, (int)club->player.y))
+    if (!is_wall(club, (int)new_x, (int)club->player.y)
+        && !collide_sprite_at(club, new_x, club->player.y))
         club->player.x = new_x;
-    if (!is_wall(club, (int)club->player.x, (int)new_y))
+
+    if (!is_wall(club, (int)club->player.x, (int)new_y)
+        && !collide_sprite_at(club, club->player.x, new_y))
         club->player.y = new_y;
 }
+
 
 // 左右转头（<- 和 ->）
 void rotate_player(t_club *club, double rot_speed)

@@ -58,6 +58,8 @@
 #define MM_WALL   0xE0448A  // 鲜粉墙
 #define MM_DOOR   0x9E1F5A  // 深玫红门
 #define MM_PLAYER 0xFFFFFF
+#define MM_SPRITE 0x00FFF0   // 亮青色
+// 0x2EE6D6    薄荷绿
 
 //texture 墙的纹理信息
 typedef struct s_tex {
@@ -130,7 +132,7 @@ typedef struct s_sprite
 	double	x;
 	double	y;
 	bool	visible;
-	int		distance;
+	double	distance;
 	//t_img	img;
 	int		screen_x;
 	int		screen_y;
@@ -140,6 +142,9 @@ typedef struct s_sprite
 	int		color;
 	double		transform_x;
 	double		transform_y;
+    double      radius; //半径
+    double      phase;
+    bool        found;
 }	t_sprite;
 
 typedef enum e_hit
@@ -195,6 +200,9 @@ typedef struct s_club
 	t_sprite	*sprites;
 	t_img		sprite_texture;
 	int			sprite_count;
+    int         sprite_jump;
+    int         found_count;
+    int         game_won;
 	t_door		*doors;
     t_tex       door_tex; //暂时不define，避免有内存风险
     t_tex       door_open_tex;
@@ -279,9 +287,11 @@ bool	init_sprits(t_club *club);
 void	render_sprites(t_club *club);
 bool	init_doors(t_club *club);
 
+int     collide_sprite_at(t_club *club, double nx, double ny);
 
 void	try_open_door(t_club *club);
 int		load_sprites(t_club *club);
+
 //int	load_door_textures(t_club *club);
 // void	render_doors(t_club *club);
 

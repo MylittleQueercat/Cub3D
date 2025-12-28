@@ -38,12 +38,40 @@ void    mm_draw_player_pony(t_img *img, int cx, int cy, int tile)
         while (x <= radius)
         {
             if (x * x + y * y <= r2)
-                put_pixel(img, cx + x, cy + y, MM_PLAYER);  // 这里的 MM_PLAYER 设成亮蓝色
+                put_pixel(img, cx + x, cy + y, MM_PLAYER);
             x++;
         }
         y++;
     }
 }
+
+void    mm_draw_sprite(t_img *img, int cx, int cy, int tile)
+{
+    int radius;
+    int r2;
+    int x;
+    int y;
+
+    // 精灵在 minimap 上稍小一点
+    radius = tile / 4;
+    if (radius < 2)
+        radius = 2;
+    r2 = radius * radius;
+
+    y = -radius;
+    while (y <= radius)
+    {
+        x = -radius;
+        while (x <= radius)
+        {
+            if (x * x + y * y <= r2)
+                put_pixel(img, cx + x, cy + y, MM_SPRITE);
+            x++;
+        }
+        y++;
+    }
+}
+
 
 void    render_minimap(t_club *club)
 {
@@ -75,4 +103,14 @@ void    render_minimap(t_club *club)
     map_x = (int)(club->player.x * tile);
     map_y = (int)(club->player.y * tile);
     mm_draw_player_pony(&club->img, map_x, map_y, tile);
+    // 在 minimap 上画精灵（亮青色小圆）
+    int i = 0;
+    while (i < club->sprite_count)
+    {
+        int sx = (int)(club->sprites[i].x * tile);
+        int sy = (int)(club->sprites[i].y * tile);
+
+        mm_draw_sprite(&club->img, sx, sy, tile);
+        i++;
+    }
 }

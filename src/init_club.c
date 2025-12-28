@@ -35,6 +35,9 @@ void init_club_defaults(t_club *club)
 	club->ceiling_color = -1;
 	club->sprites = NULL;
 	club->sprite_count = 0;
+	club->sprite_jump = 0;
+	club->found_count = 0;
+	club->game_won = 0;
 	club->doors = NULL;
 	club->door_count = 0;
 	ft_bzero(&club->door_tex, sizeof(t_tex));

@@ -3,6 +3,7 @@
 // 尝试运行
 int	render_loop(t_club *club)
 {
+	club->sprite_jump++;
 	update_doors(club);
 	update_player(club);
 	for (int x = 0; x < WIDTH; x++)

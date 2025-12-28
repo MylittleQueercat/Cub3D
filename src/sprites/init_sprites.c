@@ -41,8 +41,11 @@ static bool	fill_sprite_array(t_club *club)
 			{
 				club->sprites[idx].x = x + 0.5;
 				club->sprites[idx].y = y + 0.5;
+				club->sprites[idx].radius = 0.40;
 				club->sprites[idx].visible = false;
 				club->sprites[idx].distance = 0;
+				club->sprites[idx].phase = (y * 7 + x * 13) * 0.37;
+				club->sprites[idx].found = false;
 				//club->sprites[idx].img = NULL;
 				idx++;
 			}
@@ -98,4 +101,3 @@ int load_sprites(t_club *club)
 
     return (0);
 }
-
