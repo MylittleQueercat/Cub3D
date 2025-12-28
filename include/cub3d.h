@@ -203,6 +203,8 @@ typedef struct s_club
     int         sprite_jump;
     int         found_count;
     int         game_won;
+    t_img       win_img;
+    int         win_loaded;
 	t_door		*doors;
     t_tex       door_tex; //暂时不define，避免有内存风险
     t_tex       door_open_tex;
@@ -317,5 +319,11 @@ void	update_doors(t_club *c);
 
 // draw_door_overlay.c
 void    draw_door_overlay(t_club *club, int x, t_ray *ray);
+
+
+void    update_collectibles(t_club *club);
+
+void    draw_win_text(t_club *club);
+int     load_win_banner(t_club *c);
 
 #endif

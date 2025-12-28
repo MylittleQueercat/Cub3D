@@ -6,6 +6,7 @@ int	render_loop(t_club *club)
 	club->sprite_jump++;
 	update_doors(club);
 	update_player(club);
+	update_collectibles(club);
 	for (int x = 0; x < WIDTH; x++)
         club->z_buffer[x] = 1e30;
 	// printf("sprite_count=%d, sprite_texture.addr=%p\n",
@@ -19,6 +20,17 @@ int	render_loop(t_club *club)
 	if (club->show_minimap)
 		render_minimap(club);
 	mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
+	if (club->game_won)
+	{
+		if (club->win_img.img)  // ✅ 关键
+		{
+			int x = (WIDTH - club->win_img.width) / 2;
+			int y = (HEIGHT - club->win_img.height) / 2;
+			mlx_put_image_to_window(club->mlx, club->win, club->win_img.img, x, y);
+		}
+		else
+			mlx_string_put(club->mlx, club->win, WIDTH/2 - 40, HEIGHT/2, 0xFFFFFF, "YOU WIN!");
+	}
 	return (0);
 }
 
@@ -74,10 +86,9 @@ int	main(int argc, char **argv)
 	// 	return (err_msg("Error: door load failed"), 1);
 	mlx_hook(club.win, 17, 0, close_window, &club);
 	mlx_key_hook(club.win, key_hook, &club);
-	// mlx_hook(club.win, 4, 1L << 2, mouse_press, &club);    // ButtonPress
-	// mlx_hook(club.win, 5, 1L << 3, mouse_release, &club); 
-	// mlx_hook(club.win, 6, 1L << 6, mouse_move, &club);
-	// mlx_loop_hook(club.mlx, render_loop, &club);
+	mlx_hook(club.win, 4, 1L << 2, mouse_press, &club);    // ButtonPress
+	mlx_hook(club.win, 5, 1L << 3, mouse_release, &club); 
+	mlx_hook(club.win, 6, 1L << 6, mouse_move, &club);
 	mlx_hook(club.win, 2, 1L<<0, key_press, &club);     /* KeyPress */
 	mlx_hook(club.win, 3, 1L<<1, key_release, &club);   /* KeyRelease */
 	mlx_loop_hook(club.mlx, render_loop, &club);

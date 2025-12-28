@@ -103,14 +103,15 @@ void    render_minimap(t_club *club)
     map_x = (int)(club->player.x * tile);
     map_y = (int)(club->player.y * tile);
     mm_draw_player_pony(&club->img, map_x, map_y, tile);
-    // 在 minimap 上画精灵（亮青色小圆）
     int i = 0;
     while (i < club->sprite_count)
     {
-        int sx = (int)(club->sprites[i].x * tile);
-        int sy = (int)(club->sprites[i].y * tile);
-
-        mm_draw_sprite(&club->img, sx, sy, tile);
+        if (club->sprites[i].found)
+        {
+            int sx = (int)(club->sprites[i].x * tile);
+            int sy = (int)(club->sprites[i].y * tile);
+            mm_draw_sprite(&club->img, sx, sy, tile);
+        }
         i++;
     }
 }

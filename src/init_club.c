@@ -38,6 +38,9 @@ void init_club_defaults(t_club *club)
 	club->sprite_jump = 0;
 	club->found_count = 0;
 	club->game_won = 0;
+	club->win_img.img = NULL;
+	club->win_img.addr = NULL;
+	club->win_loaded = 0;
 	club->doors = NULL;
 	club->door_count = 0;
 	ft_bzero(&club->door_tex, sizeof(t_tex));
@@ -111,6 +114,8 @@ int init_club(t_club *club)
 	club->win = mlx_new_window(club->mlx, WIDTH, HEIGHT, "PINK PONY CLUB");
 	if (!club->win)
 		return (1);
+	if (load_win_banner(club))
+        return (err_msg("failed to load win banner"), 1);
 	if (init_image(club))
 		return (1);
 	if (!init_doors(club))
