@@ -5,7 +5,7 @@ static bool	is_valid_char(char c, bool bonus)
 	if (c == '0' || c == '1' || c == ' ' || c == '\n'\
 		|| c == 'N' || c == 'W' || c == 'E' || c == 'S')
 		return (true);
-	if (bonus && (c == '2' || c == 'D'))
+	if (bonus && ((c >= '2' && c <= '5') || c == 'D'))
 		return (true);
 	return (false);
 }
@@ -134,9 +134,16 @@ static bool	check_map_size(t_club *club)
 	y = 0;
 	while (club->map.grid[y])
 	{
+		// if (!ft_strchr(club->map.grid[y], '0') && !ft_strchr(club->map.grid[y], '1') \
+		// 	&& !ft_strchr(club->map.grid[y], 'N') && !ft_strchr(club->map.grid[y], 'S')  \
+		// 	&& !ft_strchr(club->map.grid[y], 'W') && !ft_strchr(club->map.grid[y], 'E'))
+		// 	return (false);
 		if (!ft_strchr(club->map.grid[y], '0') && !ft_strchr(club->map.grid[y], '1') \
-			&& !ft_strchr(club->map.grid[y], 'N') && !ft_strchr(club->map.grid[y], 'S')  \
-			&& !ft_strchr(club->map.grid[y], 'W') && !ft_strchr(club->map.grid[y], 'E'))
+			&& !ft_strchr(club->map.grid[y], 'N') && !ft_strchr(club->map.grid[y], 'S') \
+			&& !ft_strchr(club->map.grid[y], 'W') && !ft_strchr(club->map.grid[y], 'E') \
+			&& !ft_strchr(club->map.grid[y], '2') && !ft_strchr(club->map.grid[y], '3') \
+			&& !ft_strchr(club->map.grid[y], '4') && !ft_strchr(club->map.grid[y], '5') \
+			&& !ft_strchr(club->map.grid[y], 'D'))
 			return (false);
 		y++;
 	}

@@ -34,21 +34,17 @@ void update_collectibles(t_club *club)
     int i;
 
     if (!club->sprites || club->sprite_count <= 0 || club->game_won)
-        return;
-
+        return ;
     i = 0;
     while (i < club->sprite_count)
     {
         t_sprite *s = &club->sprites[i];
-
         if (!s->found)
         {
             double dx = club->player.x - s->x;
             double dy = club->player.y - s->y;
-
-            const double pr = 0.25;                 // 和你的玩家碰撞半径一致
-            double r = pr + s->radius + 0.05;       // 一定要 >= 碰撞可达距离
-
+            const double pr = 0.25;
+            double r = pr + s->radius + 0.05;
             if (dx * dx + dy * dy <= r * r)
             {
                 s->found = true;

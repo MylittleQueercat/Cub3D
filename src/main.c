@@ -12,13 +12,13 @@ int	render_loop(t_club *club)
 	// printf("sprite_count=%d, sprite_texture.addr=%p\n",
     //    club->sprite_count,
     //    club->sprite_texture.addr);
-
 	render_background(club);
 	render_walls(club);
 	render_sprites(club);
 	//render_doors(club); 
 	if (club->show_minimap)
 		render_minimap(club);
+	render_score_ui(club);
 	mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
 	if (club->game_won)
 	{

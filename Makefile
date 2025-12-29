@@ -23,13 +23,18 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parsing/prepare_map.c \
 		$(SRC_DIR)/parsing/utils.c \
 		$(SRC_DIR)/sprites/init_sprites.c \
+		$(SRC_DIR)/sprites/fill_sprite_array.c \
 		$(SRC_DIR)/sprites/render_sprites.c \
 		$(SRC_DIR)/sprites/sprite_collision.c \
+		$(SRC_DIR)/sprites/render_score_ui.c \
+		$(SRC_DIR)/sprites/score_bar.c \
+		$(SRC_DIR)/sprites/score_font.c \
+		$(SRC_DIR)/sprites/score_rect.c \
 		$(SRC_DIR)/hooks.c \
 		$(SRC_DIR)/hooks_util.c \
 		$(SRC_DIR)/doors_util.c \
 		$(SRC_DIR)/draw_door_overlay.c \
-		$(SRC_DIR)/mouse_bonus.c \
+		$(SRC_DIR)/render_mouse.c \
      	$(SRC_DIR)/init_club.c \
     	$(SRC_DIR)/render_background.c \
 		$(SRC_DIR)/walls_util.c \
@@ -38,12 +43,13 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/win_utils.c \
 		$(SRC_DIR)/textures.c \
 		$(SRC_DIR)/render_walls.c \
-		$(SRC_DIR)/render_minimap_bonus.c \
+		$(SRC_DIR)/render_minimap.c \
+		$(SRC_DIR)/render_minimap_util.c \
 		$(SRC_DIR)/update_collectibles.c \
 		$(SRC_DIR)/utils/error.c \
 		$(SRC_DIR)/utils/free.c \
 		$(SRC_DIR)/utils/destroy_club.c \
-		$(SRC_DIR)/utils/destroy_club_util.c
+		$(SRC_DIR)/utils/destroy_club_util.c 
 
 OBJ = $(addprefix $(OBJDIR)/,$(subst $(SRC_DIR)/,,$(SRC:.c=.o)))
 

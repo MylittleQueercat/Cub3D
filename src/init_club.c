@@ -24,6 +24,7 @@ void init_club_defaults(t_club *club)
 {
     int i;
 
+	club->file = NULL;
 	club->mlx = NULL;
 	club->win = NULL;
 	club->img.img = NULL;
@@ -59,18 +60,30 @@ void init_club_defaults(t_club *club)
 	club->key_left = 0;
 	club->key_right = 0;
 	i = 0;
-  while (i < TEX_COUNT)
-  {
-    club->tex[i].img = NULL;
-    club->tex[i].addr = NULL;
-    club->tex[i].bpp = 0;
-    club->tex[i].line_len = 0;
-    club->tex[i].endian = 0;
-    club->tex[i].width = 0;
-    club->tex[i].height = 0;
-    club->tex[i].path = NULL;
-    i++;
-    }
+	while (i < TEX_COUNT)
+	{
+		club->tex[i].img = NULL;
+		club->tex[i].addr = NULL;
+		club->tex[i].bpp = 0;
+		club->tex[i].line_len = 0;
+		club->tex[i].endian = 0;
+		club->tex[i].width = 0;
+		club->tex[i].height = 0;
+		club->tex[i].path = NULL;
+		i++;
+	}
+	i = 0;
+	while (i < SPRITE_TYPES)
+	{
+		club->sprite_textures[i].img = NULL;
+		club->sprite_textures[i].addr = NULL;
+		club->sprite_textures[i].bpp = 0;
+		club->sprite_textures[i].line_len = 0;
+		club->sprite_textures[i].endian = 0;
+		club->sprite_textures[i].width = 0;
+		club->sprite_textures[i].height = 0;
+		i++;
+	}
 }
 
 // static void init_player(t_club *club)

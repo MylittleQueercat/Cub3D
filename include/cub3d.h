@@ -15,6 +15,38 @@
 # define WIDTH 1200
 # define HEIGHT 1000
 
+// 精灵类型总数
+#define SPRITE_TYPES 4
+
+// minimap
+#define MM_ORIGIN_X 10
+#define MM_ORIGIN_Y 10
+#define MM_W        170
+#define MM_H        170
+// 显示玩家周围多少格
+#define MM_R        7
+
+// 分数条
+#define SCORE_PAD      10
+#define SCORE_W        300
+#define SCORE_H        34
+#define SCORE_X_MARGIN 10
+#define SCORE_Y_MARGIN 10
+//颜色
+// #define SCORE_BG      0x121217
+// #define SCORE_BORDER  0xF2E85C
+// #define SCORE_INNER   0x3A3A3A
+// #define SCORE_FILL    0x2EE56B
+// #define SCORE_TEXT    0xFFFFFF 
+#define SCORE_BG      0x0B0B0F   // 极深黑（不是纯黑，眼睛更舒服）
+#define SCORE_BORDER  0xFF4FA3   // 高饱和粉（主视觉）
+#define SCORE_INNER   0x2A0F1F   // 深紫粉（内框/阴影）
+#define SCORE_FILL    0xFF77B7   // 亮粉（进度填充）
+#define SCORE_TEXT    0xFFFFFF   // 纯白（文字）
+#define SCORE_BORDER_FLASH 0xFFFFFF
+#define SCORE_FILL_FLASH   0xFF4FA3
+
+
 /* Key definitions for Mac and Linux compatibility */
 #ifdef __APPLE__
     #define KEY_ESC    53
@@ -113,7 +145,7 @@ typedef enum e_door_state
 
 typedef struct	s_door
 {
-	double	    x;
+	double      x;
 	double	    y;
 	bool	    is_open;
 	t_img       img_closed;
@@ -121,30 +153,38 @@ typedef struct	s_door
 	bool	    visible;
 	double	    screen_x;
 	int		    width;
-	int		    height;
-	double	    perp_dist;
+	int             height;
+	double          perp_dist;
     t_door_state	state;
     double			t;   // 0..1, 0=关，1=完全滑开
 }	t_door;
 
+typedef enum e_sprite_type
+{
+    SPR_PONY = 0,
+    SPR_SPARKLE = 1,
+    SPR_HEART = 2,
+    SPR_DISCO = 3
+}   t_sprite_type;
+
 typedef struct s_sprite
 {
-	double	x;
-	double	y;
-	bool	visible;
-	double	distance;
-	t_img	img;
-	int		screen_x;
-	int		screen_y;
-	int		width;
-	int		height;
-	double	angle;
-	int		color;
+	double	    x;
+	double	    y;
+	bool	    visible;
+	double	    distance;
+	int		    screen_x;
+	int		    screen_y;
+	int		    width;
+	int		    height;
+	double	    angle;
+	int		    color;
 	double		transform_x;
 	double		transform_y;
     double      radius; //半径
     double      phase;
     bool        found;
+    int         type;
 }	t_sprite;
 
 typedef enum e_hit
@@ -168,7 +208,6 @@ typedef struct s_ray
     int     hit_map_x;
     int     hit_map_y;
     double  hit_point; //射线命中某个面时，在这个面的 [0,1) 区间里的位置，用于算 tex_x
-
     int     has_door; // 开门后 门的渲染
     double  door_dist;
     int     door_side;
@@ -189,6 +228,27 @@ typedef struct s_step
     int     side;
 }   t_step;
 
+// Score bar
+typedef struct s_rect
+{
+    int x;
+    int y;
+    int w;
+    int h;
+}   t_rect;
+
+typedef struct s_bar
+{
+    t_rect r;
+    int    cur;
+    int    total;
+    int    bg;
+    int    border;
+    int    inner;
+    int    fill;
+}   t_bar;
+
+
 //club
 typedef struct s_club
 {
@@ -199,7 +259,7 @@ typedef struct s_club
     t_map       map;            // 地图数据
     t_player    player;         // 玩家状态
 	t_sprite	*sprites;
-	t_img		sprite_texture;
+	t_img		sprite_textures[SPRITE_TYPES];
 	int			sprite_count;
     int         sprite_jump;
     int         found_count;
@@ -290,6 +350,9 @@ bool	init_sprits(t_club *club);
 void	render_sprites(t_club *club);
 bool	init_doors(t_club *club);
 
+bool    fill_sprite_array(t_club *club);
+
+int     count_sprites_all(char **map);
 int     collide_sprite_at(t_club *club, double nx, double ny);
 
 void	try_open_door(t_club *club);
@@ -306,9 +369,14 @@ void	destroy_sprites(t_club *club);
 void    destroy_tex(t_club *club, t_tex *t);
 void	destroy_textures_club(t_club *club);
 void	destroy_map(t_club *club);
+void    destroy_sprite_textures(t_club *club);
 void	destroy_club(t_club *club);
 
-// render_minimap_bonus.c
+// render_minimap.c
+int     mm_color_for_cell(char c);
+void    mm_draw_square(t_img *img, int x, int y, int size, int color);
+void    mm_draw_player_pony(t_img *img, int cx, int cy, int tile);
+void    mm_draw_sprite(t_img *img, int cx, int cy, int tile);
 void    render_minimap(t_club *club);
 
 // mouse_bonus.c
@@ -332,5 +400,19 @@ void    update_collectibles(t_club *club);
 
 void    draw_win_text(t_club *club);
 int     load_win_banner(t_club *c);
+
+/* rect primitives */
+void    ui_draw_rect(t_img *img, t_rect r, int color);
+void    ui_draw_border(t_img *img, t_rect r, int color, int t);
+
+/* score font */
+void    ui_draw_text_score(t_img *img, int x, int y, int color, int scale);
+int     ui_score_label_width(int scale);
+
+/* progress bar */
+void    ui_draw_progress_bar(t_img *img, t_bar *b);
+
+/* public */
+void    render_score_ui(t_club *club);
 
 #endif
