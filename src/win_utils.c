@@ -28,6 +28,12 @@ int load_win_banner(t_club *c)
 
     c->win_img.addr = mlx_get_data_addr(c->win_img.img, &c->win_img.bpp,
                                         &c->win_img.line_len, &c->win_img.endian);
+    if (!c->win_img.addr)
+    {
+        mlx_destroy_image(c->mlx, c->win_img.img);
+        c->win_img.img = NULL;
+        return (1);
+    }
     c->win_loaded = 1;
     return (0);
 }

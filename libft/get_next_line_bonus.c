@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:43:24 by lilwang           #+#    #+#             */
-/*   Updated: 2025/12/28 19:50:11 by lilwang          ###   ########.fr       */
+/*   Updated: 2025/12/29 13:26:40 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@
 
 static int	clear(char *buff, int i)
 {
+	if (i < 0)
+		i = 0;
 	while (i <= BUFFER_SIZE)
 		buff[i++] = 0;
 	return (1);
@@ -189,7 +191,12 @@ char	*get_next_line(int fd)
 	{
 		line = str_join(line, buff[fd], BUFFER_SIZE);
 		b = read(fd, buff[fd], BUFFER_SIZE);
-		if (clear(buff[fd], b) && (b < 0 || !line || (!b && !*line)))
+		// if (clear(buff[fd], b) && (b < 0 || !line || (!b && !*line)))
+		// 	return (clear(buff[fd], 0), free(line), NULL);
+		if (b < 0)
+			return (clear(buff[fd], 0), free(line), NULL);
+		clear(buff[fd], b);
+		if (!line || (!b && !*line))
 			return (clear(buff[fd], 0), free(line), NULL);
 	}
 	i = nl_index(buff[fd], b);

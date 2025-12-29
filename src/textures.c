@@ -30,7 +30,6 @@
 
 static int	load_texture(t_club *club, t_tex *tex)
 {
-	//printf("DEBUG: load_texture version A\n");
 	if (!tex || !tex->path)
 	{
 		printf("load_texture: NULL path\n");
@@ -47,6 +46,8 @@ static int	load_texture(t_club *club, t_tex *tex)
 			&tex->line_len, &tex->endian);
 	if (!tex->addr)
 	{
+		mlx_destroy_image(club->mlx, tex->img);
+		tex->img = NULL;
 		printf("mlx_get_data_addr failed for %s\n", tex->path);
 		return (1);
 	}

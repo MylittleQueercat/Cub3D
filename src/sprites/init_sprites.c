@@ -61,16 +61,20 @@ bool	init_sprits(t_club *club)
 	if (!club || !club->map.grid)
 		return (false);
 	club->sprite_count = count_char_in_map(club->map.grid, '2');
-//	printf("the sprite count: %d\n", club->sprite_count);
 	if (club->sprite_count == 0)
+	{
+		club->sprites = NULL;
 		return (false);
-	club->sprites = malloc(sizeof(t_sprite) * club->sprite_count);
+	}
+	// club->sprites = malloc(sizeof(t_sprite) * club->sprite_count);
+	club->sprites = ft_calloc(club->sprite_count, sizeof(t_sprite));
 	if (!club->sprites)
 		return (false);
 	if (!fill_sprite_array(club))
 	{
 		free(club->sprites);
 		club->sprites = NULL;
+		club->sprite_count = 0;
 		return (false);
 	}
 	return (true);

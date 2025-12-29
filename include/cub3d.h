@@ -192,6 +192,7 @@ typedef struct s_step
 //club
 typedef struct s_club
 {
+    char        **file;
     void        *mlx;
     void        *win;
     t_img       img;            // 当前帧画布
@@ -300,6 +301,11 @@ int		load_sprites(t_club *club);
 //utils.c
 void	err_msg(char *msg);
 void	free_array(char **arr);
+void	destroy_doors(t_club *club);
+void	destroy_sprites(t_club *club);
+void    destroy_tex(t_club *club, t_tex *t);
+void	destroy_textures_club(t_club *club);
+void	destroy_map(t_club *club);
 void	destroy_club(t_club *club);
 
 // render_minimap_bonus.c

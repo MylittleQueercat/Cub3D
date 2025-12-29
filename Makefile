@@ -42,7 +42,8 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/update_collectibles.c \
 		$(SRC_DIR)/utils/error.c \
 		$(SRC_DIR)/utils/free.c \
-		$(SRC_DIR)/utils/destroy_club.c
+		$(SRC_DIR)/utils/destroy_club.c \
+		$(SRC_DIR)/utils/destroy_club_util.c
 
 OBJ = $(addprefix $(OBJDIR)/,$(subst $(SRC_DIR)/,,$(SRC:.c=.o)))
 

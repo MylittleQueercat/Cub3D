@@ -1,4 +1,4 @@
-#include "../include/cub3d.h"
+ #include "../include/cub3d.h"
 
 // 用于free是null-terminated的数组
 void	free_array(char **arr)

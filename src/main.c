@@ -58,20 +58,21 @@ int	render_loop(t_club *club)
 int	main(int argc, char **argv)
 {
 	t_club club;
-	char	**file;
 
 	if (argc != 2)
 		return (err_msg("Usage: ./cub3d <map.cub>"), 1);
 	if (!is_cub_file(argv[1]))
 		return (err_msg("Error: invalid .cub file"), 1);
+	ft_bzero(&club, sizeof(club));
 	init_club_defaults(&club);
-	file = read_file(argv[1]);
-	if (!file)
+	club.file = read_file(argv[1]);
+	if (!club.file)
 			return (1);
-	if (parsing(&club, file) == -1)
+	if (parsing(&club, club.file) == -1)
 	{
 		printf ("parsing failed\n"); //debugprintf("sprite_count=%d, sprite_texture.addr=%p\n",
-		free_array(file);
+		free_array(club.file);
+		club.file = NULL;
 		return (1);
 	}
 	printf ("parsing success\n"); //debug
@@ -98,6 +99,6 @@ int	main(int argc, char **argv)
 	// render_minimap(&club);
 	// mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
 	destroy_club(&club);
-	free_array(file);
+	free_array(club.file);
 	return (0);
 }

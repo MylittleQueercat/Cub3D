@@ -1,15 +1,35 @@
 #include "../include/cub3d.h"
 #include <stdio.h>
 
-int	close_window(t_club *club)
-{
-    destroy_textures(club);
-	destroy_image(club);
+// int	close_window(t_club *club)
+// {
+//     destroy_textures(club);
+// 	destroy_image(club);
 
-	if (club->win)
-		mlx_destroy_window(club->mlx, club->win);
-	exit(0);
-	return (0);
+// 	if (club->win)
+// 		mlx_destroy_window(club->mlx, club->win);
+// 	exit(0);
+// 	return (0);
+// }
+
+int close_window(t_club *club)
+{
+    if (!club)
+        exit(0);
+    destroy_club(club);
+    if (club->file)
+    {
+        free_array(club->file);
+        club->file = NULL;
+    }
+    if (club->mlx)
+    {
+        mlx_destroy_display(club->mlx);
+        free(club->mlx);
+        club->mlx = NULL;
+    }
+    exit(0);
+    return (0);
 }
 
 int key_hook(int keycode, t_club *club)
