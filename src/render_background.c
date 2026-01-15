@@ -9,9 +9,10 @@ void	render_background(t_club *club)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		color = (y < HEIGHT / 2)
-			? club->ceiling_color
-			: club->floor_color;
+		if (y < HEIGHT / 2)
+			color = club->ceiling_color;
+		else
+			color = club->floor_color;
 		x = 0;
 		while (x < WIDTH)
 		{

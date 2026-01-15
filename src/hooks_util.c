@@ -47,7 +47,6 @@ void	update_player(t_club *c)
 
 	move_speed = 0.03;
 	rot_speed = 0.03;
-
 	if (c->key_w)
 		move_forward_backward(c, move_speed);
 	if (c->key_s)

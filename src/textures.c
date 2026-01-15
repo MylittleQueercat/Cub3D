@@ -68,8 +68,9 @@ static int	load_texture(t_club *club, t_tex *tex)
 
 int	load_all_textures(t_club *club)
 {
-	int fail = 0;
+	int	fail;
 
+	fail = 0;
 	printf("load_all_textures called\n");
 	if (load_texture(club, &club->tex[TEX_NO]))
 	{
@@ -95,7 +96,6 @@ int	load_all_textures(t_club *club)
 		fail = 1;
 		club->tex[TEX_EA].img = NULL;
 	}
-	// 可选：CEIL/FLOOR 纹理
 	if (club->tex[TEX_CEIL].path && load_texture(club, &club->tex[TEX_CEIL]))
 	{
 		printf("Warning: failed to load TEX_CEIL, fallback to color\n");
@@ -108,17 +108,17 @@ int	load_all_textures(t_club *club)
 	}
 	if (load_texture(club, &club->door_tex))
 	{
- 	   printf("Warning: failed to load door_tex (%s)\n", club->door_tex.path);
- 	   fail = 1;
- 	   club->door_tex.img = NULL;
+		printf("Warning: failed to load door_tex (%s)\n", club->door_tex.path);
+		fail = 1;
+		club->door_tex.img = NULL;
 	}
 	if (load_texture(club, &club->door_open_tex))
 	{
- 		printf("Warning: failed to load door_open_tex (%s)\n", club->door_open_tex.path);
-   		fail = 1;
-    	club->door_open_tex.img = NULL;
+		printf("Warning: failed to load door_open_tex (%s)\n", club->door_open_tex.path);
+		fail = 1;
+		club->door_open_tex.img = NULL;
 	}
-	return (fail); // 0 表示全部加载成功，1 表示至少有一个失败
+	return (fail);
 }
 
 static void	destroy_one_tex(t_club *c, t_tex *t, int free_path)

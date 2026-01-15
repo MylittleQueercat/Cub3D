@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 // void update_collectibles(t_club *club)
 // {
@@ -29,30 +29,34 @@
 //     }
 // }
 
-void update_collectibles(t_club *club)
+void	update_collectibles(t_club *club)
 {
-    int i;
+	int				i;
+	t_sprite		*s;
+	double			dx;
+	double			dy;
+	double			r;
 
-    if (!club->sprites || club->sprite_count <= 0 || club->game_won)
-        return ;
-    i = 0;
-    while (i < club->sprite_count)
-    {
-        t_sprite *s = &club->sprites[i];
-        if (!s->found)
-        {
-            double dx = club->player.x - s->x;
-            double dy = club->player.y - s->y;
-            const double pr = 0.25;
-            double r = pr + s->radius + 0.05;
-            if (dx * dx + dy * dy <= r * r)
-            {
-                s->found = true;
-                club->found_count++;
-                if (club->found_count == club->sprite_count)
-                    club->game_won = 1;
-            }
-        }
-        i++;
-    }
+	if (!club->sprites || club->sprite_count <= 0 || club->game_won)
+		return ;
+	i = 0;
+	while (i < club->sprite_count)
+	{
+		s = &club->sprites[i];
+		if (!s->found)
+		{
+			dx = club->player.x - s->x;
+			dy = club->player.y - s->y;
+			const double	pr = 0.25;
+			r = pr + s->radius + 0.05;
+			if (dx * dx + dy * dy <= r * r)
+			{
+				s->found = true;
+				club->found_count++;
+				if (club->found_count == club->sprite_count)
+					club->game_won = 1;
+			}
+		}
+		i++;
+	}
 }

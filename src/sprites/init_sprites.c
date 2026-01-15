@@ -66,7 +66,6 @@ bool	init_sprits(t_club *club)
 		club->sprites = NULL;
 		return (false);
 	}
-	// club->sprites = malloc(sizeof(t_sprite) * club->sprite_count);
 	club->sprites = ft_calloc(club->sprite_count, sizeof(t_sprite));
 	if (!club->sprites)
 		return (false);

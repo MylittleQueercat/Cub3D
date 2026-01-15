@@ -143,6 +143,16 @@ typedef enum e_door_state
 	DOOR_CLOSING
 }	t_door_state;
 
+typedef struct s_stripe
+{
+	int		line_h;
+	int		start;
+	int		end;
+	int		tex_x;
+	double	step;
+	double	tex_pos;
+}   t_stripe;
+
 typedef struct	s_door
 {
 	double      x;

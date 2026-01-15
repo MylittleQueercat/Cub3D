@@ -12,61 +12,62 @@
 // 	return (0);
 // }
 
-int close_window(t_club *club)
+int	close_window(t_club *club)
 {
-    if (!club)
-        exit(0);
-    destroy_club(club);
-    if (club->file)
-    {
-        free_array(club->file);
-        club->file = NULL;
-    }
-    if (club->mlx)
-    {
-        mlx_destroy_display(club->mlx);
-        free(club->mlx);
-        club->mlx = NULL;
-    }
-    exit(0);
-    return (0);
+	if (!club)
+		exit(0);
+	destroy_club(club);
+	if (club->file)
+	{
+		free_array(club->file);
+		club->file = NULL;
+	}
+	if (club->mlx)
+	{
+		mlx_destroy_display(club->mlx);
+		free(club->mlx);
+		club->mlx = NULL;
+	}
+	exit(0);
+	return (0);
 }
 
-int key_hook(int keycode, t_club *club)
+int	key_hook(int keycode, t_club *club)
 {
-    double move_speed = 0.1;
-    double rot_speed = 0.09;
+	double	move_speed;
+	double	rot_speed;
 
-    printf("key_hook called: keycode=%d\n", keycode);
-    if (keycode == KEY_ESC)
-        close_window(club);
-    else if (keycode == KEY_W)
-		 move_forward_backward(club, move_speed);
-    else if (keycode == KEY_S)
-        move_forward_backward(club, -move_speed);
-    else if (keycode == KEY_A)
-        strafe_left_right(club, -move_speed);
-    else if (keycode == KEY_D)
-        strafe_left_right(club, +move_speed);
-    else if (keycode == KEY_LEFT)
-        rotate_player(club, -rot_speed);
-    else if (keycode == KEY_RIGHT)
-        rotate_player(club, +rot_speed);
+	move_speed = 0.1;
+	rot_speed = 0.09;
+	if (keycode == KEY_ESC)
+		close_window(club);
+	else if (keycode == KEY_W)
+		move_forward_backward(club, move_speed);
+	else if (keycode == KEY_S)
+		move_forward_backward(club, -move_speed);
+	else if (keycode == KEY_A)
+		strafe_left_right(club, -move_speed);
+	else if (keycode == KEY_D)
+		strafe_left_right(club, +move_speed);
+	else if (keycode == KEY_LEFT)
+		rotate_player(club, -rot_speed);
+	else if (keycode == KEY_RIGHT)
+		rotate_player(club, +rot_speed);
 	else if (keycode == KEY_O)
 		try_open_door(club);
-    else if (keycode == KEY_MAP)
-        club->show_minimap = !club->show_minimap;
-    else if (keycode == KEY_Q)   // 降低灵敏度
-    {
-        club->mouse_sens *= 0.8;
-        if (club->mouse_sens < 0.0005)
-            club->mouse_sens = 0.0005;
-    }
-    else if (keycode == KEY_E)  // 提高
-    {
-        club->mouse_sens *= 1.25;
-        if (club->mouse_sens > 0.05)
-            club->mouse_sens = 0.05;
-    }
-    return (0);
+	else if (keycode == KEY_MAP)
+		club->show_minimap = !club->show_minimap;
+	else if (keycode == KEY_Q)
+	{
+		club->mouse_sens *= 0.8;
+		if (club->mouse_sens < 0.0005)
+			club->mouse_sens = 0.0005;
+	}
+	else if (keycode == KEY_E)
+	{
+		club->mouse_sens *= 1.25;
+		if (club->mouse_sens > 0.05)
+			club->mouse_sens = 0.05;
+	}
+	return (0);
 }

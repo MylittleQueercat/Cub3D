@@ -10,11 +10,12 @@ static void	calc_sprite_info(t_club *club, t_sprite *s)
 	dx = s->x - club->player.x;
 	dy = s->y - club->player.y;
 	s->distance = dx * dx + dy * dy;
-
 	inv_det = 1.0 / (club->player.plane_x * club->player.dir_y
 			- club->player.dir_x * club->player.plane_y);
-	s->transform_x = inv_det * (club->player.dir_y * dx - club->player.dir_x * dy);
-	s->transform_y = inv_det * (-club->player.plane_y * dx + club->player.plane_x * dy);
+	s->transform_x = inv_det * (club->player.dir_y * dx
+			- club->player.dir_x * dy);
+	s->transform_y = inv_det * (-club->player.plane_y * dx
+			+ club->player.plane_x * dy);
 	if (s->transform_y <= 0.0001)
 	{
 		s->visible = false;
@@ -28,10 +29,8 @@ static void	calc_sprite_info(t_club *club, t_sprite *s)
 	s->height = abs((int)((HEIGHT / ty) * 0.8));
 	if (s->height > (int)(HEIGHT * 0.90))
 		s->height = (int)(HEIGHT * 0.90);
-
 	s->width = s->height;
 }
-
 
 static void	swap_sprites(t_sprite *a, t_sprite *b)
 {
@@ -61,7 +60,6 @@ static void	sort_sprites(t_club *club)
 	}
 }
 
-
 static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 {
 	t_img		*tex;
@@ -74,7 +72,6 @@ static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 	int			y_end;
 	int			jump;
 
-	// 选取当前精灵类型对应的纹理
 	if (s->type < 0 || s->type >= SPRITE_TYPES)
 		return ;
 	tex = &club->sprite_textures[s->type];
@@ -83,7 +80,8 @@ static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 	x = s->screen_x - s->width / 2;
 	while (x < s->screen_x + s->width / 2)
 	{
-		if (x >= 0 && x < WIDTH && s->transform_y > 0 && s->transform_y < club->z_buffer[x])
+		if (x >= 0 && x < WIDTH && s->transform_y > 0
+			&& s->transform_y < club->z_buffer[x])
 		{
 			tex_x = (x - (s->screen_x - s->width / 2)) * tex->width / s->width;
 			y_start = -s->height / 2 + HEIGHT / 2;
@@ -100,8 +98,8 @@ static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 			{
 				tex_y = (y - y_start) * tex->height / (y_end - y_start + 1);
 				color = *((int *)(tex->addr
-					+ (tex_y * tex->line_len
-					+ tex_x * (tex->bpp / 8))));
+							+ (tex_y * tex->line_len
+								+ tex_x * (tex->bpp / 8))));
 				if ((color & 0x00FFFFFF) != 0)
 					put_pixel(&club->img, x, y, color);
 				y++;
@@ -178,4 +176,3 @@ void	render_sprites(t_club *club)
 		i++;
 	}
 }
-

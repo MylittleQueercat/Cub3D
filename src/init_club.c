@@ -20,9 +20,9 @@
 //     club->map.width = 10;          // 每行 10 个字符
 // }
 
-void init_club_defaults(t_club *club)
+void	init_club_defaults(t_club *club)
 {
-    int i;
+	int	i;
 
 	club->file = NULL;
 	club->mlx = NULL;
@@ -119,7 +119,7 @@ void init_club_defaults(t_club *club)
 //     return (0);
 // }
 
-int init_club(t_club *club)
+int	init_club(t_club *club)
 {
 	club->mlx = mlx_init();
 	if (!club->mlx)
@@ -128,14 +128,12 @@ int init_club(t_club *club)
 	if (!club->win)
 		return (1);
 	if (load_win_banner(club))
-        return (err_msg("failed to load win banner"), 1);
+		return (err_msg("failed to load win banner"), 1);
 	if (init_image(club))
 		return (1);
 	if (!init_doors(club))
-			return (1);
+		return (1);
 	if (!init_sprits(club))
 		return (1);
-	//printf("number sprite : %d\n", club->sprite_count);
-    return (0);
+	return (0);
 }
-
