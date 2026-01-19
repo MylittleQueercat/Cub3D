@@ -31,6 +31,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/sprites/score_bar.c \
 		$(SRC_DIR)/sprites/score_font.c \
 		$(SRC_DIR)/sprites/score_rect.c \
+		$(SRC_DIR)/render_loop.c \
 		$(SRC_DIR)/hooks.c \
 		$(SRC_DIR)/hooks_util.c \
 		$(SRC_DIR)/doors_init.c \

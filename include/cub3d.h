@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/19 16:30:16 by hguo              #+#    #+#             */
+/*   Updated: 2026/01/19 16:30:17 by hguo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -417,6 +429,9 @@ void	mm_draw_player_pony(t_mm_draw *d, int tile);
 void	mm_draw_sprite(t_mm_draw *d, int tile);
 int     mm_tile_color(t_club *club, int tx, int ty);
 void    render_minimap(t_club *club);
+
+// render_loop.c
+int     render_loop(t_club *club);
 
 // mouse_bonus.c
 int     mouse_press(int button, int x, int y, t_club *club);
