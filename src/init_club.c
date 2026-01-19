@@ -32,8 +32,8 @@ void	init_club_defaults(t_club *club)
 	club->map.grid = NULL;
 	club->map.width = 0;
 	club->map.height = 0;
-	club->floor_color = -1;
-	club->ceiling_color = -1;
+	club->floor_color = 0;
+	club->ceiling_color = 0;
 	club->sprites = NULL;
 	club->sprite_count = 0;
 	club->sprite_jump = 0;
