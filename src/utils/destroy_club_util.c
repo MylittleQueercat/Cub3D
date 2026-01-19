@@ -38,23 +38,23 @@ void	destroy_doors(t_club *club)
 // 	club->sprite_count = 0;
 // }
 
-void    destroy_sprites(t_club *club)
+void	destroy_sprites(t_club *club)
 {
-    if (!club)
-        return;
-    if (club->sprites)
-    {
-        free(club->sprites);
-        club->sprites = NULL;
-    }
-    club->sprite_count = 0;
+	if (!club)
+		return ;
+	if (club->sprites)
+	{
+		free(club->sprites);
+		club->sprites = NULL;
+	}
+		club->sprite_count = 0;
 }
 
 
 void	destroy_tex(t_club *club, t_tex *t)
 {
 	if (!club || !t)
-		return;
+		return ;
 	if (t->img)
 	{
 		mlx_destroy_image(club->mlx, t->img);
