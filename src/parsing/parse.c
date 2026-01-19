@@ -81,7 +81,7 @@ static int	check_elements_complete(t_club *club)
 	if (!club->tex[TEX_NO].path || !club->tex[TEX_SO].path \
 		|| !club->tex[TEX_WE].path || !club->tex[TEX_EA].path)
 		return (err_msg("Error: Missing texture(s)"), -1);
-	if (club->floor_color == -1 || club->ceiling_color == -1)
+	if (club->floor_color == 0 || club->ceiling_color == 0)
 		return (err_msg("Error: Missing color(s)"), -1);
 	return (0);
 }
