@@ -6,11 +6,31 @@
 /*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:35 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:26:36 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/19 16:40:35 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+static void	handle_misc_keys(int keycode, t_club *c)
+{
+	if (keycode == KEY_O)
+		try_open_door(c);
+	else if (keycode == KEY_MAP)
+		c->show_minimap = !c->show_minimap;
+	else if (keycode == KEY_Q)
+	{
+		c->mouse_sens *= 0.8;
+		if (c->mouse_sens < 0.0005)
+			c->mouse_sens = 0.0005;
+	}
+	else if (keycode == KEY_E)
+	{
+		c->mouse_sens *= 1.25;
+		if (c->mouse_sens > 0.05)
+			c->mouse_sens = 0.05;
+	}
+}
 
 int	key_press(int keycode, t_club *c)
 {
@@ -28,10 +48,8 @@ int	key_press(int keycode, t_club *c)
 		c->key_left = 1;
 	else if (keycode == KEY_RIGHT)
 		c->key_right = 1;
-	else if (keycode == KEY_O)
-		try_open_door(c);
-	else if (keycode == KEY_MAP)
-		c->show_minimap = !c->show_minimap;
+	else
+		handle_misc_keys(keycode, c);
 	return (0);
 }
 
