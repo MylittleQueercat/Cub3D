@@ -6,7 +6,6 @@ void	destroy_sprite_textures(t_club *club)
 
 	if (!club || !club->mlx)
 		return ;
-
 	i = 0;
 	while (i < SPRITE_TYPES)
 	{

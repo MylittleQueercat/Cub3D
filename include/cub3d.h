@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:16 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 18:11:17 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/19 18:25:38 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,34 +58,33 @@
 # define SCORE_BORDER_FLASH 0xFFFFFF
 # define SCORE_FILL_FLASH   0xFF4FA3
 
-
 /* Key definitions for Mac and Linux compatibility */
-#ifdef __APPLE__
-# define KEY_ESC	53
-# define KEY_W      13
-# define KEY_S      1
-# define KEY_A      0
-# define KEY_D      2
-# define KEY_Q      12
-# define KEY_E      14
-# define KEY_LEFT   123
-# define KEY_RIGHT  124
-# define KEY_O      31
-# define KEY_MAP    46
+# ifdef __APPLE__
+#  define KEY_ESC	53
+#  define KEY_W	13
+#  define KEY_S      1
+#  define KEY_A      0
+#  define KEY_D      2
+#  define KEY_Q      12
+#  define KEY_E      14
+#  define KEY_LEFT   123
+#  define KEY_RIGHT  124
+#  define KEY_O      31
+#  define KEY_MAP    46
 
-#elif __linux__
-# define KEY_ESC    65307
-# define KEY_W      119
-# define KEY_S      115
-# define KEY_A      97
-# define KEY_D      100
-# define KEY_Q      113
-# define KEY_E      101
-# define KEY_LEFT   65361
-# define KEY_RIGHT  65363
-# define KEY_O      111
- # define KEY_MAP    109
-#endif
+# elif __linux__
+#  define KEY_ESC    65307
+#  define KEY_W      119
+#  define KEY_S      115
+#  define KEY_A      97
+#  define KEY_D      100
+#  define KEY_Q      113
+#  define KEY_E      101
+#  define KEY_LEFT   65361
+#  define KEY_RIGHT  65363
+#  define KEY_O      111
+#  define KEY_MAP    109
+# endif
 
 //纹理结构
 # define TEX_NO		0 //北
@@ -128,7 +127,6 @@ typedef struct s_img
 	int		width;
 	int		height;
 }	t_img;
-
 
 typedef struct s_map
 {
@@ -247,21 +245,21 @@ typedef struct s_ray
 	double	door_dist;
 	int		door_side;
 	double	door_hit_point;
-}  	t_ray;
+}	t_ray;
 
 // 每一格
 typedef struct s_step
 {
-    int     map_x;
-    int     map_y;
-    double  delta_x;
-    double  delta_y;
-    double  dist_x;
-    double  dist_y;
-    int     step_x;
-    int     step_y;
-    int     side;
-}   t_step;
+	int		map_x;
+	int		map_y;
+	double	delta_x;
+	double	delta_y;
+	double	dist_x;
+	double	dist_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+}	t_step;
 
 // Score bar
 typedef struct s_rect
@@ -327,7 +325,6 @@ typedef struct s_club
 	int			key_left;
 	int			key_right;
 }	t_club;
-
 
 //parsing
 bool	is_valid_xpm_file(char *path);
@@ -425,13 +422,14 @@ void	destroy_club(t_club *club);
 // render_minimap.c
 
 int		mm_color_for_cell(char c);
-void	mm_draw_square(t_img *img, int pos[2], int size, int color);
-void	mm_draw_player_pony(t_img *img, int cx, int cy, int tile);
-void	mm_draw_sprite(t_img *img, int cx, int cy, int tile);
+void	mm_draw_square(t_mm_draw *d);
+void	mm_draw_player_pony(t_mm_draw *d, int tile);
+void	mm_draw_sprite(t_mm_draw *d, int tile);
 void	render_minimap(t_club *club);
+int		mm_tile_color(t_club *club, int tx, int ty);
 
 // render_loop.c
-int     render_loop(t_club *club);
+int		render_loop(t_club *club);
 
 // mouse_bonus.c
 int		mouse_press(int button, int x, int y, t_club *club);

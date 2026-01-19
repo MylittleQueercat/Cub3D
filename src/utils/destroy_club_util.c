@@ -50,7 +50,6 @@ void	destroy_sprites(t_club *club)
 		club->sprite_count = 0;
 }
 
-
 void	destroy_tex(t_club *club, t_tex *t)
 {
 	if (!club || !t)
