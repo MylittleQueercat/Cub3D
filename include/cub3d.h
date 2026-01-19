@@ -124,6 +124,15 @@ typedef struct	s_map {
 	int		map_end_index;
 }	t_map;
 
+typedef struct s_mm_draw
+{
+	t_img	*img;
+	int		x;
+	int		y;
+	int		size;
+	int		color;
+}	t_mm_draw;
+
 //player
 typedef struct s_player {
 	char	pos;
@@ -357,7 +366,6 @@ void	draw_stripe_column(t_club *club, int x, t_ray *r, t_stripe *st);
 void	draw_wall_stripe(t_club *club, int x, t_ray *r);
 int		is_wall(t_club *club, int map_x, int map_y);
 
-
 // render_walls.c
 void    render_walls(t_club *club);
 void	init_step(t_club *club, t_ray *ray, t_step *s);
@@ -401,9 +409,13 @@ void	destroy_club(t_club *club);
 
 // render_minimap.c
 int     mm_color_for_cell(char c);
-void    mm_draw_square(t_img *img, int x, int y, int size, int color);
-void    mm_draw_player_pony(t_img *img, int cx, int cy, int tile);
-void    mm_draw_sprite(t_img *img, int cx, int cy, int tile);
+// void    mm_draw_square(t_img *img, int x, int y, int size, int color);
+void	mm_draw_square(t_mm_draw *d);
+// void    mm_draw_player_pony(t_img *img, int cx, int cy, int tile);
+// void    mm_draw_sprite(t_img *img, int cx, int cy, int tile);
+void	mm_draw_player_pony(t_mm_draw *d, int tile);
+void	mm_draw_sprite(t_mm_draw *d, int tile);
+int     mm_tile_color(t_club *club, int tx, int ty);
 void    render_minimap(t_club *club);
 
 // mouse_bonus.c

@@ -30,27 +30,26 @@ static void	mm_clear(t_club *club)
 
 static void	mm_draw_tiles(t_club *club, int px, int py, int tile)
 {
-	int		tx;
-	int		ty;
-	int		sx;
-	int		sy;
-	char	**g;
+	t_mm_draw	d;
+	int			tx;
+	int			ty;
+	int			start_x;
+	int			start_y;
 
-	g = club->map.grid;
-	ty = py - MM_R;
+	d.img = &club->img;
+	d.size = tile;
+	start_x = px - MM_R;
+	start_y = py - MM_R;
+	ty = start_y;
 	while (ty <= py + MM_R)
 	{
-		tx = px - MM_R;
+		tx = start_x;
 		while (tx <= px + MM_R)
 		{
-			sx = MM_ORIGIN_X + (tx - (px - MM_R)) * tile;
-			sy = MM_ORIGIN_Y + (ty - (py - MM_R)) * tile;
-			if (ty < 0 || ty >= club->map.height
-				|| tx < 0 || tx >= club->map.width)
-				mm_draw_square(&club->img, sx, sy, tile, MM_BG);
-			else
-				mm_draw_square(&club->img, sx, sy, tile,
-					mm_color_for_cell(g[ty][tx]));
+			d.x = MM_ORIGIN_X + (tx - start_x) * tile;
+			d.y = MM_ORIGIN_Y + (ty - start_y) * tile;
+			d.color = mm_tile_color(club, tx, ty);
+			mm_draw_square(&d);
 			tx++;
 		}
 		ty++;
@@ -59,24 +58,26 @@ static void	mm_draw_tiles(t_club *club, int px, int py, int tile)
 
 static void	mm_draw_sprites_in_view(t_club *club, int tile)
 {
-	int		i;
-	double	dx;
-	double	dy;
-	int		msx;
-	int		msy;
+	int			i;
+	double		dx;
+	double		dy;
+	t_mm_draw	d;
 
+	d.img = &club->img;
+	d.size = 0;
+	d.color = 0;
 	i = 0;
 	while (i < club->sprite_count)
 	{
-		if (club->sprites[i].found)
+		if (!club->sprites[i].found)
 		{
 			dx = club->sprites[i].x - club->player.x;
 			dy = club->sprites[i].y - club->player.y;
-			msx = MM_ORIGIN_X + MM_R * tile + (int)(dx * tile);
-			msy = MM_ORIGIN_Y + MM_R * tile + (int)(dy * tile);
-			if (msx >= MM_ORIGIN_X && msx < MM_ORIGIN_X + MM_W
-				&& msy >= MM_ORIGIN_Y && msy < MM_ORIGIN_Y + MM_H)
-				mm_draw_sprite(&club->img, msx, msy, tile);
+			d.x = MM_ORIGIN_X + MM_R * tile + (int)(dx * tile);
+			d.y = MM_ORIGIN_Y + MM_R * tile + (int)(dy * tile);
+			if (d.x >= MM_ORIGIN_X && d.x < MM_ORIGIN_X + MM_W
+				&& d.y >= MM_ORIGIN_Y && d.y < MM_ORIGIN_Y + MM_H)
+				mm_draw_sprite(&d, tile);
 		}
 		i++;
 	}
@@ -84,18 +85,21 @@ static void	mm_draw_sprites_in_view(t_club *club, int tile)
 
 void	render_minimap(t_club *club)
 {
-	int	tile;
-	int	px;
-	int	py;
+	int			tile;
+	int			px;
+	int			py;
+	t_mm_draw	d;
 
 	tile = mm_tile_px();
 	px = (int)club->player.x;
 	py = (int)club->player.y;
 	mm_clear(club);
 	mm_draw_tiles(club, px, py, tile);
-	mm_draw_player_pony(&club->img,
-		MM_ORIGIN_X + MM_R * tile + (int)((club->player.x - px) * tile),
-		MM_ORIGIN_Y + MM_R * tile + (int)((club->player.y - py) * tile),
-		tile);
+	d.img = &club->img;
+	d.size = 0;
+	d.color = 0;
+	d.x = MM_ORIGIN_X + MM_R * tile + (int)((club->player.x - px) * tile);
+	d.y = MM_ORIGIN_Y + MM_R * tile + (int)((club->player.y - py) * tile);
+	mm_draw_player_pony(&d, tile);
 	mm_draw_sprites_in_view(club, tile);
 }
