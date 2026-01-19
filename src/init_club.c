@@ -45,9 +45,9 @@ void	init_club_defaults(t_club *club)
 	club->doors = NULL;
 	club->door_count = 0;
 	ft_bzero(&club->door_tex, sizeof(t_tex));
-	club->door_tex.path = ft_strdup("xpms/door_BRUNE.xpm");
+	club->door_tex.path = ft_strdup("xpms/door2.xpm");
 	ft_bzero(&club->door_open_tex, sizeof(t_tex));
-	club->door_open_tex.path = ft_strdup("xpms/door_BRUNE.xpm");
+	club->door_open_tex.path = ft_strdup("xpms/door2.xpm");
 	club->mouse_last_x = WIDTH / 2;
 	club->mouse_in_window = 0;
 	club->show_minimap = 1;
