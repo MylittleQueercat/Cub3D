@@ -1,48 +1,5 @@
 #include "../include/cub3d.h"
 
-// void    render_minimap(t_club *club)
-// {
-//     int     x;
-//     int     y;
-//     int     tile;
-//     int     map_x;
-//     int     map_y;
-//     char    **g;
-
-//     tile = 17;
-//     y = 0;
-//     g = club->map.grid;
-//     while (y < club->map.height)
-//     {
-//         x = 0;
-//         while (x < club->map.width - 1)
-//         {
-//             if (g[y][x] == '1')
-//                 mm_draw_square(&club->img, x * tile, y * tile, tile, MM_WALL);
-//             else if (g[y][x] == 'D')
-//                 mm_draw_square(&club->img, x * tile, y * tile, tile, MM_DOOR);
-//             else
-//                 mm_draw_square(&club->img, x * tile, y * tile, tile, MM_BG);
-//             x++;
-//         }
-//         y++;
-//     }
-//     map_x = (int)(club->player.x * tile);
-//     map_y = (int)(club->player.y * tile);
-//     mm_draw_player_pony(&club->img, map_x, map_y, tile);
-//     int i = 0;
-//     while (i < club->sprite_count)
-//     {
-//         if (club->sprites[i].found)
-//         {
-//             int sx = (int)(club->sprites[i].x * tile);
-//             int sy = (int)(club->sprites[i].y * tile);
-//             mm_draw_sprite(&club->img, sx, sy, tile);
-//         }
-//         i++;
-//     }
-// }
-
 static int	mm_tile_px(void)
 {
 	int	t;

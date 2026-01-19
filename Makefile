@@ -36,14 +36,18 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/doors_run.c \
 		$(SRC_DIR)/draw_door_overlay.c \
 		$(SRC_DIR)/render_mouse.c \
+		$(SRC_DIR)/init_club_defaults.c \
      	$(SRC_DIR)/init_club.c \
     	$(SRC_DIR)/render_background.c \
+		$(SRC_DIR)/wall_stripe_utils.c \
 		$(SRC_DIR)/walls_util.c \
 		$(SRC_DIR)/img_utils.c \
 		$(SRC_DIR)/move.c \
 		$(SRC_DIR)/win_utils.c \
 		$(SRC_DIR)/textures.c \
 		$(SRC_DIR)/render_walls.c \
+		$(SRC_DIR)/raycast_init_step.c \
+		$(SRC_DIR)/raycast_walk.c \
 		$(SRC_DIR)/render_minimap.c \
 		$(SRC_DIR)/render_minimap_util.c \
 		$(SRC_DIR)/update_collectibles.c \

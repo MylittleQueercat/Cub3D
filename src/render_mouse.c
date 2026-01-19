@@ -18,12 +18,8 @@ int	mouse_release(int button, int x, int y, t_club *club)
 	return (0);
 }
 
-int	mouse_move(int x, int y, t_club *club)
+static int	mouse_can_rotate(int x, t_club *club)
 {
-	int		dx;
-	double	rot_speed;
-
-	(void)y;
 	if (!club->mouse_left)
 	{
 		club->mouse_in_window = 0;
@@ -40,6 +36,17 @@ int	mouse_move(int x, int y, t_club *club)
 		club->mouse_in_window = 1;
 		return (0);
 	}
+	return (1);
+}
+
+int	mouse_move(int x, int y, t_club *club)
+{
+	int		dx;
+	double	rot_speed;
+
+	(void)y;
+	if (!mouse_can_rotate(x, club))
+		return (0);
 	dx = x - club->mouse_last_x;
 	if (dx == 0)
 		return (0);

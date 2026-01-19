@@ -151,6 +151,8 @@ typedef struct s_stripe
 	int		tex_x;
 	double	step;
 	double	tex_pos;
+    t_tex   *tex;
+    int     y;
 }   t_stripe;
 
 typedef struct	s_door
@@ -258,6 +260,12 @@ typedef struct s_bar
     int    fill;
 }   t_bar;
 
+// minimap
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
 
 //club
 typedef struct s_club
@@ -336,13 +344,20 @@ int		init_club(t_club *club);
 // render_background.c
 void	render_background(t_club *club);
 
-// raycast.c
-int 	is_wall(t_club *club, int map_x, int map_y);
-void    draw_wall_stripe(t_club *club, int x, t_ray *ray);
+// walls_util.c
+void	select_stripe_tex(t_club *club, t_ray *r, t_stripe *st);
+int		compute_stripe_tex_x(t_club *club, t_ray *r, t_tex *tex);
+void	apply_door_shift(t_club *club, t_ray *r, t_stripe *st);
+void	draw_stripe_column(t_club *club, int x, t_ray *r, t_stripe *st);
+void	draw_wall_stripe(t_club *club, int x, t_ray *r);
+int		is_wall(t_club *club, int map_x, int map_y);
+
 
 // render_walls.c
-void	draw_wall(t_club *club, int x, t_ray *ray);
 void    render_walls(t_club *club);
+void	init_step(t_club *club, t_ray *ray, t_step *s);
+void	walk_until_wall(t_club *club, t_step *s, t_ray *ray);
+void	compute_wall(t_ray *ray, t_step *s);
 
 // move.c
 void    move_forward_backward(t_club *club, double move_speed);
@@ -367,9 +382,6 @@ int     collide_sprite_at(t_club *club, double nx, double ny);
 
 void	try_open_door(t_club *club);
 int		load_sprites(t_club *club);
-
-//int	load_door_textures(t_club *club);
-// void	render_doors(t_club *club);
 
 //utils.c
 void	err_msg(char *msg);
@@ -408,7 +420,6 @@ void    draw_door_overlay(t_club *club, int x, t_ray *ray);
 
 void    update_collectibles(t_club *club);
 
-void    draw_win_text(t_club *club);
 int     load_win_banner(t_club *c);
 
 /* rect primitives */

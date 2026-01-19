@@ -1,16 +1,4 @@
 #include "../include/cub3d.h"
-#include <stdio.h>
-
-// int	close_window(t_club *club)
-// {
-//     destroy_textures(club);
-// 	destroy_image(club);
-
-// 	if (club->win)
-// 		mlx_destroy_window(club->mlx, club->win);
-// 	exit(0);
-// 	return (0);
-// }
 
 int	close_window(t_club *club)
 {
@@ -32,6 +20,42 @@ int	close_window(t_club *club)
 	return (0);
 }
 
+static int	handle_move_keys(int keycode, t_club *club, double move_speed)
+{
+	if (keycode == KEY_W)
+		move_forward_backward(club, move_speed);
+	else if (keycode == KEY_S)
+		move_forward_backward(club, -move_speed);
+	else if (keycode == KEY_A)
+		strafe_left_right(club, -move_speed);
+	else if (keycode == KEY_D)
+		strafe_left_right(club, move_speed);
+	else
+		return (0);
+	return (1);
+}
+
+static int	handle_rot_keys(int keycode, t_club *club, double rot_speed)
+{
+	if (keycode == KEY_LEFT)
+		rotate_player(club, -rot_speed);
+	else if (keycode == KEY_RIGHT)
+		rotate_player(club, rot_speed);
+	else
+		return (0);
+	return (1);
+}
+
+static void	update_mouse_sens(t_club *club, double factor,
+	double min, double max)
+{
+	club->mouse_sens *= factor;
+	if (club->mouse_sens < min)
+		club->mouse_sens = min;
+	if (club->mouse_sens > max)
+		club->mouse_sens = max;
+}
+
 int	key_hook(int keycode, t_club *club)
 {
 	double	move_speed;
@@ -41,33 +65,17 @@ int	key_hook(int keycode, t_club *club)
 	rot_speed = 0.09;
 	if (keycode == KEY_ESC)
 		close_window(club);
-	else if (keycode == KEY_W)
-		move_forward_backward(club, move_speed);
-	else if (keycode == KEY_S)
-		move_forward_backward(club, -move_speed);
-	else if (keycode == KEY_A)
-		strafe_left_right(club, -move_speed);
-	else if (keycode == KEY_D)
-		strafe_left_right(club, +move_speed);
-	else if (keycode == KEY_LEFT)
-		rotate_player(club, -rot_speed);
-	else if (keycode == KEY_RIGHT)
-		rotate_player(club, +rot_speed);
+	else if (handle_move_keys(keycode, club, move_speed))
+		;
+	else if (handle_rot_keys(keycode, club, rot_speed))
+		;
 	else if (keycode == KEY_O)
 		try_open_door(club);
 	else if (keycode == KEY_MAP)
 		club->show_minimap = !club->show_minimap;
 	else if (keycode == KEY_Q)
-	{
-		club->mouse_sens *= 0.8;
-		if (club->mouse_sens < 0.0005)
-			club->mouse_sens = 0.0005;
-	}
+		update_mouse_sens(club, 0.8, 0.0005, 0.05);
 	else if (keycode == KEY_E)
-	{
-		club->mouse_sens *= 1.25;
-		if (club->mouse_sens > 0.05)
-			club->mouse_sens = 0.05;
-	}
+		update_mouse_sens(club, 1.25, 0.0005, 0.05);
 	return (0);
 }
