@@ -13,6 +13,15 @@ static int	sprite_type_from_char(char c)
 	return (-1);
 }
 
+static void	init_sprite_params(t_sprite *s, int x, int y)
+{
+	s->radius = 0.6;
+	s->visible = false;
+	s->distance = 0;
+	s->phase = (y * 7 + x * 13) * 0.37;
+	s->found = false;
+}
+
 bool	fill_sprite_array(t_club *club)
 {
 	int	y;
@@ -20,30 +29,23 @@ bool	fill_sprite_array(t_club *club)
 	int	idx;
 	int	type;
 
-	y = 0;
+	y = -1;
 	idx = 0;
-	while (club->map.grid[y] && idx < club->sprite_count)
+	while (club->map.grid[++y] && idx < club->sprite_count)
 	{
-		x = 0;
-		while (club->map.grid[y][x] && idx < club->sprite_count)
+		x = -1;
+		while (club->map.grid[y][++x] && idx < club->sprite_count)
 		{
 			type = sprite_type_from_char(club->map.grid[y][x]);
-			if (type != -1)
-			{
-				club->sprites[idx].x = x + 0.5;
-				club->sprites[idx].y = y + 0.5;
-				club->sprites[idx].type = type;
-				club->sprites[idx].radius = 0.6;
-				club->sprites[idx].visible = false;
-				club->sprites[idx].distance = 0;
-				club->sprites[idx].phase = (y * 7 + x * 13) * 0.37;
-				club->sprites[idx].found = false;
-				club->map.grid[y][x] = '0';
-				idx++;
-			}
-			x++;
+			if (type == -1)
+				continue ;
+			club->sprites[idx].x = x + 0.5;
+			club->sprites[idx].y = y + 0.5;
+			club->sprites[idx].type = type;
+			init_sprite_params(&club->sprites[idx], x, y);
+			club->map.grid[y][x] = '0';
+			idx++;
 		}
-		y++;
 	}
 	return (true);
 }

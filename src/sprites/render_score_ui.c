@@ -29,23 +29,22 @@ static t_rect	score_panel_rect(void)
 
 void	render_score_ui(t_club *club)
 {
-	t_rect	panel;
+	t_rect	p;
 	t_bar	bar;
-	int		found;
 	int		scale;
+	int		found;
 
 	scale = 2;
-	panel = score_panel_rect();
+	p = score_panel_rect();
 	found = score_count_found(club);
-	ui_draw_rect(&club->img, panel, SCORE_BG);
-	ui_draw_border(&club->img, panel, SCORE_BORDER, 2);
-	ui_draw_text_score(&club->img, panel.x + SCORE_PAD,
-		panel.y + ((panel.h - (7 * scale)) / 2),
-		SCORE_TEXT, scale);
-	bar.r.x = panel.x + SCORE_PAD + ui_score_label_width(scale) + 12;
-	bar.r.y = panel.y + 8;
-	bar.r.w = panel.x + panel.w - SCORE_PAD - bar.r.x;
-	bar.r.h = panel.h - 16;
+	ui_draw_rect(&club->img, p, SCORE_BG);
+	ui_draw_border(&club->img, p, SCORE_BORDER, 2);
+	ui_draw_text_score(&club->img, (int [2]){p.x + SCORE_PAD, \
+		p.y + ((p.h - (7 * scale)) / 2)}, SCORE_TEXT, scale);
+	bar.r.x = p.x + SCORE_PAD + ui_score_label_width(scale) + 12;
+	bar.r.y = p.y + 8;
+	bar.r.w = p.x + p.w - SCORE_PAD - bar.r.x;
+	bar.r.h = p.h - 16;
 	bar.cur = found;
 	bar.total = club->sprite_count;
 	bar.bg = SCORE_BG;

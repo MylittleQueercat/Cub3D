@@ -432,7 +432,7 @@ void    ui_draw_rect(t_img *img, t_rect r, int color);
 void    ui_draw_border(t_img *img, t_rect r, int color, int t);
 
 /* score font */
-void    ui_draw_text_score(t_img *img, int x, int y, int color, int scale);
+void	ui_draw_text_score(t_img *img, int pos[2], int color, int scale);
 int     ui_score_label_width(int scale);
 
 /* progress bar */

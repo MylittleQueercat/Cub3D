@@ -1,5 +1,15 @@
 #include "../include/cub3d.h"
 
+static int	score_step(int scale)
+{
+	return ((5 * scale) + (2 * scale));
+}
+
+int	ui_score_label_width(int scale)
+{
+	return (score_step(scale) * 5);
+}
+
 static void	bar_clamp(t_bar *b)
 {
 	if (b->total <= 0)

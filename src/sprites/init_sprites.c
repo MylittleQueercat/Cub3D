@@ -24,38 +24,6 @@ int	count_char_in_map(char **map, char target)
 	return (count);
 }
 
-// static bool	fill_sprite_array(t_club *club)
-// {
-// 	int	y;
-// 	int	x;
-// 	int	idx;
-
-// 	y = 0;
-// 	idx = 0;
-// 	while (club->map.grid[y] && idx < club->sprite_count)
-// 	{
-// 		x = 0;
-// 		while (club->map.grid[y][x] && idx < club->sprite_count)
-// 		{
-// 			if (club->map.grid[y][x] == '2')
-// 			{
-// 				club->sprites[idx].x = x + 0.5;
-// 				club->sprites[idx].y = y + 0.5;
-// 				club->sprites[idx].radius = 0.40;
-// 				club->sprites[idx].visible = false;
-// 				club->sprites[idx].distance = 0;
-// 				club->sprites[idx].phase = (y * 7 + x * 13) * 0.37;
-// 				club->sprites[idx].found = false;
-// 				//club->sprites[idx].img = NULL;
-// 				idx++;
-// 			}
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// 	return (true);
-// }
-
 bool	init_sprits(t_club *club)
 {
 	if (!club || !club->map.grid)

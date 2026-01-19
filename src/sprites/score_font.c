@@ -1,64 +1,87 @@
 #include "../include/cub3d.h"
 
-static const unsigned char g_font_s[7] = {0b01110,0b10001,0b10000,0b01110,0b00001,0b10001,0b01110};
-static const unsigned char g_font_c[7] = {0b01110,0b10001,0b10000,0b10000,0b10000,0b10001,0b01110};
-static const unsigned char g_font_o[7] = {0b01110,0b10001,0b10001,0b10001,0b10001,0b10001,0b01110};
-static const unsigned char g_font_r[7] = {0b11110,0b10001,0b10001,0b11110,0b10100,0b10010,0b10001};
-static const unsigned char g_font_e[7] = {0b11111,0b10000,0b10000,0b11110,0b10000,0b10000,0b11111};
-
-static void	draw_glyph5x7(t_img *img, int x, int y,
-	const unsigned char *g, int color, int scale)
+static unsigned char	get_font_data(char c, int row)
 {
-	int	r;
-	int	c;
+	static const unsigned char s[7] \
+		= {0x0E, 0x11, 0x10, 0x0E, 0x01, 0x11, 0x0E};
+	static const unsigned char c_f[7] \
+		= {0x0E, 0x11, 0x10, 0x10, 0x10, 0x11, 0x0E};
+	static const unsigned char o[7] \
+		= {0x0E, 0x11, 0x11, 0x11, 0x11, 0x11, 0x0E};
+	static const unsigned char r[7] \
+		= {0x1E, 0x11, 0x11, 0x1E, 0x14, 0x12, 0x11};
+	static const unsigned char e[7] \
+		= {0x1F, 0x10, 0x10, 0x1E, 0x10, 0x10, 0x1F};
+	if (c == 'S')
+		return (s[row]);
+	if (c == 'C')
+		return (c_f[row]);
+	if (c == 'O')
+		return (o[row]);
+	if (c == 'R')
+		return (r[row]);
+	if (c == 'E')
+		return (e[row]);
+	return (0);
+}
+
+static void	draw_scaled_pixel(t_img *img, int pos[2], int color, int scale)
+{
 	int	px;
 	int	py;
+
+	py = 0;
+	while (py < scale)
+	{
+		px = 0;
+		while (px < scale)
+		{
+			put_pixel(img, pos[0] + px, pos[1] + py, color);
+			px++;
+		}
+		py++;
+	}
+}
+
+static void	draw_glyph5x7(t_img *img, int pos[2], char c, int params[2])
+{
+	int	r;
+	int	col;
+	int	draw_pos[2];
 
 	r = 0;
 	while (r < 7)
 	{
-		c = 0;
-		while (c < 5)
+		col = 0;
+		while (col < 5)
 		{
-			if (g[r] & (1 << (4 - c)))
+			if (get_font_data(c, r) & (1 << (4 - col)))
 			{
-				py = 0;
-				while (py < scale)
-				{
-					px = 0;
-					while (px < scale)
-					{
-						put_pixel(img, x + c * scale + px,
-							y + r * scale + py, color);
-						px++;
-					}
-					py++;
-				}
+				draw_pos[0] = pos[0] + col * params[1];
+				draw_pos[1] = pos[1] + r * params[1];
+				draw_scaled_pixel(img, draw_pos, params[0], params[1]);
 			}
-			c++;
+			col++;
 		}
 		r++;
 	}
 }
 
-static int	score_step(int scale)
+void	ui_draw_text_score(t_img *img, int pos[2], int color, int scale)
 {
-	return ((5 * scale) + (2 * scale));
-}
+	int		step;
+	char	*str;
+	int		i;
+	int		curr_p[2];
 
-void	ui_draw_text_score(t_img *img, int x, int y, int color, int scale)
-{
-	int	step;
-
-	step = score_step(scale);
-	draw_glyph5x7(img, x + step * 0, y, g_font_s, color, scale);
-	draw_glyph5x7(img, x + step * 1, y, g_font_c, color, scale);
-	draw_glyph5x7(img, x + step * 2, y, g_font_o, color, scale);
-	draw_glyph5x7(img, x + step * 3, y, g_font_r, color, scale);
-	draw_glyph5x7(img, x + step * 4, y, g_font_e, color, scale);
-}
-
-int	ui_score_label_width(int scale)
-{
-	return (score_step(scale) * 5);
+	step = (5 * scale) + (2 * scale);
+	str = "SCORE";
+	i = 0;
+	curr_p[1] = pos[1];
+	while (str[i])
+	{
+		curr_p[0] = pos[0] + (i * step);
+		draw_glyph5x7(img, curr_p, str[i], (int [2]){color, scale});
+		i++;
+	}
 }

@@ -18,26 +18,26 @@ void	ui_draw_rect(t_img *img, t_rect r, int color)
 	}
 }
 
-static void	draw_hline(t_img *img, int x, int y, int w, int color)
+static void	draw_hline(t_img *img, int pos[2], int w, int color)
 {
 	int	i;
 
 	i = 0;
 	while (i < w)
 	{
-		put_pixel(img, x + i, y, color);
+		put_pixel(img, pos[0] + i, pos[1], color);
 		i++;
 	}
 }
 
-static void	draw_vline(t_img *img, int x, int y, int h, int color)
+static void	draw_vline(t_img *img, int pos[2], int h, int color)
 {
 	int	i;
 
 	i = 0;
 	while (i < h)
 	{
-		put_pixel(img, x, y + i, color);
+		put_pixel(img, pos[0], pos[1] + i, color);
 		i++;
 	}
 }
@@ -49,10 +49,10 @@ void	ui_draw_border(t_img *img, t_rect r, int color, int t)
 	k = 0;
 	while (k < t)
 	{
-		draw_hline(img, r.x, r.y + k, r.w, color);
-		draw_hline(img, r.x, r.y + r.h - 1 - k, r.w, color);
-		draw_vline(img, r.x + k, r.y, r.h, color);
-		draw_vline(img, r.x + r.w - 1 - k, r.y, r.h, color);
+		draw_hline(img, (int [2]){r.x, r.y + k}, r.w, color);
+		draw_hline(img, (int [2]){r.x, r.y + r.h - 1 - k}, r.w, color);
+		draw_vline(img, (int [2]){r.x + k, r.y}, r.h, color);
+		draw_vline(img, (int [2]){r.x + r.w - 1 - k, r.y}, r.h, color);
 		k++;
 	}
 }

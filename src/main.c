@@ -76,29 +76,29 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	printf ("parsing success\n"); //debug
-	// init_club(&club);
-	// if (load_all_textures(&club))
-	// 	return (err_msg("Error: texture load failed"), 1);
-	// if (load_sprites(&club))
-	// 	return (err_msg("Error: sprite load failed"), 1);
-	// // if (init_doors(&club))
-    // // 	return (err_msg("Error: init_doors failed"), 1);
-	// // if (load_door_textures(&club))
-	// // 	return (err_msg("Error: door load failed"), 1);
-	// mlx_hook(club.win, 17, 0, close_window, &club);
-	// mlx_key_hook(club.win, key_hook, &club);
-	// mlx_hook(club.win, 4, 1L << 2, mouse_press, &club);    // ButtonPress
-	// mlx_hook(club.win, 5, 1L << 3, mouse_release, &club); 
-	// mlx_hook(club.win, 6, 1L << 6, mouse_move, &club);
-	// mlx_hook(club.win, 2, 1L<<0, key_press, &club);     /* KeyPress */
-	// mlx_hook(club.win, 3, 1L<<1, key_release, &club);   /* KeyRelease */
-	// mlx_loop_hook(club.mlx, render_loop, &club);
-	// mlx_loop(club.mlx);
-	// // render_background(&club);
-	// // render_walls(&club);
-	// // render_minimap(&club);
-	// // mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
-	// destroy_club(&club);
-	// free_array(club.file);
+	init_club(&club);
+	if (load_all_textures(&club))
+		return (err_msg("Error: texture load failed"), 1);
+	if (load_sprites(&club))
+		return (err_msg("Error: sprite load failed"), 1);
+	// if (init_doors(&club))
+    // 	return (err_msg("Error: init_doors failed"), 1);
+	// if (load_door_textures(&club))
+	// 	return (err_msg("Error: door load failed"), 1);
+	mlx_hook(club.win, 17, 0, close_window, &club);
+	mlx_key_hook(club.win, key_hook, &club);
+	mlx_hook(club.win, 4, 1L << 2, mouse_press, &club);    // ButtonPress
+	mlx_hook(club.win, 5, 1L << 3, mouse_release, &club); 
+	mlx_hook(club.win, 6, 1L << 6, mouse_move, &club);
+	mlx_hook(club.win, 2, 1L<<0, key_press, &club);     /* KeyPress */
+	mlx_hook(club.win, 3, 1L<<1, key_release, &club);   /* KeyRelease */
+	mlx_loop_hook(club.mlx, render_loop, &club);
+	mlx_loop(club.mlx);
+	// render_background(&club);
+	// render_walls(&club);
+	// render_minimap(&club);
+	// mlx_put_image_to_window(club->mlx, club->win, club->img.img, 0, 0);
+	destroy_club(&club);
+	free_array(club.file);
 	return (0);
 }
