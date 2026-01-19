@@ -63,23 +63,51 @@ OBJ = $(addprefix $(OBJDIR)/,$(subst $(SRC_DIR)/,,$(SRC:.c=.o)))
 all: $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@echo ""
+	@echo "\033[1;35m"
+	@echo " ________  ___  ________   ___  __                 "
+	@echo "|\   __  \|\  \|\   ___  \|\  \|\  \               "
+	@echo "\ \  \|\  \ \  \ \  \\ \  \ \  \/  /|_             "
+	@echo " \ \   ____\ \  \ \  \\ \  \ \   ___  \            "
+	@echo "  \ \  \___|\ \  \ \  \\ \  \ \  \\ \  \           "
+	@echo "   \ \__\    \ \__\ \__\\ \__\ \__\\ \__\          "
+	@echo " ___\|__|  ___\|__|\|__|_\|__|\|__| \|__|  ___     "
+	@echo "|\   __  \|\   __  \|\   ___  \    |\  \  /  /|    "
+	@echo "\ \  \|\  \ \  \|\  \ \  \\ \  \   \ \  \/  / /    "
+	@echo " \ \   ____\ \  \\\  \ \  \\ \  \   \ \    / /     "
+	@echo "  \ \  \___|\ \  \\\  \ \  \\ \  \   \/  /  /      "
+	@echo "   \ \__\    \ \_______\ \__\\ \__\__/  / /        "
+	@echo "    \|__|     \|_______|\|__| \|__|\___/ /         "
+	@echo " ________  ___       ___  ___  ___\|___|/          "
+	@echo "|\   ____\|\  \     |\  \|\  \|\   __  \           "
+	@echo "\ \  \___|\ \  \    \ \  \\\  \ \  \|\ /_          "
+	@echo " \ \  \    \ \  \    \ \  \\\  \ \   __  \         "
+	@echo "  \ \  \____\ \  \____\ \  \\\  \ \  \|\  \        "
+	@echo "   \ \_______\ \_______\ \_______\ \_______\       "
+	@echo "    \|_______|\|_______|\|_______|\|_______|       "
+	@echo "\033[0m"
 
 $(OBJDIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@ 
+
+depend:
+	@$(CC) -MM $(SRC) -Iinclude -Iminilibx > .depend
+
+-include .depend
 
 clean:
-	rm -rf $(OBJDIR)
+	@rm -rf $(OBJDIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) fclean -C $(LIBFT_DIR)
+	@rm -f $(NAME)
+	@$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re depend
