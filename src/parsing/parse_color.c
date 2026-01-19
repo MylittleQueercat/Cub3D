@@ -39,16 +39,13 @@ int	parse_color(char *line, t_club *club)
 {
 	char	**nums;
 	char	type;
-	int		r;
-	int		g;
-	int		b;
+	int		rgb[3];
 
 	while (*line == ' ')
 		line++;
 	if (*line != 'F' && *line != 'C')
 		return (err_msg("Error: unknown color type"), -1);
 	type = *line;
-	//printf("The type : %c\n", type);
 	if (type == 'F' && club->floor_color != 0)
 		return (err_msg("Error: floor color defined multiple times"), -1);
 	if (type == 'C' && club->ceiling_color != 0)
@@ -57,12 +54,12 @@ int	parse_color(char *line, t_club *club)
 	while (*line == ' ')
 		line++;
 	nums = ft_split(line, ',');
-	if (!validate_color_values(nums, &r, &g, &b))
+	if (!validate_color_values(nums, &rgb[0], &rgb[1], &rgb[2]))
 		return (free_array(nums), -1);
 	if (type == 'F')
-		club->floor_color = (r << 16) | (g << 8) | b;
+		club->floor_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	else
-		club->ceiling_color = (r << 16) | (g << 8) | b;
+		club->ceiling_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	free_array(nums);
 	return (0);
 }

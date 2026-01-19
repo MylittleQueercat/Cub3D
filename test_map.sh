@@ -13,7 +13,7 @@ echo "========== TESTING GOOD MAPS =========="
 for map in "$GOOD_DIR"/*.cub
 do
 	echo "Testing $map"
-	$EXEC "$map" > /dev/null 2>&1
+	$EXEC "$map"
 	if [ $? -eq 0 ]
 	then
 		echo -e "${GREEN}OK${RESET}"
@@ -28,7 +28,7 @@ echo "========== TESTING BAD MAPS =========="
 for map in "$BAD_DIR"/*.cub
 do
 	echo "Testing $map"
-	$EXEC "$map" > /dev/null 2>&1
+	$EXEC "$map"
 	if [ $? -ne 0 ]
 	then
 		echo -e "${GREEN}OK (correctly rejected)${RESET}"

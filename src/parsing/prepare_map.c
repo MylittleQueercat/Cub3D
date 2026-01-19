@@ -1,47 +1,27 @@
 #include "../include/cub3d.h"
 
-static char **copy_map(t_club *club)
-{
-	char **map;
-	int	i;
-
-	map = malloc(sizeof(char *) * (club->map.height + 1));
-	if (!map)
-		return (NULL);
-	i = 0;
-	while (i < club->map.height)
-	{
-		map[i] = ft_strdup(club->map.grid[i]);
-		if (!map[i])
-			return (free_array(map), NULL);
-		i++;
-	}
-	map[i] = NULL;
-	return (map);
-}
-
 /*
 ** Flood fill used to verify that the map is closed.
 ** Returns false if out of bounds or reaching a space (' ').
 ** Returns true for walls ('1') or visited cells ('v').
 ** Marks floor cells as 'v' and checks all 4 directions.
 */
-static bool	flood_fill_check(char **map, int x, int y, int height, int width)
+static bool	flood_fill_check(t_club *club, char **map, int x, int y)
 {
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (y < 0 || y >= club->map.height || x < 0 || x >= (int)ft_strlen(map[y]))
 		return (false);
 	if (map[y][x] == ' ')
-		return (true);
+		return (false);
 	if (map[y][x] == '1' || map[y][x] == 'v')
 		return (true);
 	map[y][x] = 'v';
-	if (!flood_fill_check(map, x, y -1, height, width))
+	if (!flood_fill_check(club, map, x, y - 1))
 		return (false);
-	if (!flood_fill_check(map, x, y + 1, height, width))
+	if (!flood_fill_check(club, map, x, y + 1))
 		return (false);
-	if (!flood_fill_check(map, x -1, y, height, width))
+	if (!flood_fill_check(club, map, x - 1, y))
 		return (false);
-	if (!flood_fill_check(map, x + 1, y, height, width))
+	if (!flood_fill_check(club, map, x + 1, y))
 		return (false);
 	return (true);
 }
@@ -122,8 +102,8 @@ bool	prepare_map(t_club *club)
 		return (false);
 	if (!find_player_position(club) || !init_player_direction(club))
 		return (free_array(map_copy), false);
-	if (!flood_fill_check(map_copy, (int)club->player.x, \
-		(int)club->player.y, club->map.height, club->map.width))
+	if (!flood_fill_check(club, map_copy, (int)club->player.x, \
+		(int)club->player.y))
 		return (free_array(map_copy), false);
 	free_array(map_copy);
 	return (true);

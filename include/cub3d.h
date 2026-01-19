@@ -322,6 +322,11 @@ int		parsing(t_club *club, char **file);
 bool	check_map_valid(t_club *club);
 bool	is_empty_line(char *line);
 bool	is_map_at_the_end(t_club *club, char **file);
+bool	is_valid_char(char c, bool bonus);
+bool	check_valid_chars(t_club *club);
+bool	check_player_count(t_club *club);
+bool	check_first_last_row(t_club *club);
+char	**copy_map(t_club *club);
 
 // hooks.c
 int		close_window(t_club *club);

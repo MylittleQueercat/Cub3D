@@ -33,7 +33,7 @@ int	count_sprites_all(char **map)
 int	collide_sprite_at(t_club *club, double nx, double ny)
 {
 	const double pr = 0.25;
-	int i;
+	int	i;
 
 	if (!club->sprites || club->sprite_count <= 0)
 		return (0);

@@ -67,7 +67,6 @@ int	parse_texture(char *line, t_club *club)
 	tex_ptr = get_texture_ptr(club, line);
 	if (!tex_ptr)
 		return (err_msg("Error: unknown texture type"), -1);
-	//printf("Debug: tex_ptr address = %p for line = '%s'\n", (void *)tex_ptr, line);
 	while (ft_is_whitespace(*line))
 		line++;
 	line += 2;
