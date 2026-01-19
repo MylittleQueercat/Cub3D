@@ -61,7 +61,7 @@ static int	init_door_stripe(t_club *c, t_ray *r, t_tex **tex, t_stripe *st)
 void	draw_door_overlay(t_club *club, int x, t_ray *ray)
 {
 	t_tex			*tex;
-	t_stripe	st;
+	t_stripe		st;
 	int				y;
 	int				tex_y;
 	int				color;

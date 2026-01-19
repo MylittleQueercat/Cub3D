@@ -54,18 +54,6 @@ static int	load_texture(t_club *club, t_tex *tex)
 	return (0);
 }
 
-// int	load_all_textures(t_club *club)
-// {
-// 	if (load_texture(club, &club->tex[TEX_NO]) \
-// 		|| load_texture(club, &club->tex[TEX_SO]) \
-// 		|| load_texture(club, &club->tex[TEX_WE]) \
-// 		|| load_texture(club, &club->tex[TEX_EA]) \
-// 		|| load_texture(club, &club->door_tex) \
-// 		|| load_texture(club, &club->door_open_tex))
-// 		return (1);
-// 	return (0);
-// }
-
 int	load_all_textures(t_club *club)
 {
 	int	fail;
@@ -114,7 +102,8 @@ int	load_all_textures(t_club *club)
 	}
 	if (load_texture(club, &club->door_open_tex))
 	{
-		printf("Warning: failed to load door_open_tex (%s)\n", club->door_open_tex.path);
+		printf("Warning: failed to load door_open_tex (%s)\n",
+			club->door_open_tex.path);
 		fail = 1;
 		club->door_open_tex.img = NULL;
 	}

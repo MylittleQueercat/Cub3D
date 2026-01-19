@@ -12,8 +12,6 @@ bool	init_doors(t_club *club)
 	club->doors = ft_calloc(club->door_count, sizeof(t_door));
 	if (!club->doors)
 		return (false);
-	// door[i].state = DOOR_CLOSED;
-	// door[i].t = 0.0;
 	i = 0;
 	y = 0;
 	while (y < club->map.height)
@@ -25,7 +23,6 @@ bool	init_doors(t_club *club)
 			{
 				club->doors[i].x = x;
 				club->doors[i].y = y;
-				// club->doors[i].is_open = false;
 				club->doors[i].state = DOOR_CLOSED;
 				club->doors[i].t = 0.0;
 				i++;

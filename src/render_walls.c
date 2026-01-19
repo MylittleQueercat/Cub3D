@@ -61,7 +61,7 @@ static void	init_step(t_club *club, t_ray *ray, t_step *s)
 //     }
 // }
 
-static void walk_until_wall(t_club *club, t_step *s, t_ray *ray)
+static void	walk_until_wall(t_club *club, t_step *s, t_ray *ray)
 {
 	int	hit;
 
@@ -155,11 +155,6 @@ void	render_walls(t_club *club)
 		compute_wall(&ray, &s);
 		club->z_buffer[x] = ray.perp_wall_dist;
 		draw_wall(club, x, &ray);
-		// if (ray.has_door && ray.door_dist > 0 && ray.door_dist < ray.perp_wall_dist)
-		// {
-		//     club->z_buffer[x] = ray.door_dist;
-		//     draw_door_overlay(club, x, &ray);
-		// }
 		x++;
 	}
 }
