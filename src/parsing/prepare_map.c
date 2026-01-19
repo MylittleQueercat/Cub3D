@@ -116,7 +116,7 @@ bool	prepare_map(t_club *club)
 	char	**map_copy;
 
 	if (!club || !club->map.grid)
-    	return false;
+		return (false);
 	map_copy = copy_map(club);
 	if (!map_copy)
 		return (false);

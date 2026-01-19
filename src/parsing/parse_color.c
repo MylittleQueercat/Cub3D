@@ -1,6 +1,6 @@
 #include "../include/cub3d.h"
 
-static bool is_all_number(char *s)
+static bool	is_all_number(char *s)
 {
 	int	i;
 
@@ -34,7 +34,8 @@ static bool	validate_color_values(char **nums, int *r, int *g, int *b)
 		return (err_msg("Error: color values out of range: 0 ~ 255"), false);
 	return (true);
 }
-int parse_color(char *line, t_club *club)
+
+int	parse_color(char *line, t_club *club)
 {
 	char	**nums;
 	char	type;

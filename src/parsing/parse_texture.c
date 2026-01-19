@@ -2,8 +2,8 @@
 
 bool	is_valid_xpm_file(char *path)
 {
-	int len;
-	int fd;
+	int	len;
+	int	fd;
 
 	if (!path)
 		return (false);
@@ -17,7 +17,7 @@ bool	is_valid_xpm_file(char *path)
 	return (true);
 }
 
-static char *extract_path(char *line)
+static char	*extract_path(char *line)
 {
 	char	*path;
 	int		start;
@@ -41,6 +41,7 @@ static char *extract_path(char *line)
 	path[len] = '\0';
 	return (path);
 }
+
 static t_tex	*get_texture_ptr(t_club *club, char *line)
 {
 	while (ft_is_whitespace(*line))
@@ -56,10 +57,10 @@ static t_tex	*get_texture_ptr(t_club *club, char *line)
 	return (NULL);
 }
 
-int parse_texture(char *line, t_club *club)
+int	parse_texture(char *line, t_club *club)
 {
-	t_tex *tex_ptr;
-	char *path;
+	t_tex	*tex_ptr;
+	char	*path;
 
 	if (*line == '\0')
 		return (err_msg("Error: empty texture line"), -1);
@@ -74,7 +75,7 @@ int parse_texture(char *line, t_club *club)
 		line++;
 	path = extract_path(line);
 	if (!path)
-		return (err_msg("Error: texture path missing"),-1);
+		return (err_msg("Error: texture path missing"), -1);
 	if (!is_valid_xpm_file(path))
 		return (free(path), err_msg("Error: invalid xmp file"), -1);
 	if (tex_ptr->path)

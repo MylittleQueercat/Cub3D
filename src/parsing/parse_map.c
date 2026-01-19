@@ -58,7 +58,7 @@ static bool	check_player_count(t_club *club)
 static bool	check_first_last_row(t_club *club)
 {
 	int	x;
-	int last_y;
+	int	last_y;
 
 	if (!club->map.height)
 		return (false);
@@ -66,14 +66,16 @@ static bool	check_first_last_row(t_club *club)
 	x = 0;
 	while (club->map.grid[0][x])
 	{
-		if (club->map.grid[0][x] != '1' && !ft_is_whitespace(club->map.grid[0][x]))
+		if (club->map.grid[0][x] != '1' \
+			&& !ft_is_whitespace(club->map.grid[0][x]))
 			return (false);
 		x++;
 	}
 	x = 0;
 	while (club->map.grid[last_y][x])
 	{
-		if (club->map.grid[last_y][x] != '1' && !ft_is_whitespace(club->map.grid[last_y][x]))
+		if (club->map.grid[last_y][x] != '1' \
+			&& !ft_is_whitespace(club->map.grid[last_y][x]))
 			return (false);
 		x++;
 	}
@@ -138,11 +140,17 @@ static bool	check_map_size(t_club *club)
 		// 	&& !ft_strchr(club->map.grid[y], 'N') && !ft_strchr(club->map.grid[y], 'S')  \
 		// 	&& !ft_strchr(club->map.grid[y], 'W') && !ft_strchr(club->map.grid[y], 'E'))
 		// 	return (false);
-		if (!ft_strchr(club->map.grid[y], '0') && !ft_strchr(club->map.grid[y], '1') \
-			&& !ft_strchr(club->map.grid[y], 'N') && !ft_strchr(club->map.grid[y], 'S') \
-			&& !ft_strchr(club->map.grid[y], 'W') && !ft_strchr(club->map.grid[y], 'E') \
-			&& !ft_strchr(club->map.grid[y], '2') && !ft_strchr(club->map.grid[y], '3') \
-			&& !ft_strchr(club->map.grid[y], '4') && !ft_strchr(club->map.grid[y], '5') \
+
+		if (!ft_strchr(club->map.grid[y], '0') \
+			&& !ft_strchr(club->map.grid[y], '1') \
+			&& !ft_strchr(club->map.grid[y], 'N') \
+			&& !ft_strchr(club->map.grid[y], 'S') \
+			&& !ft_strchr(club->map.grid[y], 'W') \
+			&& !ft_strchr(club->map.grid[y], 'E') \
+			&& !ft_strchr(club->map.grid[y], '2') \
+			&& !ft_strchr(club->map.grid[y], '3') \
+			&& !ft_strchr(club->map.grid[y], '4') \
+			&& !ft_strchr(club->map.grid[y], '5') \
 			&& !ft_strchr(club->map.grid[y], 'D'))
 			return (false);
 		y++;

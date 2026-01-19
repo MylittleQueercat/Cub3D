@@ -28,7 +28,6 @@ static bool	is_color_key(char *line)
 	return (false);
 }
 
-
 int	check_elements(t_club *club, char **lines)
 {
 	int	i;

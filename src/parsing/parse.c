@@ -1,7 +1,5 @@
 #include "../include/cub3d.h"
 
-
-
 static int	count_lines(const char *file)
 {
 	int		fd;
@@ -66,7 +64,7 @@ bool	is_cub_file(char *arg)
 	int	len;
 	int	fd;
 
-	if	(!arg)
+	if (!arg)
 		return (false);
 	len = ft_strlen(arg);
 	if (len < 4 || ft_strcmp(arg + len - 4, ".cub") != 0)
@@ -99,7 +97,6 @@ int	parsing(t_club *club, char **file)
 // printf("WE: %s\n", club->tex[2].path);
 // printf("EA: %s\n", club->tex[3].path);
 //printf("S : %s\n", club->sprite_texture.img ? "ok" : "NULL");
-
 	if (check_elements_complete(club) == -1)
 		return (free_array(club->map.grid), -1);
 	if (get_map(club, file) == -1)
@@ -107,7 +104,7 @@ int	parsing(t_club *club, char **file)
 	if (!is_map_at_the_end(club, file))
 		return (err_msg("Error: Map is not at the end of the file"), -1);
 	if (!check_map_valid(club))
-			return (free_array(club->map.grid), -1);
+		return (free_array(club->map.grid), -1);
 	if (!prepare_map(club))
 		return (free_array(club->map.grid), -1);
 	return (0);
