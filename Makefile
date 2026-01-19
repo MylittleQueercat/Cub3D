@@ -32,7 +32,8 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/sprites/score_rect.c \
 		$(SRC_DIR)/hooks.c \
 		$(SRC_DIR)/hooks_util.c \
-		$(SRC_DIR)/doors_util.c \
+		$(SRC_DIR)/doors_init.c \
+		$(SRC_DIR)/doors_run.c \
 		$(SRC_DIR)/draw_door_overlay.c \
 		$(SRC_DIR)/render_mouse.c \
      	$(SRC_DIR)/init_club.c \
