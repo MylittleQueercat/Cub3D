@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:26:53 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 14:25:53 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ static int	load_map(t_club *club, char *path)
 static int	run_game(t_club *club)
 {
 	if (init_club(club))
-		return (err_msg("Error: init_club failed"), 1);
+		return (1);
 	if (load_all_textures(club))
-		return (err_msg("Error: texture load failed"), 1);
+		return (1);
 	if (load_sprites(club))
-		return (err_msg("Error: sprite load failed"), 1);
+		return (1);
 	mlx_hook(club->win, 17, 0, close_window, club);
 	mlx_key_hook(club->win, key_hook, club);
 	mlx_hook(club->win, 4, 1L << 2, mouse_press, club);

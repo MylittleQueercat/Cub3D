@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:31 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:30:32 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 14:21:29 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	init_sprits(t_club *club)
 	if (club->sprite_count == 0)
 	{
 		club->sprites = NULL;
-		return (false);
+		return (true);
 	}
 	club->sprites = ft_calloc(club->sprite_count, sizeof(t_sprite));
 	if (!club->sprites)
@@ -64,7 +64,7 @@ static int	load_sprite_texture(t_club *club, t_img *tex, const char *path)
 	if (!club || !tex || !path)
 		return (1);
 	if (!is_valid_xpm_file((char *)path))
-		return (err_msg("Error: sprite XPM missing"), 1);
+		return (err_msg("Error: sprite XPM file not found or invalid"), 1);
 	if (tex->img)
 		mlx_destroy_image(club->mlx, tex->img);
 	tex->img = mlx_xpm_file_to_image(club->mlx, (char *)path,
