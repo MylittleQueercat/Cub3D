@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:53 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:29:54 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 11:35:46 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ bool	check_map_valid(t_club *club)
 	if (!check_first_last_row(club) || !check_sides(club))
 		return (err_msg("Error: map is not surrounded by walls"), false);
 	if (!check_map_size(club))
-		return (err_msg("Error: map size is not right"), false);
+		return (err_msg("Error: Map dimensions are invalid"), false);
 	if (!check_player_count(club))
 		return (err_msg("Error: map should have one and only one player"), \
 			false);
