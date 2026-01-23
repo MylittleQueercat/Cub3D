@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_door_overlay.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: leticiabi <leticiabi@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:31 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:26:32 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 10:06:26 by leticiabi        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ static int	tex_sample(t_tex *t, int x, int y)
 	p = t->addr + (y * t->line_len + x * (t->bpp / 8));
 	return (*(int *)p);
 }
-
-// typedef struct s_stripe
-// {
-// 		int			line_h;
-// 		int			start;
-// 		int			end;
-// 		int			tex_x;
-// 		double	step;
-// 		double	tex_pos;
-// }   t_stripe;
 
 static int	init_door_stripe(t_club *c, t_ray *r, t_tex **tex, t_stripe *st)
 {
