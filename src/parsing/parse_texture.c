@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:57 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:29:58 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 12:16:25 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	is_valid_xpm_file(char *path)
 		return (false);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (perror("open failed"), false);
+		return (false);
 	close(fd);
 	return (true);
 }

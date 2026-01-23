@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:57 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:30:58 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 12:01:06 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ int	count_sprites_all(char **map)
 	return (count);
 }
 
+/*
+** Detects sprite collision using a 2D circle-to-point distance check.
+** pr = 0.25 represents the player collision radius, sprite->radius defines the
+** sprite hitbox size.
+** The extra 0.04 is a safety margin to prevent the player from
+** passing through sprites due to floating-point errors.
+*/
 int	collide_sprite_at(t_club *club, double nx, double ny)
 {
 	t_sprite		*s;

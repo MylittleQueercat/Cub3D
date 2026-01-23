@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   score_font.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:49 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:30:50 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 11:41:31 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+/**
+ * Returns the 5-bit wide bitmap row for a given character.
+ * Each character is a 5x7 sprite defined by hexadecimal rows.
+ * Used for rendering a simple "SCORE" UI without external assets.
+ * * @param c The character to retrieve (S, C, O, R, or E).
+ * @param row The specific row index (0-6) of the 7-pixel high font.
+ */
 static unsigned char	get_font_data(char c, int row)
 {
 	static const unsigned char s[7] \

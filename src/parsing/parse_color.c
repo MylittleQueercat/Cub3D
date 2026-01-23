@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:48 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:29:49 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 12:28:53 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,22 @@ static bool	is_all_number(char *s)
 static bool	validate_color_values(char **nums, int *r, int *g, int *b)
 {
 	if (!nums || !nums[0] || !nums[1] || !nums[2] || nums[3])
-		return (err_msg("Error: color should have exactly 3 colors"), false);
+		return (err_msg("Error: Color should have exactly 3 components"), \
+		false);
+	if (nums[0][0] == '\0' || nums[1][0] == '\0' || nums[2][0] == '\0')
+		return (err_msg("Error: Color should have exactly 3 components"), \
+		false);
+	if (nums[0][0] == '\n' || nums[1][0] == '\n' || nums[2][0] == '\n')
+		return (err_msg("Error: Color should have exactly 3 components"), \
+		false);
 	if (!is_all_number(nums[0]) || !is_all_number(nums[1]) \
 			|| !is_all_number(nums[2]))
-		return (err_msg("Error: color values must be positif numbers"), false);
+		return (err_msg("Error: Color values must be positif numbers"), false);
 	*r = ft_atoi(nums[0]);
 	*g = ft_atoi(nums[1]);
 	*b = ft_atoi(nums[2]);
 	if (*r < 0 || *r > 255 || *g < 0 || *g > 255 || *b < 0 || *b > 255)
-		return (err_msg("Error: color values out of range: 0 ~ 255"), false);
+		return (err_msg("Error: Color values out of range: 0 ~ 255"), false);
 	return (true);
 }
 

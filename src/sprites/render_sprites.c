@@ -3,15 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   render_sprites.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:39 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:30:40 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 12:07:25 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+/**
+ * calc_sprite_info - Transforms sprite coordinates from world space to
+ * 					  camera space.
+ * * 1. Translation: Calculates the relative distance from the player 
+ * 					 to the sprite.
+ * 2. Transformation: Uses the inverse of the camera matrix 
+ *	(direction and plane) to find the sprite's position relative to the
+ *	player's orientation.
+ * - transform_x: Horizontal position in the camera view.
+ * - transform_y: Depth (distance) in the camera view.
+ * 3. Projection: Determines the 2D screen position and scales the
+ * height/width based on the calculated depth to create a 3D perspective effect.
+ * *
+ * 0.0001 : Epsilon value to ensure the sprite is in front of the camera and
+ *          avoid division by zero during projection.
+ * 0.35   : Minimum depth clamp to prevent excessive sprite scaling when the
+ *          sprite is too close to the player.
+ * 0.8    : Visual scaling factor applied to sprite height for better on-screen
+ *          proportions.
+ * 0.90   : Maximum sprite size limit expressed as a percentage of screen height
+ *          to avoid full-screen sprites.
+*/
 static void	calc_sprite_info(t_club *club, t_sprite *s)
 {
 	double	dx;
@@ -67,6 +89,13 @@ static void	sort_sprites(t_club *club)
 	}
 }
 
+/*
+** Render a single vertical column of a sprite on screen.
+** Applies a sinusoidal vertical offset (0.12 controls animation speed,
+** 6.0 defines jump amplitude) to simulate sprite movement, clamps drawing
+** within screen bounds, maps screen pixels to texture coordinates, and
+** skips transparent pixels during rendering.
+*/
 static void	draw_sprite_column(t_club *club, t_sprite *s, t_img *tex, int x)
 {
 	int	y;
@@ -112,6 +141,13 @@ static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 	}
 }
 
+/*
+** Sprite rendering logic:
+** The sprite position is first transformed from world space to camera space
+** to determine visibility and depth. Its screen position and size are then
+** computed using perspective projection. Finally, the sprite is rendered
+** column by column with texture mapping, skipping transparent pixels.
+*/
 void	render_sprites(t_club *club)
 {
 	int	i;
