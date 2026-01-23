@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:40 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:29:41 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 11:27:47 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	is_valid_map_line(char *line)
 		i++;
 	if (line[i] == '\0')
 		return (false);
-	if (line[i] == '1')
+	if (line[i] == '1' || line[i] == '0')
 		return (true);
 	return (false);
 }

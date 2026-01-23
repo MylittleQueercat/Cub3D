@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:01 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:30:02 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 11:24:41 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ bool	prepare_map(t_club *club)
 		return (free_array(map_copy), false);
 	if (!flood_fill_check(club, map_copy, (int)club->player.x, \
 		(int)club->player.y))
+	{
+		err_msg("Error: map is not surrounded by walls");
 		return (free_array(map_copy), false);
+	}
 	free_array(map_copy);
 	return (true);
 }
