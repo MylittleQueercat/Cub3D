@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:16 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 18:25:38 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 13:42:47 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,12 @@ typedef struct s_point
 }	t_point;
 
 //club
+/*
+** z_buffer - Stores the distance from the player to the first wall
+** for each vertical screen column. It is used during sprite rendering
+** to check if a sprite is in front of or behind a wall, ensuring correct
+** occlusion and depth ordering.
+*/
 typedef struct s_club
 {
 	char		**file;

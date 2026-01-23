@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:39 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 12:07:25 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 13:47:03 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ static void	draw_sprite_column(t_club *club, t_sprite *s, t_img *tex, int x)
 	}
 }
 
+/*
+** draw_sprite_pixel - Renders a sprite on screen column by column.
+**
+** For each horizontal column of the sprite on the screen:
+**  - Checks that the column is within screen bounds (0 to WIDTH).
+**  - Uses s->transform_y (sprite depth) and z_buffer[x] to ensure the sprite
+**    is in front of walls and other objects.
+**    - z_buffer[x] stores the distance from the player to the nearest wall
+**      for column x, calculated during wall rendering.
+**    - Only draw the column if sprite is closer than the wall
+**		(transform_y < z_buffer[x]).
+**  - Calls draw_sprite_column to render the vertical pixels of the sprite
+** 	  for this column.
+*/
 static void	draw_sprite_pixel(t_club *club, t_sprite *s)
 {
 	t_img	*tex;
