@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:28:31 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:28:42 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 16:10:37 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,8 @@ int	load_all_textures(t_club *club)
 	try_load_tex(club, &club->tex[TEX_WE], &fail, 1);
 	try_load_tex(club, &club->tex[TEX_EA], &fail, 1);
 	try_load_tex(club, &club->tex[TEX_CEIL], &fail, 0);
-	try_load_tex(club, &club->tex[TEX_FLOOR], &fail, 0);
-	try_load_tex(club, &club->door_tex, &fail, 1);
-	try_load_tex(club, &club->door_open_tex, &fail, 1);
+	if (have_door(club))
+		try_load_tex(club, &club->tex[TEX_FLOOR], &fail, 0);
 	return (fail);
 }
 

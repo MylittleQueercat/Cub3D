@@ -6,25 +6,11 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:47 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 14:27:56 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 16:13:49 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-static void	init_ptrs_defaults(t_club *club)
-{
-	club->file = NULL;
-	club->mlx = NULL;
-	club->win = NULL;
-	club->img.img = NULL;
-	club->img.addr = NULL;
-	club->win_img.img = NULL;
-	club->win_img.addr = NULL;
-	club->map.grid = NULL;
-	club->sprites = NULL;
-	club->doors = NULL;
-}
 
 static void	init_values_defaults(t_club *club)
 {
@@ -51,14 +37,18 @@ static void	init_values_defaults(t_club *club)
 	club->key_right = 0;
 }
 
-static void	init_door_tex_defaults(t_club *club)
+bool	init_door_tex_defaults(t_club *club)
 {
 	if (!is_valid_xpm_file("xpms/door2.xpm"))
+	{
 		err_msg("Error: Door XPM file not found or invalid");
+		return (false);
+	}
 	ft_bzero(&club->door_tex, sizeof(t_tex));
 	club->door_tex.path = ft_strdup("xpms/door2.xpm");
 	ft_bzero(&club->door_open_tex, sizeof(t_tex));
 	club->door_open_tex.path = ft_strdup("xpms/door2.xpm");
+	return (true);
 }
 
 static void	init_tex_arrays_defaults(t_club *club)
@@ -67,10 +57,9 @@ static void	init_tex_arrays_defaults(t_club *club)
 	ft_bzero(club->sprite_textures, sizeof(club->sprite_textures));
 }
 
-void	init_club_defaults(t_club *club)
+int	init_club_defaults(t_club *club)
 {
-	init_ptrs_defaults(club);
 	init_values_defaults(club);
-	init_door_tex_defaults(club);
 	init_tex_arrays_defaults(club);
+	return (0);
 }

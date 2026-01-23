@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:16 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 13:42:47 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 16:09:42 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,7 +365,7 @@ int		key_release(int keycode, t_club *c);
 void	update_player(t_club *c);
 
 // img_utils.c
-void	init_club_defaults(t_club *club);
+int		init_club_defaults(t_club *club);
 int		init_image(t_club *club);
 void	destroy_image(t_club *club);
 void	put_pixel(t_img *img, int x, int y, int color);
@@ -468,5 +468,9 @@ void	ui_draw_progress_bar(t_img *img, t_bar *b);
 
 /* public */
 void	render_score_ui(t_club *club);
+int		init_bonus(t_club *club);
+int		is_bonus(t_club *club);
+bool	init_door_tex_defaults(t_club *club);
+int		have_door(t_club *club);
 
 #endif

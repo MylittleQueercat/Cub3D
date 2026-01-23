@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 14:25:53 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 16:13:26 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ static int	load_map(t_club *club, char *path)
 	return (0);
 }
 
-static int	run_game(t_club *club)
+static int	run_game(t_club *club, bool bonus)
 {
-	if (init_club(club))
-		return (1);
 	if (load_all_textures(club))
 		return (1);
-	if (load_sprites(club))
-		return (1);
+	if (bonus)
+	{
+		if (load_sprites(club))
+			return (1);
+	}
 	mlx_hook(club->win, 17, 0, close_window, club);
 	mlx_key_hook(club->win, key_hook, club);
 	mlx_hook(club->win, 4, 1L << 2, mouse_press, club);
@@ -49,14 +50,24 @@ static int	run_game(t_club *club)
 int	main(int argc, char **argv)
 {
 	t_club	club;
+	int		bonus;
 
 	if (argc != 2)
 		return (err_msg("Usage: ./cub3d <map.cub>"), 1);
 	if (!is_cub_file(argv[1]))
 		return (err_msg("Error: invalid .cub file"), 1);
 	ft_bzero(&club, sizeof(club));
-	init_club_defaults(&club);
+	if (init_club(&club))
+		return (1);
+	if (init_club_defaults(&club))
+		return (1);
 	if (load_map(&club, argv[1]))
 		return (1);
-	return (run_game(&club));
+	bonus = is_bonus(&club);
+	if (bonus)
+	{
+		if (init_bonus(&club))
+			return (1);
+	}
+	return (run_game(&club, bonus));
 }

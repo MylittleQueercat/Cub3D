@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   destroy_club_util.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 16:14:52 by lilwang           #+#    #+#             */
+/*   Updated: 2026/01/23 16:14:53 by lilwang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3d.h"
 
 void	destroy_doors(t_club *club)
@@ -19,24 +31,6 @@ void	destroy_doors(t_club *club)
 	club->doors = NULL;
 	club->door_count = 0;
 }
-
-// void	destroy_sprites(t_club *club)
-// {
-// 	int	i;
-
-// 	if (!club || !club->sprites)
-// 		return ;
-// 	i = 0;
-// 	while (i < club->sprite_count)
-// 	{
-// 		if (club->sprites[i].img.img)
-// 			mlx_destroy_image(club->mlx, club->sprites[i].img.img);
-// 		i++;
-// 	}
-// 	free(club->sprites);
-// 	club->sprites = NULL;
-// 	club->sprite_count = 0;
-// }
 
 void	destroy_sprites(t_club *club)
 {
