@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:05 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 15:45:20 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 19:20:03 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,16 @@ int	parsing(t_club *club, char **file)
 	if (!file || !*file)
 		return (err_msg("Error: No file content provided"), -1);
 	if (check_elements(club, file) == -1)
-		return (free_array(club->map.grid), -1);
+		return (-1);
 	if (check_elements_complete(club) == -1)
-		return (free_array(club->map.grid), -1);
+		return (-1);
 	if (get_map(club, file) == -1)
-		return (err_msg("Error: Map missing"), -1);
+		return (-1);
 	if (!is_map_at_the_end(club, file))
 		return (err_msg("Error: Map is not at the end of the file"), -1);
 	if (!check_map_valid(club))
-		return (free_array(club->map.grid), -1);
+		return (-1);
 	if (!prepare_map(club))
-		return (free_array(club->map.grid), -1);
+		return (-1);
 	return (0);
 }

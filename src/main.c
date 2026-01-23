@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 17:09:01 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 19:20:30 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,27 @@ static int	run_game(t_club *club, bool bonus)
 int	main(int argc, char **argv)
 {
 	t_club	club;
-	int		exit_code;
+	int		bonus;
 
-	exit_code = 0;
 	if (argc != 2)
 		return (err_msg("Usage: ./cub3d <map.cub>"), 1);
 	if (!is_cub_file(argv[1]))
 		return (err_msg("Error: invalid .cub file"), 1);
 	ft_bzero(&club, sizeof(club));
-	if (init_club(&club) || init_club_defaults(&club)
-		|| load_map(&club, argv[1]))
-		exit_code = 1;
-	else
+	if (init_club(&club))
+		return (destroy_club(&club), 1);
+	if (init_club_defaults(&club))
+		return (destroy_club(&club), 1);
+	if (load_map(&club, argv[1]))
+		return (destroy_club(&club), 1);
+	bonus = is_bonus(&club);
+	if (bonus)
 	{
-		if (is_bonus(&club) && init_bonus(&club))
-			exit_code = 1;
-		else if (run_game(&club, is_bonus(&club)))
-			exit_code = 1;
+		if (init_bonus(&club))
+			return (destroy_club(&club), 1);
 	}
+	if (run_game(&club, bonus))
+		return (destroy_club(&club), 1);
 	destroy_club(&club);
-	return (exit_code);
+	return (0);
 }

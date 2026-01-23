@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_club_util.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:14:52 by lilwang           #+#    #+#             */
-/*   Updated: 2026/01/23 17:06:59 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 19:14:57 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	destroy_textures_club(t_club *club)
 
 void	destroy_map(t_club *club)
 {
-	int	i;
-
 	if (!club)
 		return ;
 	if (club->file)
@@ -81,18 +79,8 @@ void	destroy_map(t_club *club)
 		free_array(club->file);
 		club->file = NULL;
 	}
-	if (club->map.grid)
-	{
-		i = 0;
-		while (i < club->map.height)
-		{
-			if (club->map.grid[i])
-				free(club->map.grid[i]);
-			i++;
-		}
-		free(club->map.grid);
-		club->map.grid = NULL;
-	}
+	free_array(club->map.grid);
+	club->map.grid = NULL;
 	club->map.width = 0;
 	club->map.height = 0;
 }
