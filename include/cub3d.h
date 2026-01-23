@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:16 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 16:09:42 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 20:03:25 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,7 +354,8 @@ bool	check_valid_chars(t_club *club);
 bool	check_player_count(t_club *club);
 bool	check_first_last_row(t_club *club);
 char	**copy_map(t_club *club);
-
+bool	pad_map(t_club *club);
+char	*pad_line(char *line, int new_len);
 // hooks.c
 int		close_window(t_club *club);
 int		key_hook(int keycode, t_club *club);

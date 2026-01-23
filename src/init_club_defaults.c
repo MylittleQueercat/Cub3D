@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_club_defaults.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:47 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 17:08:52 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 19:43:27 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 static void	init_values_defaults(t_club *club)
 {
-	club->map.width = 0;
-	club->map.height = 0;
-	club->floor_color = 0;
-	club->ceiling_color = 0;
 	club->sprite_count = 0;
 	club->sprite_jump = 0;
 	club->found_count = 0;

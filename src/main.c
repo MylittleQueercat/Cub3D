@@ -6,13 +6,13 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 19:20:30 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 20:22:23 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static int	load_map(t_club *club, char *path)
+static int	parse(t_club *club, char *path)
 {
 	club->file = read_file(path);
 	if (!club->file)
@@ -61,8 +61,8 @@ int	main(int argc, char **argv)
 		return (destroy_club(&club), 1);
 	if (init_club_defaults(&club))
 		return (destroy_club(&club), 1);
-	if (load_map(&club, argv[1]))
-		return (destroy_club(&club), 1);
+	if (parse(&club, argv[1]))
+		return (1);
 	bonus = is_bonus(&club);
 	if (bonus)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:43 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/19 16:29:44 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/23 20:10:09 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,23 @@ bool	check_first_last_row(t_club *club)
 			&& !ft_is_whitespace(club->map.grid[last_y][x]))
 			return (false);
 		x++;
+	}
+	return (true);
+}
+
+bool	pad_map(t_club *club)
+{
+	int		i;
+	char	*new_line;
+
+	i = 0;
+	while (club->map.grid[i])
+	{
+		new_line = pad_line(club->map.grid[i], club->map.width);
+		if (!new_line)
+			return (err_msg("Error: failed to pad map line"), false);
+		club->map.grid[i] = new_line;
+		i++;
 	}
 	return (true);
 }
