@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_club_util.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:14:52 by lilwang           #+#    #+#             */
-/*   Updated: 2026/01/23 16:14:53 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:06:59 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@ void	destroy_doors(t_club *club)
 	if (!club || !club->doors)
 		return ;
 	i = 0;
-	while (i < club->door_count)
-	{
-		if (club->doors[i].img_closed.img)
-			mlx_destroy_image(club->mlx, club->doors[i].img_closed.img);
-		if (club->doors[i].img_open.img)
-			mlx_destroy_image(club->mlx, club->doors[i].img_open.img);
-		i++;
-	}
 	free(club->doors);
 	club->doors = NULL;
 	club->door_count = 0;
@@ -76,24 +68,31 @@ void	destroy_textures_club(t_club *club)
 	while (i < TEX_COUNT)
 		destroy_tex(club, &club->tex[i++]);
 	destroy_tex(club, &club->door_tex);
-	destroy_tex(club, &club->door_open_tex);
 }
 
 void	destroy_map(t_club *club)
 {
 	int	i;
 
-	if (!club || !club->map.grid)
+	if (!club)
 		return ;
-	i = 0;
-	while (i < club->map.height)
+	if (club->file)
 	{
-		if (club->map.grid[i])
-			free(club->map.grid[i]);
-		i++;
+		free_array(club->file);
+		club->file = NULL;
 	}
-	free(club->map.grid);
-	club->map.grid = NULL;
+	if (club->map.grid)
+	{
+		i = 0;
+		while (i < club->map.height)
+		{
+			if (club->map.grid[i])
+				free(club->map.grid[i]);
+			i++;
+		}
+		free(club->map.grid);
+		club->map.grid = NULL;
+	}
 	club->map.width = 0;
 	club->map.height = 0;
 }

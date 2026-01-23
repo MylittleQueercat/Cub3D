@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_club_defaults.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:47 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 16:13:49 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:08:52 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,19 @@ static void	init_values_defaults(t_club *club)
 bool	init_door_tex_defaults(t_club *club)
 {
 	if (!is_valid_xpm_file("xpms/door2.xpm"))
-	{
-		err_msg("Error: Door XPM file not found or invalid");
-		return (false);
-	}
+		return (err_msg("Error: Door XPM file not found or invalid"), false);
 	ft_bzero(&club->door_tex, sizeof(t_tex));
 	club->door_tex.path = ft_strdup("xpms/door2.xpm");
-	ft_bzero(&club->door_open_tex, sizeof(t_tex));
-	club->door_open_tex.path = ft_strdup("xpms/door2.xpm");
+	club->door_tex.img = mlx_xpm_file_to_image(club->mlx, club->door_tex.path,
+			&club->door_tex.width, &club->door_tex.height);
+	if (!club->door_tex.img)
+		return (err_msg("Error: Failed to load door image via MLX"), false);
+	club->door_tex.addr = mlx_get_data_addr(club->door_tex.img,
+			&club->door_tex.bpp, &club->door_tex.line_len,
+			&club->door_tex.endian);
+	if (!club->door_tex.addr)
+		return (err_msg("Error: Failed to get door data address"), false);
+	club->door_open_tex = club->door_tex;
 	return (true);
 }
 

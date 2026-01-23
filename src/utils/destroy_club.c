@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_club.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 16:14:57 by lilwang           #+#    #+#             */
-/*   Updated: 2026/01/23 16:14:58 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/23 17:09:16 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,21 @@ void	destroy_club(t_club *club)
 {
 	if (!club)
 		return ;
+	if (club->img.img)
+		mlx_destroy_image(club->mlx, club->img.img);
+	if (club->win_img.img)
+		mlx_destroy_image(club->mlx, club->win_img.img);
 	destroy_sprites(club);
 	destroy_doors(club);
 	destroy_textures_club(club);
+	destroy_sprite_textures(club);
 	destroy_map(club);
-	if (club->img.img)
-		mlx_destroy_image(club->mlx, club->img.img);
 	if (club->win)
 		mlx_destroy_window(club->mlx, club->win);
-	destroy_sprite_textures(club);
-	if (club->win_img.img)
+	if (club->mlx)
 	{
-		mlx_destroy_image(club->mlx, club->win_img.img);
-		club->win_img.img = NULL;
+		mlx_destroy_display(club->mlx);
+		free(club->mlx);
+		club->mlx = NULL;
 	}
-	club->win_loaded = 0;
 }
