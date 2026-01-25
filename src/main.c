@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 20:22:23 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/25 16:30:45 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ int	main(int argc, char **argv)
 	if (!is_cub_file(argv[1]))
 		return (err_msg("Error: invalid .cub file"), 1);
 	ft_bzero(&club, sizeof(club));
-	if (init_club(&club))
-		return (destroy_club(&club), 1);
-	if (init_club_defaults(&club))
-		return (destroy_club(&club), 1);
 	if (parse(&club, argv[1]))
+	{
+		destroy_club(&club);
 		return (1);
+	}
+	if (init_club(&club) || init_club_defaults(&club))
+		return (destroy_club(&club), 1);
 	bonus = is_bonus(&club);
 	if (bonus)
 	{
