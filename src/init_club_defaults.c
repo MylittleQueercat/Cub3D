@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:47 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 19:43:27 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 14:13:45 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	init_values_defaults(t_club *club)
 	club->key_d = 0;
 	club->key_left = 0;
 	club->key_right = 0;
+	club->ceiling_color = -1;
+	club->floor_color = -1;
 }
 
 bool	init_door_tex_defaults(t_club *club)

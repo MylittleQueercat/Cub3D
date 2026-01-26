@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:01 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/25 16:37:54 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/26 14:05:10 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static bool	find_player_position(t_club *club)
 				|| club->map.grid[y][x] == 'W' || club->map.grid[y][x] == 'E')
 			{
 				if (!is_surrounded_by_zero(club->map.grid, x, y))
-					return (false);
+					return (err_msg("Error: Player incorrectly placed."), \
+						false);
 				club->player.pos = club->map.grid[y][x];
 				club->player.x = x + 0.5;
 				club->player.y = y + 0.5;

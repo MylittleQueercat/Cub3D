@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:43 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 20:10:09 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 12:51:02 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	is_valid_char(char c, bool bonus)
 {
-	if (c == '0' || c == '1' || c == ' ' || c == '\n'\
-		|| c == 'N' || c == 'W' || c == 'E' || c == 'S')
+	if (c == '0' || c == '1' || c == ' ' || c == 'N'\
+		|| c == 'W' || c == 'E' || c == 'S' || ft_is_whitespace(c))
 		return (true);
 	if (bonus && ((c >= '2' && c <= '5') || c == 'D'))
 		return (true);

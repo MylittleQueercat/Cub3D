@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/25 16:30:45 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/26 14:15:43 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,21 @@ static int	parse(t_club *club, char *path)
 		return (1);
 	if (parsing(club, club->file) == -1)
 	{
+		printf("DEBUG: parse failed\n");
 		free_array(club->file);
 		club->file = NULL;
 		return (1);
 	}
+	printf("DEBUG: parse sucess\n");
 	return (0);
 }
 
 static int	run_game(t_club *club, bool bonus)
 {
 	if (load_all_textures(club))
-		return (1);
+		{
+			printf("DEBUG: load wrong\n");
+			return (1); }
 	if (bonus)
 	{
 		if (load_sprites(club))
@@ -71,7 +75,10 @@ int	main(int argc, char **argv)
 			return (destroy_club(&club), 1);
 	}
 	if (run_game(&club, bonus))
+	{
+		printf("DEBUG: run game wrong\n");
 		return (destroy_club(&club), 1);
+	}
 	destroy_club(&club);
 	return (0);
 }
