@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:05 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 15:44:20 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 15:51:40 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	check_elements_complete(t_club *club)
 	if (!club->tex[TEX_NO].path || !club->tex[TEX_SO].path \
 		|| !club->tex[TEX_WE].path || !club->tex[TEX_EA].path)
 		return (err_msg("Error: Missing texture(s)"), -1);
-	if (club->floor_color == 0 || club->ceiling_color == 0)
+	if (club->floor_color == -1 || club->ceiling_color == -1)
 		return (err_msg("Error: Missing color(s)"), -1);
 	return (0);
 }
@@ -85,6 +85,8 @@ int	parsing(t_club *club, char **file)
 {
 	if (!file || !*file)
 		return (err_msg("Error: No file content provided"), -1);
+	club->floor_color = -1;
+	club->ceiling_color = -1;
 	if (check_elements(club, file) == -1)
 		return (-1);
 	if (check_elements_complete(club) == -1)

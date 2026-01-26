@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:48 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 15:42:59 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 15:51:20 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	parse_color(char *line, t_club *club)
 	if (*line != 'F' && *line != 'C')
 		return (err_msg("Error: unknown color type"), -1);
 	type = *line;
-	if (type == 'F' && club->floor_color != 0)
+	if (type == 'F' && club->floor_color != -1)
 		return (err_msg("Error: floor color defined multiple times"), -1);
-	if (type == 'C' && club->ceiling_color != 0)
+	if (type == 'C' && club->ceiling_color != -1)
 		return (err_msg("Error: ceiling color defined multiple times"), -1);
 	line++;
 	while (*line == ' ')
