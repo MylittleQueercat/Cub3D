@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:40 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 16:57:55 by hguo             ###   ########.fr       */
+/*   Updated: 2026/01/26 19:03:27 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	get_map(t_club *club, char **file)
 	j = 0;
 	while (file[i] && is_valid_map_line(file[i]))
 	{
-		club->map.grid[j] = ft_strdup(file[i]);
+		club->map.grid[j] = strdup_expanded(file[i]);
 		if (!club->map.grid[j])
 			return (free_array(club->map.grid), -1);
 		j++;
