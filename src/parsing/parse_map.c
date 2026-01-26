@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:29:53 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 14:03:12 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 16:40:49 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 char	*pad_line(char *line, int new_len)
 {
 	int		i;
-	int		old_len;
 	char	*new_line;
 
-	old_len = ft_strlen(line);
-	new_line = malloc(new_len + 1);
+	new_line = malloc(sizeof(char) * (new_len + 1));
 	if (!new_line)
 		return (NULL);
 	i = 0;
-	while (i < old_len)
+	while (line[i] && line[i] != '\n' && line[i] != '\r')
 	{
 		new_line[i] = line[i];
 		i++;
@@ -38,7 +36,8 @@ char	*pad_line(char *line, int new_len)
 static bool	check_sides(t_club *club)
 {
 	int		i;
-	int		len;
+	int		start;
+	int		end;
 	char	*line;
 
 	i = 0;
@@ -47,10 +46,15 @@ static bool	check_sides(t_club *club)
 		line = club->map.grid[i];
 		if (!line || ft_strlen(line) == 0)
 			return (false);
-		len = ft_strlen(line);
-		if (line[0] != '1' && !ft_is_whitespace(line[0]))
+		end = ft_strlen(line) - 1;
+		start = 0;
+		while (line[start] && ft_is_whitespace(line[start]))
+			start++;
+		if (!line[start] || line[start] != '1')
 			return (false);
-		if (line[len - 2] != '1' && !ft_is_whitespace(line[len - 2]))
+		while (end >= 0 && ft_is_whitespace(line[end]))
+			end--;
+		if (end < 0 || line[end] != '1')
 			return (false);
 		i++;
 	}
