@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:28:31 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 14:31:39 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 15:30:15 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static void	try_load_tex(t_club *club, t_tex *tex, int *fail, int mandatory)
 		return ;
 	}
 	err = load_texture(club, tex);
-	printf("err: %d\n", err);
-
 	if (err)
 	{
 		tex->img = NULL;
@@ -56,25 +54,13 @@ int	load_all_textures(t_club *club)
 	int	fail;
 
 	fail = 0;
-	//printf("TEX_NO addr = %p\n", (void *)&club->tex[TEX_NO]);
 	try_load_tex(club, &club->tex[TEX_NO], &fail, 1);
-	printf("fail: %d\n", fail);
 	try_load_tex(club, &club->tex[TEX_SO], &fail, 1);
-	printf("fail: %d\n", fail);
-
 	try_load_tex(club, &club->tex[TEX_WE], &fail, 1);
-	printf("fail: %d\n", fail);
-
 	try_load_tex(club, &club->tex[TEX_EA], &fail, 1);
-	printf("fail: %d\n", fail);
-
 	try_load_tex(club, &club->tex[TEX_CEIL], &fail, 0);
-	printf("fail: %d\n", fail);
-
 	if (have_door(club))
 		try_load_tex(club, &club->tex[TEX_FLOOR], &fail, 0);
-	printf("fail: %d\n", fail);
-
 	return (fail);
 }
 

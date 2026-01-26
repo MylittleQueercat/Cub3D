@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:47 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 14:13:45 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 15:41:58 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	init_values_defaults(t_club *club)
 	club->key_d = 0;
 	club->key_left = 0;
 	club->key_right = 0;
-	club->ceiling_color = -1;
-	club->floor_color = -1;
 }
 
 bool	init_door_tex_defaults(t_club *club)
@@ -54,15 +52,8 @@ bool	init_door_tex_defaults(t_club *club)
 	return (true);
 }
 
-static void	init_tex_arrays_defaults(t_club *club)
-{
-	ft_bzero(club->tex, sizeof(club->tex));
-	ft_bzero(club->sprite_textures, sizeof(club->sprite_textures));
-}
-
 int	init_club_defaults(t_club *club)
 {
 	init_values_defaults(club);
-	init_tex_arrays_defaults(club);
 	return (0);
 }
