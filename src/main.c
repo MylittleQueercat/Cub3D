@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:26:52 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 15:29:32 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 19:04:41 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ static int	parse(t_club *club, char *path)
 		return (1);
 	if (parsing(club, club->file) == -1)
 	{
-		printf("DEBUG: parse failed\n");
 		free_array(club->file);
 		club->file = NULL;
 		return (1);
 	}
-	printf("DEBUG: parse sucess\n");
 	return (0);
 }
 
