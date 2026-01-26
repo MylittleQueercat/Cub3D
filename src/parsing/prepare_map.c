@@ -6,7 +6,7 @@
 /*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:01 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/26 19:03:35 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/26 19:14:42 by lilwang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ bool	prepare_map(t_club *club)
 		return (free_array(map_copy), false);
 	if (!check_map_closed(club))
 	{
-		err_msg("ERROR: map is not surrounded");
+		err_msg("ERROR: map is not surrounded by walls");
 		return (free_array(map_copy), false);
 	}
 	free_array(map_copy);
