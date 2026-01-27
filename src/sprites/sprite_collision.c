@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lilwang <lilwang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:30:57 by hguo              #+#    #+#             */
-/*   Updated: 2026/01/23 12:01:06 by lilwang          ###   ########.fr       */
+/*   Updated: 2026/01/27 17:33:04 by hguo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	collide_sprite_at(t_club *club, double nx, double ny)
 {
 	t_sprite		*s;
 	double			d[3];
-	const double	pr = 0.25;
+	const double	pr = 0.1;
 	int				i;
 
 	if (!club->sprites || club->sprite_count <= 0)

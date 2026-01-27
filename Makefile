@@ -32,28 +32,28 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/sprites/score_bar.c \
 		$(SRC_DIR)/sprites/score_font.c \
 		$(SRC_DIR)/sprites/score_rect.c \
-		$(SRC_DIR)/render_loop.c \
-		$(SRC_DIR)/hooks.c \
-		$(SRC_DIR)/hooks_util.c \
-		$(SRC_DIR)/doors_init.c \
-		$(SRC_DIR)/doors_run.c \
-		$(SRC_DIR)/draw_door_overlay.c \
-		$(SRC_DIR)/render_mouse.c \
-		$(SRC_DIR)/init_club_defaults.c \
-     	$(SRC_DIR)/init_club.c \
-    	$(SRC_DIR)/render_background.c \
-		$(SRC_DIR)/wall_stripe_utils.c \
-		$(SRC_DIR)/walls_util.c \
-		$(SRC_DIR)/img_utils.c \
-		$(SRC_DIR)/move.c \
-		$(SRC_DIR)/win_utils.c \
-		$(SRC_DIR)/textures.c \
-		$(SRC_DIR)/render_walls.c \
-		$(SRC_DIR)/raycast_init_step.c \
-		$(SRC_DIR)/raycast_walk.c \
-		$(SRC_DIR)/render_minimap.c \
-		$(SRC_DIR)/render_minimap_util.c \
-		$(SRC_DIR)/update_collectibles.c \
+		$(SRC_DIR)/render/render_loop.c \
+		$(SRC_DIR)/controls/hooks.c \
+		$(SRC_DIR)/controls/hooks_util.c \
+		$(SRC_DIR)/door/doors_init.c \
+		$(SRC_DIR)/door/doors_run.c \
+		$(SRC_DIR)/door/draw_door_overlay.c \
+		$(SRC_DIR)/render/render_mouse.c \
+		$(SRC_DIR)/init/init_club_defaults.c \
+     	$(SRC_DIR)/init/init_club.c \
+    	$(SRC_DIR)/engine/render_background.c \
+		$(SRC_DIR)/engine/wall_stripe_utils.c \
+		$(SRC_DIR)/engine/walls_util.c \
+		$(SRC_DIR)/render/img_utils.c \
+		$(SRC_DIR)/controls/move.c \
+		$(SRC_DIR)/sprites/win_utils.c \
+		$(SRC_DIR)/render/textures.c \
+		$(SRC_DIR)/engine/render_walls.c \
+		$(SRC_DIR)/engine/raycast_init_step.c \
+		$(SRC_DIR)/engine/raycast_walk.c \
+		$(SRC_DIR)/render/render_minimap.c \
+		$(SRC_DIR)/render/render_minimap_util.c \
+		$(SRC_DIR)/sprites/update_collectibles.c \
 		$(SRC_DIR)/utils/error.c \
 		$(SRC_DIR)/utils/free.c \
 		$(SRC_DIR)/utils/destroy_club.c \
