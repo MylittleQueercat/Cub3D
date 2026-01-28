@@ -52,7 +52,7 @@ Map files (.cub) must include:
     0 = Empty Space
     N/S/E/W = Player Starting Position & Direction
 - Bonus: 
-    2 = Sprite
+    2, 3, 4, 5 = Sprites
 	D = Door
 
 ################################################################################
