@@ -1,6 +1,9 @@
 # 🎮 Cub3D — 42 Project | 125/125
 
-![Score](https://img.shields.io/badge/Score-125%2F125-brightgreen) ![Language](https://img.shields.io/badge/Language-C-blue) ![42](https://img.shields.io/badge/42-Project-black) ![Team](https://img.shields.io/badge/Team-2_people-orange)
+![Score](https://img.shields.io/badge/Score-125%2F125-brightgreen)
+![Language](https://img.shields.io/badge/Language-C-blue)
+![42](https://img.shields.io/badge/42-Project-black)
+![Team](https://img.shields.io/badge/Team-2_people-orange)
 
 ## 📌 Project Goal
 
@@ -163,4 +166,3 @@ valgrind --leak-check=full ./cub3D map.cub
 # Test minimal valid map
 ./cub3D pink_pony_club.cub
 ```
-
