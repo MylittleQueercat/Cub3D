@@ -163,3 +163,4 @@ valgrind --leak-check=full ./cub3D map.cub
 # Test minimal valid map
 ./cub3D pink_pony_club.cub
 ```
+
